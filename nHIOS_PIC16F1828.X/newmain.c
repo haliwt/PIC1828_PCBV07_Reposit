@@ -18,14 +18,15 @@ void  main(void )
 {
     init_fosc();
     Led_Init();
-  //  Drv8306_Init();
- //   HALL_INTInit();
+    Drv8306_Init();
+    HALL_INTInit();
+    Drv8306_PWM();
     while(1)
     {
         PORTC = 0x0;//
         delay_10ms(20);
         PORTC = 0x0f;
-         delay_10ms(20);
+        delay_10ms(20);
 
     }
 

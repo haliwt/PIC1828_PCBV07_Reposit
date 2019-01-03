@@ -7,7 +7,7 @@
 #define  DRV_FAULT        RB7 //input
 #define  DRV_FGOUT       RA4 //input
 
-my_drv8306 *pdrv ;
+my_drv8306 drv ={0,0,0,0,0,0};
 /******************************************
  *
  * Function Name: Drv8306_Init()
@@ -20,29 +20,29 @@ void Drv8306_Init()
     TRISB = 0x80;
     TRISA = 0x10;
     DRV_ENABLE=0 ;
-    pdrv->drv_enable = DRV_ENABLE ;
     DRV_BRAKE = 0;
-    pdrv->drv_brake= DRV_BRAKE ;
     DRV_DIR = 0;
-    pdrv->drv_dir= DRV_DIR ;
      DRV_FAULT = 0;
-    pdrv->drv_fault = DRV_FAULT ;
-    DRV_FGOUT = 0;
-    pdrv->drv_fgout = DRV_FGOUT ;
+     DRV_FGOUT = 0;
     DRV_PWM=0;
-    pdrv->drv_pwm = DRV_PWM ;
+    
 }
 /******************************************
  *
  * Function Name: Drv8306_PWM()
- *
+ *Input Reference: PWM = RC5
  *
  *****************************************/
 void Drv8306_PWM()
 {
-    CCPR1L = 0x32;    //
-    CCP1CON = 0x0c ; //CCPxCON, PWM module
-    TRISC5 = 0 ; //CCP1 
+    TRISCbits.TRISC5=1;  //????
+    PR2 = 0X9C;   //TIMER1 ???
+   CCP1CON = 0x0f ; //CCPxCON, PWM module
+    CCPR1L = 0x3e;    //????8?
+    CCPTMRS0 = 0xFC ;  //CCP1??TIMER2 ??
+    T2CON  = 0X07;     //TIMER2 ?
+    TRISCbits.TRISC5 =0;
+    
 
 }
 /******************************************

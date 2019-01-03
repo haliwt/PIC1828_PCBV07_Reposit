@@ -13,18 +13,18 @@
 extern "C" {
 #endif
 
-    typedef struct
+typedef struct
 {
-    uchar drv_enable : 1;
-    uchar drv_brake : 1;
-    uchar drv_dir : 1;
-    uchar  drv_fault : 1;  //input
+    uchar drv_enable ;
+    uchar drv_brake ;
+    uchar drv_dir ;
+    uchar  drv_fault ;  //input
     uchar  drv_fgout;    //input Capture
     uint   drv_pwm;   //uint model
 }my_drv8306;
     void Drv8306_Init();
     void Drv8306_PWM();
-    void Drv8306_FGOUT(); //DRV8306_FGOUT
+    void Drv8306_FGOUT();    //DRV8306_FGOUT
     void Drv8306_FAULT();
 
 
