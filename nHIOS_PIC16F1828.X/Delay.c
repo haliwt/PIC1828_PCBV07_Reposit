@@ -42,5 +42,7 @@
 void init_fosc(void)
 {
     //OSCCON=0x72; //?????8MHZ
-    OSCCON = 0x60; //externl 8mhz
+   // OSCCON = 0x60; //externl 8mhz
+    //OSCCONbits.IRCF=0b1110;//8M?? // 400KHZ
+    OSCCON = 0xe0;
 }

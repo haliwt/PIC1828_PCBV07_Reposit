@@ -8,6 +8,12 @@
 #ifndef DRV8306_H
 #define	DRV8306_H
 #include "delay.h"
+#define  DRV_ENABLE      RC7
+#define  DRV_BRAKE       RC6
+#define  DRV_PWM         RC5
+#define  DRV_DIR           RB6
+#define  DRV_FAULT        RB7 //input
+#define  DRV_FGOUT       RA4 //input
 
 #ifdef	__cplusplus
 extern "C" {

@@ -18,15 +18,25 @@ void  main(void )
 {
     init_fosc();
     Led_Init();
+    Drv8306_FAULT();
     Drv8306_Init();
     HALL_INTInit();
     Drv8306_PWM();
+
+  
     while(1)
     {
-        PORTC = 0x0;//
+        PORTC = 0xce;//
         delay_10ms(20);
-        PORTC = 0x0f;
-        delay_10ms(20);
+        
+        Drv8306_PWM();
+        if(RB7 == 1)
+        {
+          PORTC = 0x80;//
+        }
+        //PORTC = 0x8f;
+       // delay_10ms(20);
+
 
     }
 
