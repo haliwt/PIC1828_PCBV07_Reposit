@@ -23,7 +23,7 @@
  * input regerence :
  *
  *************************************************************************/
-    void delay_10ms(uint t)
+    void delay_10ms(ulong t)
     {
         uint i= 630 *t ; // 8MHZ
         while(i --)

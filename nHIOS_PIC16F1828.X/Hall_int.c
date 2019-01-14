@@ -5,12 +5,14 @@
  * Hall_INTInit()
  * 
 **********************************/
-void HALL_INTInit()
+#if 0
+void HALL_Init()
 {
 
     TRISAbits.TRISA0 = 1 ;  //RA0 = 1 input
-    ANSA0 = 0;  //
+    ANSA0 = 0;  //0 = digital I/O; 1 = analog input
    // PORTAbits.RA0 =1;
+    INLVLA0 = 0;  // 1 =ST input 0 =TTL input
     IOCAP = 0x01;  // IOCAP : <ic0an0>
     IOCAF0 = 0x00;  //Flag IOCAF0
     //HALL_SENSOR = 0;
@@ -27,4 +29,20 @@ void HALL_INTInit()
     GIE = 1;  // open all interrupt
 
    
+}
+#endif
+void HALL_Init()
+{
+
+    TRISAbits.TRISA2 = 1 ;  //RA0 = 1 input
+    ANSA2 = 0;  //0 = digital I/O; 1 = analog input
+
+    INLVLA0 = 0;  // 1 =ST input 0 =TTL input
+    INTF = 0;
+    INTE =1 ;  //external interrupt enable bit
+    PEIE =1;   //peripheral interrupt enable
+    INTEDG = 0;  // 1=rising edge interrupt
+    GIE = 1;  // open all interrupt
+
+
 }

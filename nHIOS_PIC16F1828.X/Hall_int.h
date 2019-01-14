@@ -1,10 +1,3 @@
-/* 
- * File:   Hall_int.h
- * Author: Administrator
- *
- * Created on December 25, 2018, 11:25 AM
- */
-
 #ifndef HALL_INT_H
 #define	HALL_INT_H
 #include "delay.h"
@@ -12,9 +5,9 @@
 #ifdef	__cplusplus
 extern "C" {
 #endif
-#define HALL_SENSOR  PORTAbits.RA0
+#define HALL_SENSOR  PORTAbits.RA2
 
-    void HALL_INTInit();
+    void HALL_Init();
 
 
 
