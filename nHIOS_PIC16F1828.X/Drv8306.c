@@ -1,13 +1,7 @@
 #include "drv8306.h"
 
-#define  DRV_ENABLE       RC7
-#define  DRV_BRAKE        RC6
-#define  DRV_PWM          RC5
-#define  DRV_DIR           RB6
-#define  DRV_FAULT        RB7 //input
-#define  DRV_FGOUT       RA4 //input
 
-my_drv8306 drv ={0,0,0,0,0,0};
+//my_drv8306 drv ={0,0,0,0,0,0};
 /******************************************
  *
  * Function Name: Drv8306_Init()
@@ -21,12 +15,7 @@ void Drv8306_Init()
     TRISA = 0x10;
    // PORTB= 0X40;
    
-     DRV_ENABLE=0 ;
-     DRV_BRAKE = 0;
-     DRV_DIR = 0;
-     DRV_FAULT = 0;
-     DRV_FGOUT = 0;
-     DRV_PWM=0;
+    
     
 }
 /******************************************
@@ -37,14 +26,15 @@ void Drv8306_Init()
  *****************************************/
 void Drv8306_PWM()
 {
-    TRISCbits.TRISC5=1;  //????
-    PR2 =0x04;//PR2 = 0X9C;   //TIMER1 ???
+
+    TRISCbits.TRISC5=1;  //PWM CCP1,OSC =16MHZ
+    PR2 =0x15;     //Timer2 period Register
    //CCP1CON = 0x3C ; //CCPxCON, PWM module
-    CCP1CON = 0X0C;
-    CCPR1L = 0x2;    //????8?
-    CCPTMRS0 = 0xFC ;  //CCP1??TIMER2 ??
-    T2CON  = 0X07;     //TIMER2 ???TIMER2,prescaler is 64
-    //T2CON = 0x04;    //TIMER2 enable ,prescaler is 4 .
+     CCPR1L = 0x0f;    //pulse duty of value
+    CCP1CON = 0X0C; //LSB has 2 bits,<5:4>selcet PMW module,Load duty cycle
+    CCPTMRS0 = 0xFC ;  //PWM timer selectiong control RE :Enable PWM
+    //T2CON  = 0X07;     //TIMER2 of TIMER2,prescaler is 64
+    T2CON = 0x04;    //TIMER2 enable ,prescaler is=1 .
     TRISCbits.TRISC5 =0;
     
 
@@ -71,6 +61,5 @@ void Drv8306_FGOUT()
  {
     TRISBbits.TRISB7 =1;
      RB7=0;
-
  }
  

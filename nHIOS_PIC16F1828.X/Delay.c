@@ -9,7 +9,7 @@
  *************************************************************************/
     void delay_1ms(uint t)
     {
-         uint i= 4000 *t ;
+         uint i= 63 *t ;
         while(i --)
         {
           ;
@@ -44,5 +44,6 @@ void init_fosc(void)
     //OSCCON=0x72; //?????8MHZ
    // OSCCON = 0x60; //externl 8mhz
     //OSCCONbits.IRCF=0b1110;//8M?? // 400KHZ
-    OSCCON = 0xe0;
+    //OSCCON = 0xe0;
+    OSCCON = 0xFA;  //internal OSCS is 16MHZ
 }

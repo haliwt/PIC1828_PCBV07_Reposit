@@ -3,9 +3,10 @@
 
 void Led_Init()
 {
-    TRISC = 0Xf0;
-    PORTC = 0X00;
-    LED1 = 1;
-    LED2 = 1;
-    LED3 = 1;
+    TRISCbits.TRISC1 = 0;
+    TRISCbits.TRISC2= 0;
+    TRISCbits.TRISC3 = 0;
+    LED1=0;
+    LED2=0;
+    LED3=0;
 }

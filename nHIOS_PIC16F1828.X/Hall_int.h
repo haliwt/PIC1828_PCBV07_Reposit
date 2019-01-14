@@ -12,6 +12,8 @@
 #ifdef	__cplusplus
 extern "C" {
 #endif
+#define HALL_SENSOR  PORTAbits.RA0
+
     void HALL_INTInit();
 
 

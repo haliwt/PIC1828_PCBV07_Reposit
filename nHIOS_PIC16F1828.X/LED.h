@@ -11,9 +11,9 @@
 #ifdef	__cplusplus
 extern "C" {
 #endif
-#define LED1  RC1
-#define LED2  RC2
-#define LED3  RC3
+#define LED1  PORTCbits.RC1
+#define LED2  PORTCbits.RC2
+#define LED3  PORTCbits.RC3
  void  Led_Init();
 
 
