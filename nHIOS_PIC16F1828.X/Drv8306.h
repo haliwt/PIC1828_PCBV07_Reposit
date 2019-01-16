@@ -32,7 +32,7 @@ my_drv8306 my_drv ={0,0,0,0,0,0};
     void Drv8306_Init();
     void Drv8306_PWM();
     void Drv8306_FGOUT();    //DRV8306_FGOUT
-    void Drv8306_FAULT();
+  //  void Drv8306_FAULT();
 
 
 

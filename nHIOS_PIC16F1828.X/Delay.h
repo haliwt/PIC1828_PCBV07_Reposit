@@ -1,10 +1,3 @@
-/* 
- * File:   Delay.h
- * Author: Administrator
- *
- * Created on December 25, 2018, 8:56 AM
- */
-
 #ifndef DELAY_H
 #define	DELAY_H
 //#include <xc.h>
