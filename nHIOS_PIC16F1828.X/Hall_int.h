@@ -7,7 +7,7 @@ extern "C" {
 #endif
 #define HALL_SENSOR  PORTAbits.RA2
 
-    void HALL_Init();
+ void HALL_Init();
 
 
 

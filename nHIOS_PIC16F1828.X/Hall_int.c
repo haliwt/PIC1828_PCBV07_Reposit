@@ -36,12 +36,10 @@ void HALL_Init()
 
     TRISAbits.TRISA2 = 1 ;  //RA2 = 1 input interrupter
     ANSA2 = 0;  //0 = digital I/O; 1 = analog input
-    HALL_SENSOR = 1;
-    IOCIE =1;
     INLVLA0 = 1;  // 1 =ST input 0 =TTL input
     INTF = 0; //
     INTE = 1;  //external interrupt enable bit
-    PEIE =1;   //peripheral interrupt enable
+    PEIE =0;   //peripheral interrupt enable
     INTEDG = 0;  // 1=rising edge interrupt
     GIE = 1;  // open all interrupt
 
