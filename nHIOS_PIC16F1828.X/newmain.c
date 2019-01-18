@@ -26,78 +26,39 @@ void  main(void )
     Drv8306_PWM();
     while(1)
     {
-        while(HALL_SENSOR == 0)
-        {
+
+         
+
+        mykey =GetKeyPad();
+      while(HALL_SENSOR == 0)
+      {
+           PORTC = 0x0;
+           delay_10ms(50);
             LED1 =1;
             LED2=1;
             LED3=1;
-        
-        }
-        mykey =GetKeyPad();
-         if(my_drv.drv_dir ==1)
-           {
-
-            LED1=1;
-            delay_10ms(100);
-           }
-       if( flagbrake == 1)// if( my_drv.drv_brake == 1)
-        {
-           //my_drv.drv_brake=0;
-           LED3=1;
-           DRV_BRAKE = 0 ;
-           delay_10ms(100);
-           LED3= 0;
-           delay_10ms(100);
-           LED3 = !LED3;
-        }
-
+       }
+         
       if( GetKeyPad()==1) //scredirver works,
        {
-          LED2 =1;
-        if((DRV_BRAKE==0) ||(flagbrake != 0))
+         //PORTCbits.RC7= 1; //DRV_ENABLE =1 ;
+          //PORTCbits.RC6 =1 ;//DRV_BRAKE =1 ;
+          PORTC = 0xc0;  //start on
+           delay_10ms(10);
+          //PORTC = 0xce;
+       }
+         if( GetKeyPad()==0)
          {
-          DRV_ENABLE =1 ;
-          DRV_BRAKE = 1;
-          delay_10ms(10);
-          my_drv.drv_brake=0;
-           LED1=1;
-           delay_10ms(100);
-           LED3=1;
-           delay_10ms(100);
-           LED1=0;
-          // DRV_BRAKE = 0 ;
-           delay_10ms(100);
-           LED3=0;
-           delay_10ms(100);
-          
-          }
-      }
-#if 0
-        {
-         else if(my_drv.drv_dir ==1)
-           {
-            DRV_DIR=1;
-            DRV_ENABLE =1;
-            DRV_BRAKE = 1 ;
-            LED3=1;
-            delay_10ms(100);
-           }
-         else if(my_drv.drv_dir ==0)
-           {
-               DRV_DIR=0;
-               DRV_ENABLE =1;
-               DRV_BRAKE = 1 ;
-               LED2=1;
-              delay_10ms(100);
-           }
-          Manual_Operation_Dir();
-        }
-    #endif
+             PORTC = 0x0; //breake 
+             delay_10ms(50);
+         }
+      
 
-     
-    }
+
+
  }
-   
+ 
+}
 
 /**************************************************************
  *
@@ -118,7 +79,9 @@ void interrupt Hallsensor(void)
            my_drv.drv_brake =1;
            flagbrake=1;
            LED3=1;
-           LATC6 =0;//PORTCbits.RC6=1;//DRV_BRAKE = 0 ;
+           PORTC = 0x0;
+           delay_10ms(50);
+          // LATC6 =0;//PORTCbits.RC6=1;//DRV_BRAKE = 0 ;
            
          
        }
