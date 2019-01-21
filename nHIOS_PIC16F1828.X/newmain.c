@@ -5,7 +5,9 @@
 #include "led.h"
 #include "drv8306.h"
 #include "key.h"
- uchar flagbrake ;
+volatile uchar flag_brake ;
+volatile uchar flag_power_on;
+
 
 
 /**************************************************************
@@ -16,7 +18,7 @@
  *************************************************************/
 void  main(void )
 {
-   // uint i;
+    uint i;
     uchar mykey=0;
     init_fosc();
     Led_Init();
@@ -26,38 +28,27 @@ void  main(void )
     Drv8306_PWM();
     while(1)
     {
-
-         
-
-        mykey =GetKeyPad();
-      while(HALL_SENSOR == 0)
-      {
-           PORTC = 0x0;
-           delay_10ms(50);
-            LED1 =1;
-            LED2=1;
-            LED3=1;
-       }
-         
-      if( GetKeyPad()==1) //scredirver works,
-       {
-         //PORTCbits.RC7= 1; //DRV_ENABLE =1 ;
-          //PORTCbits.RC6 =1 ;//DRV_BRAKE =1 ;
-          PORTC = 0xc0;  //start on
-           delay_10ms(10);
-          //PORTC = 0xce;
-       }
-         if( GetKeyPad()==0)
-         {
-             PORTC = 0x0; //breake 
-             delay_10ms(50);
-         }
-      
-
-
-
- }
- 
+        if(GetKeyPad() == 1)
+        {
+           if ( flag_brake == 1)
+            {
+                LED1=1;
+                delay_10ms(10);
+                TRISC =0xc0;// TRISCbits.TRISC7 = 0;
+                //TRISCbits.TRISC6 = 0;
+                PORTC = 0x00;
+            }
+            if( flag_power_on ==0)
+            {
+                flag_power_on++;
+                LED2=1;
+                TRISC =0x0;// TRISCbits.TRISC7 = 0;
+                //TRISCbits.TRISC6 = 0;
+                PORTC = 0xc0;
+            }
+    
+        }
+     }
 }
 
 /**************************************************************
@@ -66,26 +57,28 @@ void  main(void )
  *
  *
  *************************************************************/
+
 void interrupt Hallsensor(void)
 {
    //if(INTF == 1)//if( IOCAF0 == 1)//if(IOCIF == 1)
-  if(INTF == 1)
-   {
-      //INTF =0;
-     // PORTCbits.RC6=1;//DRV_BRAKE = 0 ;
-       if(HALL_SENSOR == 0)
-       {
-           INTF=0;
-           my_drv.drv_brake =1;
-           flagbrake=1;
-           LED3=1;
-           PORTC = 0x0;
-           delay_10ms(50);
-          // LATC6 =0;//PORTCbits.RC6=1;//DRV_BRAKE = 0 ;
-           
-         
+  //if(INTF == 1)
+  if( IOCAF2 == 1)
+    {
+      IOCAF2=0;//INTF =0;
+         my_drv.drv_brake =1;
+           flag_brake=1;
+           flag_power_on =1;
+           TRISC= 0xc0;
+             delay_10ms(100);
+           PORTC = 0x00;
+           delay_10ms(100);
+            LED3=1;
+            delay_10ms(10);
+           while(1);
+       
        }
-     }
+   }
  
 
-}
+
+

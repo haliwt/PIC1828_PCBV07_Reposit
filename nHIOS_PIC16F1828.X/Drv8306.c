@@ -16,10 +16,7 @@ void Drv8306_Init()
     TRISBbits.TRISB7 = 1 ; //DRV_FAULT input
     TRISAbits.TRISA4 = 1; //DRV_FGOUT input
 
-    DRV_ENABLE =0;
-    DRV_BRAKE = 1 ;
-    DRV_DIR = 0;
-   // LATC6 = 1;
+    
 }
 /******************************************
  *
