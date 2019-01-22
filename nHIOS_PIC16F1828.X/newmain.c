@@ -18,7 +18,7 @@ volatile uchar flag_power_on;
  *************************************************************/
 void  main(void )
 {
-    uint i;
+    uint i=0;
     uchar mykey=0;
     init_fosc();
     Led_Init();
@@ -28,28 +28,49 @@ void  main(void )
     Drv8306_PWM();
     while(1)
     {
-        if(GetKeyPad() == 1)
+        if(i==0)
         {
-           if ( flag_brake == 1)
-            {
-                LED1=1;
-                delay_10ms(10);
-                TRISC =0xc0;// TRISCbits.TRISC7 = 0;
-                //TRISCbits.TRISC6 = 0;
-                PORTC = 0x00;
-            }
-            if( flag_power_on ==0)
-            {
-                flag_power_on++;
-                LED2=1;
-                TRISC =0x0;// TRISCbits.TRISC7 = 0;
-                //TRISCbits.TRISC6 = 0;
-                PORTC = 0xc0;
-            }
-    
+          GetKeyPad();
+          i=2;
+          
         }
-     }
+        if(i ==1)
+        {
+          my_drv.key_press_start  == 0;
+        }
+        if(HALL_SENSOR==0)
+        {
+            i=1;
+            TRISC =0xc0;
+             PORTC = 0x00;
+         }
+       if((flag_brake ==1) || (my_drv.drv_brake == 1))
+            my_drv.key_press_start = 0;
+        if(my_drv.key_press_start  == 0)
+        {
+
+                   LED1=1;
+                   i=1;
+                   flag_brake =1;
+                   my_drv.drv_brake=1;
+                    TRISC =0xc0;
+                    PORTC = 0x00;
+                   
+          }
+         if(my_drv.key_press_start  == 1)
+        {
+       
+             TRISCbits.TRISC5 =0;
+             PORTC = 0xc0;
+                
+           }
+       }
 }
+            
+
+    
+  
+
 
 /**************************************************************
  *
@@ -62,21 +83,21 @@ void interrupt Hallsensor(void)
 {
    //if(INTF == 1)//if( IOCAF0 == 1)//if(IOCIF == 1)
   //if(INTF == 1)
-  if( IOCAF2 == 1)
+  if( IOCIF == 1)
     {
-      IOCAF2=0;//INTF =0;
-         my_drv.drv_brake =1;
+          IOCAF=0;//INTF =0;
+        //  if(HALL_SENSOR==0)
+          {
+             LED3=1;
+          my_drv.drv_brake =1;
+          my_drv.key_press_start=0;
            flag_brake=1;
            flag_power_on =1;
-           TRISC= 0xc0;
-             delay_10ms(100);
-           PORTC = 0x00;
-           delay_10ms(100);
-            LED3=1;
-            delay_10ms(10);
-           while(1);
-       
-       }
+           TRISC=0xc0;
+           PORTC= 0x00;
+          
+          }
+      }
    }
  
 

@@ -12,7 +12,7 @@ void HALL_Init()
     ANSA2 = 0;  //0 = digital I/O; 1 = analog input
     INLVLA2 = 1;  // 1 =ST input 0 =TTL inpu
     IOCAP2 = 1;  //Flag IOCAF0
-    IOCAN2 = 1;
+   // IOCAN2 = 1;
     IOCIE =1;  //interrupt on change enable bit
    // IOCAN = 0b00000100;
    // IOCAP = 0b00000100;
