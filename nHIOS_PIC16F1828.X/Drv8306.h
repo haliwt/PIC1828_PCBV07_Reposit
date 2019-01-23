@@ -12,8 +12,10 @@
 #define  DRV_BRAKE       PORTCbits.RC6
 #define  DRV_PWM         PORTCbits.RC5
 #define  DRV_DIR           PORTBbits.RB6
-#define  DRV_FAULT        PORTBbits.RB7 //input
-#define  DRV_FGOUT       PORTAbits.RA4 //input
+#define  DRV_FAULT        PORTBbits.RB7 //input 1
+#define  DRV_FGOUT       PORTAbits.RA4 //input 1
+#define  DETECT_BRAKE   PORTCbits.RC0 //input 1
+volatile ulong pwm_duty=0 ;
 
 #ifdef	__cplusplus
 extern "C" {

@@ -5,13 +5,17 @@
  * Hall_INTInit()
  * 
 **********************************/
-
+#if 1
 void HALL_Init()
 {
     TRISAbits.TRISA2 = 1 ;  //RA0 = 1 input
+    TRISBbits.TRISB4 =1;    //RB4 =1 input
     ANSA2 = 0;  //0 = digital I/O; 1 = analog input
     INLVLA2 = 1;  // 1 =ST input 0 =TTL inpu
     IOCAP2 = 1;  //Flag IOCAF0
+    IOCAN2 =1;
+    IOCBN4 =1;
+    IOCBP4 =1;
    // IOCAN2 = 1;
     IOCIE =1;  //interrupt on change enable bit
    // IOCAN = 0b00000100;
@@ -21,6 +25,7 @@ void HALL_Init()
 
    
 }
+#endif
 #if 0
 void HALL_Init()
 {
