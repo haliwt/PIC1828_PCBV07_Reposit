@@ -5,8 +5,11 @@
 #include "led.h"
 #include "drv8306.h"
 #include "key.h"
+
+
+
 volatile uchar flag_brake=0 ;
-extern uchar flag_power_on;
+extern uchar flag_power_on=0;
 
 /**************************************************************
  *
@@ -16,7 +19,7 @@ extern uchar flag_power_on;
  *************************************************************/
 void  main(void )
 {
-    uint i=0;
+    uint i=0,j;
     uchar mykey=0;
     init_fosc();
     Led_Init();
@@ -26,7 +29,32 @@ void  main(void )
     Drv8306_PWM();
     while(1)
     {
-        mykey =GetKeyPad();
+        //mykey =GetKeyPad();
+        if(flag_power_on == 1)
+        {
+            //mykey =GetKeyPad();
+            mykey =0;
+            PORTC = 0x01;
+            TRISCbits.TRISC5 =1;
+             Key_Access = 0;
+             j=2;
+             while(1);
+        }
+        if(flag_power_on == 0)
+        {
+          
+            pwm_duty=0x02;
+            Key_Access = 1;
+             mykey =GetKeyPad();
+             if(j==2)
+             {
+                 LED1=1;
+                 LED2=1;
+                 LED3=1;
+                 while(1);
+             }
+          
+        }
         switch(mykey)
         {
             case 0 :
@@ -34,7 +62,24 @@ void  main(void )
                PORTC = 0x01;
                TRISCbits.TRISC5 =1;
                 LED1=1;
-                
+                 pwm_duty=0;
+                if(flag_brake ==1)
+                {
+                    j=2;
+                    mykey=0;
+                    Key_Access = 0;
+                      while(1);
+                   LED2=1;
+                   LED1=1;
+                    pwm_duty=0;
+                   delay_10ms(10);
+                   while(1);
+                }
+                else
+                {
+                    Key_Access = 1;
+                     delay_10ms(10);
+                }
               }
             break;
 
@@ -42,10 +87,9 @@ void  main(void )
              {
                    // pwm_duty=0x02;
                      LED2=1;
-                   // CCPR1L = pwm_duty;
-                    TRISCbits.TRISC5 =0;
+                     TRISCbits.TRISC5 =0;
                     PORTC = 0xc1;
-                    while(GetKeyPad());
+                  //  while(mykey==1);
                }
             break;
             default :
@@ -66,39 +110,36 @@ void  main(void )
  * Function function: interrupt program hall
  *
  *
- *************************************************************/
+ *****
+
+
+
+
+ ******************************************************/
 
 void interrupt Hallsensor(void)
 {
    //if(INTF == 1)//if( IOCAF0 == 1)//if(IOCIF == 1)
 // if(INTF == 1)
-#if 0
-  if( IOCAF2  == 1)
+    uint i;
+  if(IOCAF2 == 1)
     {
-        IOCIF =0;
-      IOCAF2=0;//INTF =0;
+     
+      IOCIF =0;
+     IOCAF2=0;//INTF =0;
          // IOCBF4=0;
         //  INTF=0;
+           flag_brake =1;
+          flag_power_on =1;
           PORTC = 0x01;
-          flag_power_on =1;
-          pwm_duty =0x00;
-          CCPR1L = pwm_duty;    //LSB:Low 2 bit 0x00 //pulse duty of
-          LED3=1;
-          delay_10ms(100);
-      }
-#endif 
-  if(PORTBbits.RB4 ==0)
-  {
-       PORTC = 0x01;
-          flag_power_on =1;
-          pwm_duty =0x00;
-          CCPR1L = pwm_duty;    //LSB:Low 2 bit 0x00 //pulse duty of
-          LED3=1;
-          while(1);
+          TRISCbits.TRISC5 =1;
+          PORTBbits.RB4 =0;
+           pwm_duty=0;
+           LED3=1;
+           delay_10ms(10);
+         }
+ }
 
-  }
-  
-  }
   
 
    
