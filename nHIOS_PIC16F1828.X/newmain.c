@@ -29,8 +29,8 @@ void  main(void )
     Drv8306_PWM();
     while(1)
     {
-        //mykey =GetKeyPad();
-        if(flag_power_on == 1)
+       mykey =GetKeyPad();
+       if(flag_power_on == 1)
         {
             //mykey =GetKeyPad();
             mykey =0;
@@ -40,58 +40,53 @@ void  main(void )
              j=2;
              while(1);
         }
-        if(flag_power_on == 0)
+       if(flag_power_on == 0)
         {
-          
-            pwm_duty=0x02;
+
             Key_Access = 1;
+            PORTC = 0x01;
+            TRISCbits.TRISC5 =1;
              mykey =GetKeyPad();
+           
              if(j==2)
              {
+               
                  LED1=1;
+                 delay_1ms(20);
                  LED2=1;
-                 LED3=1;
-                 while(1);
+               //  LED3=1;
+                 mykey=0;// new add item
              }
-          
-        }
+           
+           }
         switch(mykey)
         {
             case 0 :
             {
                PORTC = 0x01;
                TRISCbits.TRISC5 =1;
-                LED1=1;
-                 pwm_duty=0;
-                if(flag_brake ==1)
-                {
-                    j=2;
-                    mykey=0;
-                    Key_Access = 0;
-                      while(1);
-                   LED2=1;
-                   LED1=1;
-                    pwm_duty=0;
-                   delay_10ms(10);
-                   while(1);
-                }
-                else
-                {
-                    Key_Access = 1;
-                     delay_10ms(10);
-                }
-              }
+               Key_Access = 0;
+                LED3=1;
+                delay_1ms(50);
+                LED2=0;
+                LED1=0;
+                delay_1ms(50);
+               
+             }
             break;
 
             case 1:
              {
-                   // pwm_duty=0x02;
+
+                 // pwm_duty=0x02;
                      LED2=1;
                      TRISCbits.TRISC5 =0;
                     PORTC = 0xc1;
-                  //  while(mykey==1);
+                    while(flag_power_on==0);
+
                }
             break;
+           
             default :
             {
               PORTC = 0x01;
@@ -108,14 +103,10 @@ void  main(void )
 /**************************************************************
  *
  * Function function: interrupt program hall
+ * Input Reference :Noting
+ * Return Reference :Noting
  *
- *
- *****
-
-
-
-
- ******************************************************/
+******************************************************/
 
 void interrupt Hallsensor(void)
 {
