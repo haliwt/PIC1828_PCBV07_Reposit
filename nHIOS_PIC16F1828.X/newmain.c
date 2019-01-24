@@ -5,6 +5,9 @@
 #include "led.h"
 #include "drv8306.h"
 #include "key.h"
+#asm RESET
+#endasm
+
 
 
 
@@ -19,7 +22,7 @@ extern uchar flag_power_on=0;
  *************************************************************/
 void  main(void )
 {
-    uint i=0,j;
+    uint i=0,j,z;
     uchar mykey=0;
     init_fosc();
     Led_Init();
@@ -43,34 +46,37 @@ void  main(void )
        if(flag_power_on == 0)
         {
 
-            Key_Access = 1;
+          //  Key_Access = 1;
             PORTC = 0x01;
             TRISCbits.TRISC5 =1;
-             mykey =GetKeyPad();
+            mykey =GetKeyPad();
            
              if(j==2)
              {
                
                  LED1=1;
                  delay_1ms(20);
-                 LED2=1;
-               //  LED3=1;
-                 mykey=0;// new add item
+                 mykey=2;// new add item
              }
            
            }
-        switch(mykey)
+
+       switch(mykey)
         {
             case 0 :
             {
                PORTC = 0x01;
                TRISCbits.TRISC5 =1;
-               Key_Access = 0;
+             //  Key_Access = 0;
                 LED3=1;
                 delay_1ms(50);
                 LED2=0;
                 LED1=0;
                 delay_1ms(50);
+                if(j==2)
+                {
+                     //  asm("RESET");
+                }
                
              }
             break;
@@ -86,6 +92,35 @@ void  main(void )
 
                }
             break;
+
+            case 2:
+            {
+                 GetKeyPad();
+            //    Key_Access = 1;
+                PORTC = 0x01;
+                TRISCbits.TRISC5 =1;
+               
+                LED2=1;
+                delay_1ms(50);
+                if(GetKeyPad() == 1)
+                {
+                    if(z==1)
+                    {
+                        z=0;
+                        j=3;
+                    }
+                       
+                }
+                if(GetKeyPad()==0)
+                {
+                    z = 1;
+                  LED3=~LED3;
+                  delay_1ms(100);
+                }
+               
+            }
+            break;
+            
            
             default :
             {
@@ -93,10 +128,10 @@ void  main(void )
               TRISCbits.TRISC5 =1;
              }
             break;
+          }
         }
-        }
-        
-  }
+ }
+  
  
 
 
@@ -123,9 +158,9 @@ void interrupt Hallsensor(void)
            flag_brake =1;
           flag_power_on =1;
           PORTC = 0x01;
-          TRISCbits.TRISC5 =1;
-          PORTBbits.RB4 =0;
-           pwm_duty=0;
+        //  TRISCbits.TRISC5 =1;
+        //  PORTBbits.RB4 =0;
+         //  pwm_duty=0;
            LED3=1;
            delay_10ms(10);
          }
