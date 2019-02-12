@@ -13,9 +13,12 @@ void Key_Init(void)
     TRISAbits.TRISA0 =1; //Key_start input
  //   TRISBbits.TRISB4 = 0 ; //Key_access
     ANSA0 = 0;
-    ANSA2 = 0;
-    TRISAbits.TRISA1 =1 ; //key_dir input
-    ANSA1 = 0;
+    IOCAP0 = 1;  //Flag IOCAF0
+    IOCIE =1;  //interrupt on change enable bit
+
+    PEIE =1;   //peripheral interrupt enable
+    GIE = 1;  // open all interrupt
+  
     Key_Dir = 0;
   //  Key_Access = 0;
     
@@ -33,21 +36,21 @@ uchar GetKeyPad(void)
    {
       delay_1ms(1);
 
-      while(Key_Start ==1)
-          return 1;
-
-#if 0
+   
       if(Key_Start ==1)
        {
            return 1;
-         }
-#endif
+        }
+
     }
-  else
-   {
-     
-       return 0;
-     }
+ if(Key_Start == 0)
+  {
+    delay_1ms(1);
+    if(Key_Start == 0)
+    {
+        return 0;
+    }
+   }
  }
  
 /************************************************************

@@ -1,25 +1,29 @@
 #include "output_sig.h"
 /***********************************************************
    *
-   *Function :
+   *Function :Brake_Output_SIG_Init()
    *Effect : output break signal to auto equipment
+   *Input reference :no
+   *Output reference :no
    *
  **********************************************************/
- void Break_SIG_Init()
- {
-
-
- }
+void Brake_OutPut_SIG_Init()
+{
+      TRISBbits.TRISB5 =0; //RB5 -output brake
+      PORTBbits.RB5 =0;  //output low level
+}
  /***********************************************************
    *
-   *Function :
-   *Effect : output works signal to Auto equipment
+   *Function :Fsult_OutPut_SIG_Init()
+   *Effect : output fsult signal to Auto equipment
+   *Input reference:no
+   *Output referncece: no
    *
  **********************************************************/
- void Works_SIG_Init()
+ void Fsult_OutPut_SIG_Init()
  {
-
-
+     TRISBbits.TRISB4 =0;
+     PORTBbits.RB4 =0;
  }
   /***********************************************************
    *
@@ -28,9 +32,3 @@
    *         that screw don't tightening
    *
  **********************************************************/
-  void Fail_SIG_Init()
-  {
-
-  
-
-  }
