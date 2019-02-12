@@ -31,13 +31,14 @@ void Drv8306_PWM()
 {
 
     TRISCbits.TRISC5=1;  //PWM CCP1,OSC =8MHZ
-    PR2 =0x4;     //Timer2 period Register
+    PR2 =0x05;     //Timer2 period Register
    //CCP1CON = 0x3C ; //CCPxCON, PWM module
-    CCPR1L = 0x02;    //MSB 8bit<>pulse duty of value
-    CCP1CON = 0X0c; //LSB has 2 bits in <5:4>
-    CCPTMRS0 =0xFC ;  //PWM timer selectiong control RE :Enable PWM
-//    //T2CON  = 0X07;     //TIMER2 of TIMER2,prescaler is 64
-    T2CON = 0x04;    //TxCON <>TIMER2 enable ,prescaler is=1 .
+    CCPR1L = 0x05;    //MSB 8bit<>pulse duty of value
+    CCP1CON = 0x2c;//0X0c; //LSB has 2 bits in <5:4>
+    CCPTMRS0 =0x3c;//0xFC ;  //PWM timer selectiong control RE :Enable PWM
+    //T2CON  = 0X07;     //TIMER2 of TIMER2,prescaler is 64
+    //T2CON = 0x04;    //TXCON <>TIMER2 enable ,prescaler is=1 .
+    T2CON = 0x05;    //prescale is = 4
     //TRISCbits.TRISC5 =0;
     
 

@@ -44,7 +44,7 @@ void init_fosc(void)
    // PLLR = 0;  // OSCSTAT : 0  = 4 x PLL is not ready
     HFIOFR = 1 ;  //OSCSTAT:  1 = HFINTOSC is ready
 
-    OSCCON= 0xe2; //8M
+    OSCCON= 0xe2; //8Mhz OSCS
 
    // OSCCON = 0xFA;  //internal OSCS is 16MHZ
 }

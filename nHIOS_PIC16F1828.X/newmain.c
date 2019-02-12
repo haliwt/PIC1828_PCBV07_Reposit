@@ -7,10 +7,6 @@
 #include "key.h"
 #asm RESET
 #endasm
-
-
-
-
 volatile uchar flag_brake=0 ;
 extern uchar flag_power_on=0;
 
@@ -53,7 +49,6 @@ void  main(void )
            
              if(j==2)
              {
-               
                  LED1=1;
                  delay_1ms(20);
                  mykey=2;// new add item
@@ -73,10 +68,7 @@ void  main(void )
                 LED2=0;
                 LED1=0;
                 delay_1ms(50);
-                if(j==2)
-                {
-                     //  asm("RESET");
-                }
+             
                
              }
             break;
