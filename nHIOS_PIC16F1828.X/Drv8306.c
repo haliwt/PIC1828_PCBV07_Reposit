@@ -12,11 +12,10 @@ void Drv8306_Init()
 {
     TRISCbits.TRISC7 =0 ; //DRV_ENABLE output
     TRISCbits.TRISC6 = 0;  //DRV_BRAKE output
-    TRISCbits.TRISC0 = 1;  //DETECT_BRAKE input
     TRISBbits.TRISB6 = 0 ;  //DRV_DIR  output
     TRISBbits.TRISB7 = 1 ; //DRV_FAULT input
     TRISAbits.TRISA4 = 1; //DRV_FGOUT input
-    PORTC = 0xC1;
+    PORTC = 0x00;
   
   
     

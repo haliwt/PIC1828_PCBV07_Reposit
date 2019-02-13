@@ -32,9 +32,10 @@ void Key_Init(void)
  ************************************************************/
 uchar GetKeyPad(void)
 {
+#if 1
   if(Key_Start == 1) 
    {
-      //delay_1ms(1);
+     // delay_1ms(10);
       delay_100us(1);
       if(Key_Start ==1)
        {
@@ -44,13 +45,14 @@ uchar GetKeyPad(void)
     }
  if(Key_Start == 0)
   {
-    //delay_1ms(1);
+    //delay_1ms(10);
      delay_100us(1);
     if(Key_Start == 0)
     {
         return 0;
     }
    }
+#endif
  }
  
 /************************************************************

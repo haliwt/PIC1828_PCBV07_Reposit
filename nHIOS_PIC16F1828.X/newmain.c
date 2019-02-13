@@ -45,7 +45,7 @@ void  main(void )
         }
        if(flag_power_on == 0)
         {
-            PORTC = 0x01;
+            PORTC = 0x00;
             TRISCbits.TRISC5 =1;
             mykey =GetKeyPad();
             if(j==2)
@@ -65,10 +65,10 @@ void  main(void )
         {
             case 0 : //stop
             {
-               PORTC = 0x01;
+               PORTC = 0x0;
                TRISCbits.TRISC5 =1;
                LED3=1;
-                delay_1ms(50);
+              delay_1ms(10);
                 
             }
             break;

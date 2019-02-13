@@ -23,7 +23,7 @@ void Brake_OutPut_SIG_Init()
  void Fsult_OutPut_SIG_Init()
  {
      TRISBbits.TRISB4 =0;
-     PORTBbits.RB4 =0;
+     PORTBbits.RB4 =0;   //output error signal
  }
   /***********************************************************
    *
