@@ -8,7 +8,7 @@
 #ifdef	__cplusplus
 extern "C" {
 #endif
- void delay_20us(uint t);
+ void delay_100us(uint t);
  void delay_1ms(uint t);
  void delay_10ms(ulong t);
  void init_fosc(void);

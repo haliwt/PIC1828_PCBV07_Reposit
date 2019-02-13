@@ -38,7 +38,7 @@ void  main(void )
            LED2=0;
            LED3=0;
             mykey =0;
-            PORTC = 0x01;
+            PORTC = 0x00;
             TRISCbits.TRISC5 =1;
              j=2;
              while(1);
