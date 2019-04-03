@@ -17,6 +17,10 @@ void Key_Init(void)
 
     TRISCbits.TRISC1 = 1;  //manual directin key
     
+    TRISCbits.TRISC3 = 0;  //PCBV06- DRV8306_DIR 
+    ANSC3 =0;
+	DRV_DIR = 0;
+    
     ANSC1 = 0;  //wt.edit New_direction key 
     ANSA0 = 0;
 	ANSC2 = 0;
@@ -69,7 +73,7 @@ void Manual_Operation_Dir(void)
         delay_100us(2);
        if(Key_Dir==1)
         {
-           DRV_DIR =1;
+          DRV_DIR =1;
           my_drv.drv_dir=1;
 		
 		  

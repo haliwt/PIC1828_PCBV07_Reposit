@@ -10,7 +10,10 @@ extern "C" {
 //#define Key_New_Dir             PORTCbits.RC1 //KEY_Press physical
 //#define Key_Access            PORTBbits.RB4  //output
 #define Key_MachineL            PORTCbits.RC2  //machine learnign switch 
-
+#define  DRV_DIR                PORTCbits.RC3// PCB_V06
+    
+    
+    
 enum key {start=1, dir };
 
 void Key_Init(void);

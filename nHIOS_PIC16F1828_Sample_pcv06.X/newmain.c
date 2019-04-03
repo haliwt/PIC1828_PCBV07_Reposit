@@ -10,7 +10,7 @@
 #include "Eeprom.h"
 #include "Timer1.h"
 
-
+/*2019-04-03 */
 // #pragma config statements should precede project file includes.
 // Use project enums instead of #define for ON and OFF.
 
@@ -74,8 +74,11 @@ void  main(void )
 		 if(flag_power_on==2)
          {
 	          
-			 TMR1_Counter_Enable = 0; //Stop counter number
-             size_n = size_n + 1;
+		      TMR1_Counter_Enable = 0; //Stop counter number
+              TRISCbits.TRISC5 =1;
+			  DRV_ENABLE=0;
+			  delay_10ms(50);
+              size_n = size_n + 1;
              switch(machine_key)
              {     
 			  
@@ -98,9 +101,7 @@ void  main(void )
                         check =0 ;
 					if((m > k || m ==k )&& k !=0)
 					{
-                       TRISCbits.TRISC5 =1;
-			           DRV_ENABLE=0;
-			           delay_10ms(12);
+                       
 					   Auto_OutPut_Brake=1;	
                        j=2;   
 					}
@@ -108,9 +109,7 @@ void  main(void )
 					{
                          if((n > 0x01)||n == 0x01)
                          {
-                             TRISCbits.TRISC5 =1;
-			                 DRV_ENABLE=0;
-			                 delay_10ms(12);
+                            
 							 Auto_OutPut_Brake=1;	
                              j=2; 
 						 }

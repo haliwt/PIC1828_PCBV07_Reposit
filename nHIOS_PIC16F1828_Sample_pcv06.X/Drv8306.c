@@ -11,9 +11,9 @@
 void Drv8306_Init(void)
 {
    
-    TRISCbits.TRISC3 = 0;  //PCBV06- DRV8306_DIR 
-    ANSC3 =0;
-	 DRV_DIR = 0;
+  //  TRISCbits.TRISC3 = 0;  //PCBV06- DRV8306_DIR 
+  //  ANSC3 =0;
+  //  DRV_DIR = 0;
 	 
     TRISAbits.TRISA4 = 0; //PCBV06 -DRV8306_ENABLE 2019-03-14
     ANSA4 =0;

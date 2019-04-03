@@ -12,9 +12,9 @@
 #define  DRV_ENABLE       PORTAbits.RA4// PCB_V06
 //#define  DRV_BRAKE       
 #define  DRV_PWM          PORTCbits.RC5
-#define  DRV_DIR          PORTCbits.RC3// PCB_V06
 
 #define  DETECT_BRAKE     PORTCbits.RC0 //input 1
+
 //volatile ulong pwm_duty=0 ;
 
 enum drv{DISABLE , ENABLE};
