@@ -74,22 +74,59 @@ void  main(void )
 		 if(flag_power_on==2)
          {
 	          
-			   TRISCbits.TRISC5 =1;
-			   DRV_ENABLE=0;
-			   delay_10ms(12);
+			 TMR1_Counter_Enable = 0; //Stop counter number
+            // TRISCbits.TRISC5 =1;
+			// DRV_ENABLE=0;
+			//  delay_10ms(12);
               // DRV_ENABLE=0; //WT 0402 DISABLE
                //delay_10ms(2);  //CQL WT.EDIT 20190328
-			   TMR1_Counter_Enable = 0; //Stop counter number
+			  
                size_n = size_n + 1;
              switch(machine_key)
              {     
 			  
                case 0 :
 			   {
+                        m =k;
+                        TXREG = m;     //flag bit 0xef
+                         delay_100us(5);
+                         n=TMR1H;
+                         TXREG = n;     //flag bit 0xef
+                          delay_100us(5);
+                   
                     Auto_OutPut_Brake=1;					
                     size_n =0;
-                    EEPROM_Write_OneByte(0x56,0);
-                    j=2;  
+					check=check + 1;
+                    if(check < 4)
+                    {
+                     EEPROM_Write_OneByte(0x56,0);
+                    }
+                    else 
+                        check =0 ;
+					if((m > k || m ==k )&& k !=0)
+					{
+                       
+                       TRISCbits.TRISC5 =1;
+			           DRV_ENABLE=0;
+			          delay_10ms(12);
+                       j=2;   
+					}
+					else 
+					{
+                         if((n > 0x04)||n == 0x04)
+                         {
+                            TRISCbits.TRISC5 =1;
+			                 DRV_ENABLE=0;
+			                delay_10ms(12);
+                             j=2; 
+						 }
+						 else
+						 	{
+							 	TMR1_Counter_Enable = 1;
+							 	mykey = 0;
+						 	}
+					}
+                    
                             
                }
                break;
@@ -248,9 +285,10 @@ void  main(void )
                  
 					 TRISCbits.TRISC5 =0;
 		             DRV_ENABLE=1;//WT.EDIT 2019-02-21
-		             TMR1_Counter_Enable = 1;
+		             delay_100us(1); //WT.EDIT 2019-04-02  equivalence Think
+                      TMR1_Counter_Enable = 1;
 		            /* add a judeg if screwdriver start */
-					if((TMR1L  > 0x0a || TMR1L == 0x0a )
+					if((TMR1L  > 0x02 || TMR1L == 0x02 )
 						||(TMR1H == 0x01 || TMR1H > 0x01))   //wt.edit 20190328 CQL
 					   flag_power_on=1;
 		             if(PIR1bits.TMR1IF==1)
@@ -260,6 +298,7 @@ void  main(void )
 		                 TMR1H=0;
 		                 TMR1L=0;
                      }
+                    // flag_power_on=1;
                      Manual_Operation_Dir();
 					 mykey =GetKeyPad();
                       
