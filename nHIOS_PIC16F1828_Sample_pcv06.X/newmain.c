@@ -75,27 +75,20 @@ void  main(void )
          {
 	          
 			 TMR1_Counter_Enable = 0; //Stop counter number
-            // TRISCbits.TRISC5 =1;
-			// DRV_ENABLE=0;
-			//  delay_10ms(12);
-              // DRV_ENABLE=0; //WT 0402 DISABLE
-               //delay_10ms(2);  //CQL WT.EDIT 20190328
-			  
-               size_n = size_n + 1;
+             size_n = size_n + 1;
              switch(machine_key)
              {     
 			  
                case 0 :
 			   {
-                        m =k;
-                        TXREG = m;     //flag bit 0xef
-                        delay_100us(5);
-                        n=TMR1H;
-                        TXREG = n;     //flag bit 0xef
-                          delay_100us(5);
+                    m =k;
+                    TXREG = m;     //flag bit 0xef
+                    delay_100us(5);
+                    n=TMR1H;
+                    TXREG = n;     //flag bit 0xef
+                    delay_100us(5);
                    
-                   				
-                    size_n =0;
+                   	size_n =0;
 					check=check + 1;
                     if(check < 4)
                     {
@@ -105,7 +98,6 @@ void  main(void )
                         check =0 ;
 					if((m > k || m ==k )&& k !=0)
 					{
-                       
                        TRISCbits.TRISC5 =1;
 			           DRV_ENABLE=0;
 			           delay_10ms(12);
@@ -264,6 +256,16 @@ void  main(void )
 					   Auto_OutPut_Brake=1;
                        j=2;
                     }
+                   else if (n > 0x01 || n== 0x01)
+                   {
+                       TRISCbits.TRISC5 =1;
+			           DRV_ENABLE=0;
+			           delay_10ms(12);
+					   Auto_OutPut_Brake=1;
+                       j=2;
+                   
+                   
+                   }
                     else 
                     {
                        TMR1_Counter_Enable = 1;
