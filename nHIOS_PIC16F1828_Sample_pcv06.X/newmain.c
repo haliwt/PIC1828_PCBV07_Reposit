@@ -89,12 +89,12 @@ void  main(void )
 			   {
                         m =k;
                         TXREG = m;     //flag bit 0xef
-                         delay_100us(5);
-                         n=TMR1H;
-                         TXREG = n;     //flag bit 0xef
+                        delay_100us(5);
+                        n=TMR1H;
+                        TXREG = n;     //flag bit 0xef
                           delay_100us(5);
                    
-                    Auto_OutPut_Brake=1;					
+                   				
                     size_n =0;
 					check=check + 1;
                     if(check < 4)
@@ -108,16 +108,18 @@ void  main(void )
                        
                        TRISCbits.TRISC5 =1;
 			           DRV_ENABLE=0;
-			          delay_10ms(12);
+			           delay_10ms(12);
+					   Auto_OutPut_Brake=1;	
                        j=2;   
 					}
 					else 
 					{
-                         if((n > 0x04)||n == 0x04)
+                         if((n > 0x01)||n == 0x01)
                          {
-                            TRISCbits.TRISC5 =1;
+                             TRISCbits.TRISC5 =1;
 			                 DRV_ENABLE=0;
-			                delay_10ms(12);
+			                 delay_10ms(12);
+							 Auto_OutPut_Brake=1;	
                              j=2; 
 						 }
 						 else
@@ -146,31 +148,31 @@ void  main(void )
                             check =30;
 
                         }
-                      //  TXREG = check ;
-                      //  delay_100us(5);
+                        TXREG = check ;
+                        delay_100us(5);
 
-                      }
+                    }
                       if(size_n < 242 )
                         {
 
-                          //  TXREG = size_n ;
-                          //  delay_100us(5);
+                            TXREG = size_n ;
+                            delay_100us(5);
                             m = k;    // 262ms * k = m
-                          //  TXREG=m;
-                          //  delay_100us(5);
+                            TXREG=m;
+                            delay_100us(5);
 
 
                             n = TMR1H;  // 4* 256 * TMR1H / 1000 (ms) = n+++++++++++++++
-                          //  TXREG = n ;
-                          //  delay_100us(5);
+                            TXREG = n ;
+                            delay_100us(5);
                             if(size_n < 81)
                              {
                                EEPROM_Write_OneByte(size_n+99,m); // m > n to save sample of data
                                EEPROM_Write_OneByte(size_n-1,n); // m > n
                                Average_First(size_n,0xb5);
 
-                             //  TXREG = 0xaa;     //flag bit 0xba
-                             //  delay_100us(5);
+                               TXREG = 0xaa;     //flag bit 0xba
+                               delay_100us(5);
                                Average_Second(size_n,0x53);
                              }
                             else if(size_n > 80 && size_n < 161)
@@ -180,8 +182,8 @@ void  main(void )
                                EEPROM_Write_OneByte(counter-1,n); // m > n
                                Average_First(counter,0xb6);
 
-                            //   TXREG = 0xbb;     //flag bit 0xba
-                             //   delay_100us(5);
+                               TXREG = 0xbb;     //flag bit 0xba
+                                delay_100us(5);
                                Average_Second(counter,0x54);
                             }
                             else if(size_n > 160 && size_n < 241)
@@ -191,8 +193,8 @@ void  main(void )
                                EEPROM_Write_OneByte(counter-1,n); // m > n
                                Average_First(counter,0xb7);
 
-                            //   TXREG = 0xcc;     //flag bit 0xba
-                            //   delay_100us(5);
+                               TXREG = 0xcc;     //flag bit 0xba
+                               delay_100us(5);
                                Average_Second(counter,0x55);
 
                             }
@@ -205,15 +207,15 @@ void  main(void )
                            size_n = 245;
                            EEPROM_Write_OneByte(0x56,size_n);
                            times_m = Machine_M_Learning();
-                        //   TXREG = times_m;     //flag bit 0xef
-                         //  delay_100us(5);
+                           TXREG = times_m;     //flag bit 0xef
+                           delay_100us(5);
 
                             times_n = Machine_N_Learning();
-                         // TXREG = times_n;     //flag bit 0xef
-                         // delay_100us(5);
+                          TXREG = times_n;     //flag bit 0xef
+                          delay_100us(5);
 
-                        //  TXREG = size_n;     //flag bit 0xef
-                        //  delay_100us(5);
+                          TXREG = size_n;     //flag bit 0xef
+                          delay_100us(5);
 
                         }
                        else if(size_n > 243)
@@ -227,21 +229,28 @@ void  main(void )
 
                         m = k;
                         n = TMR1H;
-                      //  TXREG = times_m;     //flag bit 0xef
-                      //  delay_100us(5);
-                      //  TXREG = times_n;     //flag bit 0xef
-                       // delay_100us(5);
+                        TXREG = times_m;     //flag bit 0xef
+                        delay_100us(5);
+                        TXREG = times_n;     //flag bit 0xef
+                        delay_100us(5);
 
                 if(((m > times_m) && (times_m != 0)) ||( m == times_m))
 				{
                    
+                   TRISCbits.TRISC5 =1;
+			       DRV_ENABLE=0;
+			       delay_10ms(12);
 				   Auto_OutPut_Brake=1;
 				   j=2;
                    
 				 }
                 else if( m < (times_m - 1)&& (times_m -1 !=0) && m !=0 )
                 {
-                    Auto_OutPut_Brake=1;
+
+                    TRISCbits.TRISC5 =1;
+			        DRV_ENABLE=0;
+			        delay_10ms(12);
+					Auto_OutPut_Brake=1;
                     j=2;
 
                 }
@@ -249,11 +258,17 @@ void  main(void )
                 {
                    if(n > (times_n + 0x0a)  || n == (times_n + 0x0a) )  //WT.EDIT 20190328
                     {
-                       Auto_OutPut_Brake=1;
+                       TRISCbits.TRISC5 =1;
+			           DRV_ENABLE=0;
+			           delay_10ms(12);
+					   Auto_OutPut_Brake=1;
                        j=2;
                     }
                     else 
-                        mykey = 0 ;
+                    {
+                       TMR1_Counter_Enable = 1;
+					   mykey = 0;
+					}
 
                  }
 
@@ -285,20 +300,17 @@ void  main(void )
                  
 					 TRISCbits.TRISC5 =0;
 		             DRV_ENABLE=1;//WT.EDIT 2019-02-21
-		             delay_100us(1); //WT.EDIT 2019-04-02  equivalence Think
+		             //delay_100us(1); //WT.EDIT 2019-04-02  equivalence Think
                       TMR1_Counter_Enable = 1;
 		            /* add a judeg if screwdriver start */
-					if((TMR1L  > 0x02 || TMR1L == 0x02 )
-						||(TMR1H == 0x01 || TMR1H > 0x01))   //wt.edit 20190328 CQL
-					   flag_power_on=1;
-		             if(PIR1bits.TMR1IF==1)
+					if(PIR1bits.TMR1IF==1)
 		             {
 		                 PIR1bits.TMR1IF=0;
 		                 k=k+1;
 		                 TMR1H=0;
 		                 TMR1L=0;
                      }
-                    // flag_power_on=1;
+                     flag_power_on=1;
                      Manual_Operation_Dir();
 					 mykey =GetKeyPad();
                       
