@@ -72,17 +72,17 @@ void  main(void )
       if(flag_power_on==2)
          {
 	          
-		      TMR1_Counter_Enable = 0; //Stop counter number
+              TMR1_Counter_Enable = 0; //Stop counter number
               TRISCbits.TRISC5 =1;
 			  DRV_ENABLE=0;
               Auto_OutPut_Brake=1;	
-			  delay_10ms(10);
+			  delay_10ms(50);
               size_n = size_n + 1;
              switch(machine_key)
              {     
-			  
-               case 0 :
+			   case 0 :
 			   {
+                   //j=2;
                     m =k;
                     TXREG = m;     //flag bit 0xef
                     delay_100us(5);
@@ -98,13 +98,15 @@ void  main(void )
                     }
                     else 
                         check =0 ;
+                    
+#if 1
 					if((m > k || m ==k )&& k !=0)
 					{
                        j=2;   
 					}
 					else 
 					{
-                         if((n > 0x02)||n == 0x02) //WT.EDIT 2019-0404
+                         if((n > 0x05)||n == 0x05) //WT.EDIT 2019-0404
                          {
                             
                              j=2; 
@@ -116,9 +118,8 @@ void  main(void )
 						 	mykey = 0;
 					 	}
 					}
-                    
-                            
-               }
+#endif 
+               	}
                break;
               case 1 : //machine deep learning 
 			  {
@@ -245,13 +246,13 @@ void  main(void )
                    {
                      j=2;
                    }
-                    else 
-                    {
+                   else 
+                   {
                        Auto_OutPut_Brake=0;	
 					   Auto_OutPut_Fail = 1;
                        TMR1_Counter_Enable = 1;
 					   mykey = 0;
-					}
+				   }
 
                  }
 
@@ -265,11 +266,10 @@ void  main(void )
             case 0 : //run works
             {
                
-                 if((mydir == 0)&&(j ==2))  //CW motor run works 
+                 if((mydir == 0)&&(j ==2))  //CW motor brake
                  {
                      TRISCbits.TRISC5 =1;
-					 DRV_ENABLE=0;
-                     delay_100us(5);
+                     DRV_ENABLE=0;
 				     Auto_OutPut_Brake=1;
 				     flag_power_on=0; //edit 2019-02-14
                      TMR1H=0;
@@ -280,29 +280,13 @@ void  main(void )
 					 
                  }
 				 
-                 if(mydir == 1)  //CCW ,motor run 
-			     {
-	                 j =3;
-					 DRV_ENABLE = 1;
-					 TRISCbits.TRISC5 =0;
-		             k=0;
-					 TMR1H =0;
-					 TMR1L = 0;
-					 flag_power_on=0;
-					 TMR1_Counter_Enable = 0;
-		             Auto_OutPut_Brake=0;
-		             mydir = Manual_Operation_Dir();
-					 mykey =GetKeyPad();
-				
-			     }
-				 
-				 if((mydir == 0)&&(j !=2))  //CW motor run works 
+                else if((mydir == 0)&&(j !=2))  //CW motor run works 
                  {
                  
 					 TRISCbits.TRISC5 =0;
 		             DRV_ENABLE=1;//WT.EDIT 2019-02-21
-		             //delay_100us(1); //WT.EDIT 2019-04-02  equivalence Think
-                      TMR1_Counter_Enable = 1;
+		             delay_100us(10); //WT.EDIT 2019-04-02  equivalence Think
+                     TMR1_Counter_Enable = 1;
 		            /* add a judeg if screwdriver start */
 					 if(TMR1H ==0xFF)
 		             {
@@ -317,6 +301,21 @@ void  main(void )
 					
                       
                  }
+				 else //if(mydir == 1)  //CCW ,motor run ,but don't works
+			     {
+	                 j =3;
+					 DRV_ENABLE = 1;
+					 TRISCbits.TRISC5 =0;
+		             k=0;
+					 TMR1H =0;
+					 TMR1L = 0;
+					 flag_power_on=0;
+					 TMR1_Counter_Enable = 0;
+		             Auto_OutPut_Brake=0;
+		             mydir = Manual_Operation_Dir();
+					 mykey =GetKeyPad();
+				
+			     }
            
             }
             break;
@@ -327,7 +326,7 @@ void  main(void )
 				j=3;
 				TRISCbits.TRISC5 =1;
 				DRV_ENABLE=0;
-			    delay_10ms(6);
+			    delay_1ms(10);
                 Auto_OutPut_Brake=0;
 				k=0;
 				TMR1H =0;
@@ -337,17 +336,13 @@ void  main(void )
              }
             break;
 
-	     
-           
-          default :
-            {
-
-              TRISCbits.TRISC5 =1;
+	     default :
+	     	{
+			  TRISCbits.TRISC5 =1;
 			  DRV_ENABLE=0;
 			  flag_power_on=0;
 			  Auto_OutPut_Brake=0;
 			  TMR1_Counter_Enable = 0;
-			  
 			  k=0;
 			 TMR1H =0;
 			 TMR1L = 0;

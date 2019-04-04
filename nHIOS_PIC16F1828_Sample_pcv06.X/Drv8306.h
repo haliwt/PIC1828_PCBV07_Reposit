@@ -12,8 +12,8 @@
 #define  DRV_ENABLE       PORTAbits.RA4// PCB_V06
 //#define  DRV_BRAKE       
 #define  DRV_PWM          PORTCbits.RC5
-
 #define  DETECT_BRAKE     PORTCbits.RC0 //input 1
+#define  CPU_CAPTURE      PORTCbits.RC4   // caputre PWM signal
 
 //volatile ulong pwm_duty=0 ;
 
@@ -36,7 +36,7 @@ my_drv8306 my_drv;
 
     void Drv8306_Init(void);
     void Drv8306_PWM(void);
-    void Drv8306_FGOUT_Init(void);    //DRV8306_FGOUT
+    void Drv8306_FGOUT_Capture(void);    //DRV8306_FGOUT
     void Drv8306_FAULT_Init(void);  //Drv8603 is fault signal
 
 
