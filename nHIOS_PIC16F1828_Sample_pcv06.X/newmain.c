@@ -49,7 +49,7 @@ void  main(void )
 {
     uchar i,j, machine_key=0,check,k,m=0,n=0,power_on=1,counter=0,remm=0;
     uint size_n;
-    uchar  mykey=1,times_m=0,times_n=0;  //wt.edit 2019-02-21
+    uchar  mykey=1,times_m=0,times_n=0,mydir = 0;  //wt.edit 2019-02-21
  
     init_fosc();
     USART_Init();
@@ -67,7 +67,7 @@ void  main(void )
     {
       
       machine_key =MachineLearning_Key();
-	  Manual_Operation_Dir();
+	  mydir = Manual_Operation_Dir();
       mykey =GetKeyPad();
       if(flag_power_on==2)
          {
@@ -104,17 +104,17 @@ void  main(void )
 					}
 					else 
 					{
-                         if((n > 0x01)||n == 0x01)
+                         if((n > 0x02)||n == 0x02) //WT.EDIT 2019-0404
                          {
                             
                              j=2; 
 						 }
 						 else
-						 	{
-							 	Auto_OutPut_Brake=0;
-								Auto_OutPut_Fail = 1;
-							 	mykey = 0;
-						 	}
+					 	{
+						 	Auto_OutPut_Brake=0;
+							Auto_OutPut_Fail = 1;
+						 	mykey = 0;
+					 	}
 					}
                     
                             
@@ -243,11 +243,7 @@ void  main(void )
                     }
                    else if (n > 0x01 || n== 0x01)
                    {
-                      
-					 
-                       j=2;
-                   
-                   
+                     j=2;
                    }
                     else 
                     {
@@ -269,10 +265,9 @@ void  main(void )
             case 0 : //run works
             {
                
-                 if(j==2)
+                 if((mydir == 0)&&(j ==2))  //CW motor run works 
                  {
-       
-					 TRISCbits.TRISC5 =1;
+                     TRISCbits.TRISC5 =1;
 					 DRV_ENABLE=0;
                      delay_100us(5);
 				     Auto_OutPut_Brake=1;
@@ -280,10 +275,28 @@ void  main(void )
                      TMR1H=0;
 		             TMR1L=0;
                      k=0;
-                     Manual_Operation_Dir();
+                     mydir=Manual_Operation_Dir();
 					 mykey =GetKeyPad();
+					 
                  }
-                 else
+				 
+                 if(mydir == 1)  //CCW ,motor run 
+			     {
+	                 j =3;
+					 DRV_ENABLE = 1;
+					 TRISCbits.TRISC5 =0;
+		             k=0;
+					 TMR1H =0;
+					 TMR1L = 0;
+					 flag_power_on=0;
+					 TMR1_Counter_Enable = 0;
+		             Auto_OutPut_Brake=0;
+		             mydir = Manual_Operation_Dir();
+					 mykey =GetKeyPad();
+				
+			     }
+				 
+				 if((mydir == 0)&&(j !=2))  //CW motor run works 
                  {
                  
 					 TRISCbits.TRISC5 =0;
@@ -299,8 +312,9 @@ void  main(void )
 		                 TMR1L=0;
                      }
                      flag_power_on=1;
-                     Manual_Operation_Dir();
+                     mydir = Manual_Operation_Dir();
 					 mykey =GetKeyPad();
+					
                       
                  }
            
@@ -323,23 +337,7 @@ void  main(void )
              }
             break;
 
-	       case 2: // CCW 
-		   {
-             j=3;
-             DRV_ENABLE = 1;
-			 TRISCbits.TRISC5 =0;
-             k=0;
-			 TMR1H =0;
-			 TMR1L = 0;
-			 flag_power_on=0;
-			 TMR1_Counter_Enable = 0;
-             Auto_OutPut_Brake=0;
-             Manual_Operation_Dir();
-			 mykey =GetKeyPad();
-			
-           }
-		   break;
-
+	     
            
           default :
             {
@@ -375,14 +373,12 @@ void __interrupt() Hallsensor(void)
    
 	if((INTF == 1) ||(IOCAF2 == 1) || (IOCAP2 ==1)||(PORTAbits.RA2 == 0)||(IOCIF ==1))
     {
-     // DRV_ENABLE=0;
-     // TRISCbits.TRISC5 =1;
+   
 	  INTF =0;
 	  IOCIF =0;
       IOCAF2=0;
       IOCAP2=0;
 	  INTF =0;
-      //DRV_ENABLE=0;  //2019-03-27 disable
       flag_power_on=flag_power_on + 1;
 
      }

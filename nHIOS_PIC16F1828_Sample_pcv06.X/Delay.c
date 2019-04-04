@@ -1,7 +1,9 @@
 #include "Delay.h"
 /**************************************
   *
-  *
+  *Function Name:
+  *Function active : delay times 100us
+  *Input Reference: times
   *
  **************************************/
 void delay_100us(uint t)
@@ -30,7 +32,7 @@ void delay_1ms(uint tim)  //8MHZ OSC
     
 }
 
-  /***************************************************************************
+ /***************************************************************************
  *
  * Function Name:delay_10ms()
  * Function function:
