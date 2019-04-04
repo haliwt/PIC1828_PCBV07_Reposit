@@ -77,6 +77,7 @@ void  main(void )
 		      TMR1_Counter_Enable = 0; //Stop counter number
               TRISCbits.TRISC5 =1;
 			  DRV_ENABLE=0;
+              Auto_OutPut_Brake=1;	
 			  delay_10ms(50);
               size_n = size_n + 1;
              switch(machine_key)
@@ -101,8 +102,6 @@ void  main(void )
                         check =0 ;
 					if((m > k || m ==k )&& k !=0)
 					{
-                       
-					   Auto_OutPut_Brake=1;	
                        j=2;   
 					}
 					else 
@@ -110,12 +109,12 @@ void  main(void )
                          if((n > 0x01)||n == 0x01)
                          {
                             
-							 Auto_OutPut_Brake=1;	
                              j=2; 
 						 }
 						 else
 						 	{
-							 	TMR1_Counter_Enable = 1;
+							 	Auto_OutPut_Brake=0;
+								Auto_OutPut_Fail = 1;
 							 	mykey = 0;
 						 	}
 					}
@@ -226,47 +225,37 @@ void  main(void )
                         delay_100us(5);
 
                 if(((m > times_m) && (times_m != 0)) ||( m == times_m))
-				{
-                   
-                   TRISCbits.TRISC5 =1;
-			       DRV_ENABLE=0;
-			       delay_10ms(12);
-				   Auto_OutPut_Brake=1;
+                {
+				 
 				   j=2;
                    
 				 }
                 else if( m < (times_m - 1)&& (times_m -1 !=0) && m !=0 )
                 {
 
-                    TRISCbits.TRISC5 =1;
-			        DRV_ENABLE=0;
-			        delay_10ms(12);
-					Auto_OutPut_Brake=1;
-                    j=2;
+				  j=2;
 
                 }
                 else if ((m == times_m) && (times_m == 0))
                 {
                    if(n > (times_n + 0x0a)  || n == (times_n + 0x0a) )  //WT.EDIT 20190328
                     {
-                       TRISCbits.TRISC5 =1;
-			           DRV_ENABLE=0;
-			           delay_10ms(12);
-					   Auto_OutPut_Brake=1;
+                      
+					
                        j=2;
                     }
                    else if (n > 0x01 || n== 0x01)
                    {
-                       TRISCbits.TRISC5 =1;
-			           DRV_ENABLE=0;
-			           delay_10ms(12);
-					   Auto_OutPut_Brake=1;
+                      
+					 
                        j=2;
                    
                    
                    }
                     else 
                     {
+                       Auto_OutPut_Brake=0;	
+					   Auto_OutPut_Fail = 1;
                        TMR1_Counter_Enable = 1;
 					   mykey = 0;
 					}
