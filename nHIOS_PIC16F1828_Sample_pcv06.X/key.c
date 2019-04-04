@@ -2,6 +2,8 @@
 #include "LED.h"
 #include "Drv8306.h"
 #include "MachineLearing.h"
+#include "Output_SIG.h"
+
 
 /************************************************************
  *
@@ -39,7 +41,8 @@ uchar GetKeyPad(void)
 {
   if(Key_Start == 1) //stop
    {
-      TRISCbits.TRISC5 =1;
+      Auto_OutPut_Brake=0;
+	  TRISCbits.TRISC5 =1;
 	  delay_10ms(10);
 	  DRV_ENABLE = 0;
     
@@ -70,7 +73,7 @@ void Manual_Operation_Dir(void)
    if(Key_Dir ==1)//anticlockwise Motor don't works run
     {
         
-        delay_100us(2);
+       delay_100us(10);
        if(Key_Dir==1)
         {
           DRV_DIR =1;
@@ -82,15 +85,12 @@ void Manual_Operation_Dir(void)
   if(Key_Dir ==0)  //clockwise Motor do works run
    {
  
-       delay_100us(2);
+       delay_100us(10);
        if(Key_Dir==0)
        {
            DRV_DIR =0;
-         
-		   my_drv.drv_dir=0;
-		  
-		  
-       }
+           my_drv.drv_dir=0;
+	   }
    }
   
 }

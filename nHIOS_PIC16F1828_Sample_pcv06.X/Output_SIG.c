@@ -7,21 +7,15 @@
    *Output reference :no
    *
  **********************************************************/
- void Output_SIG_Init(void)
- {
-    
-   
-	  TRISBbits.TRISB6 =0;  //IO  -output fault signal
+void Output_SIG_Init(void)
+{
+      TRISBbits.TRISB6 =0;  //IO  -output fault signal
       
-      
-
-	  TRISBbits.TRISB4 = 0;
+      TRISBbits.TRISB4 = 0;
 	  ANSB4 =0;
- 
       
       Auto_OutPut_Brake = 0; //PORTBbits.RB6 =0;   //output error signal
       Auto_OutPut_Fail = 0;
-    
- }
+}
 
  
