@@ -82,7 +82,7 @@ uchar  Manual_Operation_Dir(void)
 	   	}
 		
      }
-   if(Key_Dir ==0)  //clockwise Motor do works run
+   else if(Key_Dir ==0)  //clockwise Motor do works run
    {
        
        delay_100us(10);
@@ -104,9 +104,9 @@ uchar  Manual_Operation_Dir(void)
  ************************************************************/
 uchar MachineLearning_Key(void)
 {
-   if(Key_MachineL == 0) //disable machine learning model
+ if(Key_MachineL == 0) //disable machine learning model
  {
-      delay_100us(5);
+      delay_100us(1);
 	   if(Key_MachineL == 0)
 	   {
           my_machine.machine_swtich =0 ;
@@ -115,9 +115,9 @@ uchar MachineLearning_Key(void)
 	   }
 
  }
-  if(Key_MachineL == 1) //Enable machine learning model
+ else if(Key_MachineL == 1) //Enable machine learning model
   {
-    delay_100us(5);
+    delay_100us(1);
 	if(Key_MachineL == 1)
 	   {
 		  my_machine.machine_swtich =1 ;
