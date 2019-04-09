@@ -3,6 +3,7 @@
 #include "Drv8306.h"
 #include "MachineLearing.h"
 #include "Output_SIG.h"
+#include "Timer1.h"
 
 
 /************************************************************
@@ -41,14 +42,14 @@ uchar GetKeyPad(void)
 {
   if(Key_Start == 1) //stop
    {
+      
+      TRISCbits.TRISC5 =1;
       Auto_OutPut_Brake=0;
-	  TRISCbits.TRISC5 =1;
-	  delay_10ms(10);
+      TMR1_Counter_Enable = 0;
+	  delay_10ms(2);
 	  DRV_ENABLE = 0;
-    
-       return 1;
+      return 1;
         
-
     }
   else if (Key_Start == 0)  //run //WT.EDIT 2019-02-20
   {

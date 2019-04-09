@@ -12,6 +12,7 @@ void HALL_Init(void)
     IOCAP2 = 1;  //Flag IOCAF0  //WT.EDIT 2019-02-20
     IOCAN2 =1; //negative edge enable
     IOCIE =1;  //interrupt on change enable bit
+    IOCIF = 0;
     PEIE =1;   //peripheral interrupt enable
     GIE = 1;  // open all interrupt
 }
