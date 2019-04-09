@@ -15,7 +15,7 @@ enum key {start=1, dir };
 
 void Key_Init(void);
 uchar GetKeyPad(void);
-void Manual_Operation_Dir(void);
+uchar Manual_Operation_Dir(void);
 
 uchar MachineLearning_Key(void);
 

@@ -13,7 +13,7 @@ extern "C" {
 #endif
  void delay_100us(uint t);
  void delay_1ms(uint t);
- void delay_10ms(ulong t);
+ void delay_10ms(uint t);
  void init_fosc(void);
 
 

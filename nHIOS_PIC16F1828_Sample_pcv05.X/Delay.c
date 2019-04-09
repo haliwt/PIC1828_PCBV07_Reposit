@@ -6,7 +6,7 @@
  **************************************/
 void delay_100us(uint t)
 {
-     uint i= 8*t ;
+     uint i= 6*t ;
       while(i --)
         {
           ;
@@ -20,9 +20,9 @@ void delay_100us(uint t)
  * input regerence :
  *
  *************************************************************************/
-void delay_1ms(uint tim)
+void delay_1ms(uint tim)  //8MHZ OSC
 {
-     ulong i= 63*tim ;
+     ulong i= 25*tim ;
       while(i --)
         {
           ;
@@ -37,9 +37,9 @@ void delay_1ms(uint tim)
  * input regerence :
  *
  *************************************************************************/
-    void delay_10ms(ulong t)
+    void delay_10ms(uint t)
     {
-        uint i= 630 *t ; // 8MHZ//uint i= 1260 *t ;//16mhz
+        uint i= 626 *t ; // 8MHZ osc
         while(i --)
         {
           ;
