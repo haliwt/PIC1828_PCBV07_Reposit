@@ -138,7 +138,7 @@ void Average_First(uchar size_m,uchar addr)
    *
  *********************************************************/
  
- void  convertDecimalToHexa(ulong number)
+ void  convertDecimalToHexa(uint number)
   {
 	 uchar i,index =0 ;
 	 ulong x = number;
@@ -165,4 +165,5 @@ void Average_First(uchar size_m,uchar addr)
 		delay_100us(5);
 	   
  }
+  
 

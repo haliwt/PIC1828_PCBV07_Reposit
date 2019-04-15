@@ -73,7 +73,7 @@ uchar  Manual_Operation_Dir(void)
    if(Key_Dir ==1)//anticlockwise Motor don't works run
     {
        
-       delay_100us(100);
+        delay_100us(100);
 	   if(Key_Dir ==1)
 	   	{
 		  
@@ -85,8 +85,8 @@ uchar  Manual_Operation_Dir(void)
      }
    else if(Key_Dir ==0)  //clockwise Motor do works run
    {
-       
-       delay_100us(10);
+       DRV_ENABLE=1;
+        delay_100us(100);
        if(Key_Dir==0)
        {
            DRV_DIR =0;
