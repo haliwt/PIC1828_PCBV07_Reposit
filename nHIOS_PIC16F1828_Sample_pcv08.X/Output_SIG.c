@@ -15,7 +15,7 @@ void Output_SIG_Init(void)
 	  ANSB4 =0;
       
       Auto_OutPut_Brake = 0; //PORTBbits.RB6 =0;   //output error signal
-      Auto_OutPut_Fail = 1;
+      Auto_OutPut_Fail = 0;
 }
 
  

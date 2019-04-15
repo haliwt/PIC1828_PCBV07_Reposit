@@ -9,7 +9,6 @@
 #include "ShellSort.h"
 #include "Eeprom.h"
 #include "Timer1.h"
-//#include "ADC.h"
 
 /*2019-04-03 */
 // #pragma config statements should precede project file includes.
@@ -36,7 +35,7 @@
 
 
 //#define LENGTH(a) ((sizeof(a))/(sizeof(a[0])))
-uchar flag_brake=0;
+uchar flag_power_on=0;
 
 
  
@@ -49,45 +48,48 @@ uchar flag_brake=0;
 void  main(void )
 {
     uchar i,j, machine_key=0,k,m=0,n=0,power_on=1,counter=0,remm=0;
-    uint size_n,adc_value=0;
+    uint size_n;
     uchar  mykey=1,times_m=0,times_n=0,mydir = 0;  //wt.edit 2019-02-21
- 
+    uchar hall_number;  //judge hall of singal times 
  
     init_fosc();
     USART_Init();
    // Led_Init();
     Key_Init();
- //   ADC_Init();
     Timer1_Init();
     Output_SIG_Init();
     Drv8306_Init();
     HALL_Init();
     Drv8306_PWM();
-    
+    DRV_ENABLE =0;
+	TRISCbits.TRISC5 =1;
+
     while(1)
     {
       
       machine_key =MachineLearning_Key();
 	  mydir = Manual_Operation_Dir();
       mykey =GetKeyPad();
-      
-      switch(mykey)
+      if(flag_power_on==2)
       {
-           case 0 : //run works
-            {
+
+        //TMR1_Counter_Enable = 0; //Stop counter number
        
-          
-                if((my_drv.drv_brake == 1) &&(mydir == 0))
-                {
-               
+      //  hall_number = hall_number + 1;
+     
+		//if(hall_number == 1)
+		//{
+         //  j=4;
+		   //TXREG  = hall_number ;
+           //delay_100us(5)
+       // }
+		//else if(hall_number == 6)
+		{
+                 DRV_BRAKE = 0;
                 TMR1_Counter_Enable = 0;
-                TRISCbits.TRISC5 =1;
-                DRV_BRAKE = 0;
-              //  DRV_ENABLE=0;
-                  //brake = low high = run motor
-                Auto_OutPut_Brake=1;
-               //adc_value =ADC_Conversion_More();//ADC_Conversion_One();
-              // convertDecimalToHexa(adc_value);
+               
+              
+                Auto_OutPut_Brake=1;	
                switch(machine_key)
                {     
                 case 0 :
@@ -97,12 +99,13 @@ void  main(void )
                    EEPROM_Write_OneByte(0x56,0);
                    
                 }
-                 break;
-               case 1 : //machine deep learning 
-               {
-               
+              break;
+             case 1 : //machine deep learning 
+             {
+                
                   size_n = size_n + 1;
-               
+                 // TXREG  = size_n ;
+                 // delay_100us(5);
                  if( size_n ==1  )
                    {
 
@@ -167,7 +170,8 @@ void  main(void )
 
                            }
 
-                        }
+
+                       }
                       else if(size_n > 241  && size_n < 244)
                       {
 
@@ -235,31 +239,33 @@ void  main(void )
                         }
                        
 
-                    }
-                     break;
+                }
+                break;
              
-		          }//switch(machine_key))
-	
-                }//end if(flag_power_on))
+		   }//switch(machine_key))
+	  } //end hall == 6
+    }//end if(flag_power_on))
      
-	//switch(mykey)
-      //  {
-          //  case 0 : //run works
-          //  {
+	switch(mykey)
+        {
+            case 0 : //run works
+            {
                  
-                 if((mydir == 0)&&(j==2))  //CW motor brake
+                 if((mydir == 0)&&(j ==2))  //CW motor brake
                  {
+                   
                      TRISCbits.TRISC5 =1;
-                     DRV_ENABLE =0;
-                     DRV_BRAKE = 0;
-				    // Auto_OutPut_Brake=1;
-				    // flag_brake=0; //edit 2019-02-14
+                     DRV_ENABLE=0;
+                     DRV_BRAKE = 0; //run
+                
+				     Auto_OutPut_Brake=1;
+				     flag_power_on=0; //edit 2019-02-14
                      TMR1H=0;
 		             TMR1L=0;
                      k=0;
                      mydir=Manual_Operation_Dir();
 					 mykey =GetKeyPad();
-                    
+                  
                   }
 				 else if((mydir == 0)&&(j !=2))  //CW motor run works 
                  {
@@ -267,8 +273,7 @@ void  main(void )
 					 TRISCbits.TRISC5 =0;
                      DRV_ENABLE=1;
                      DRV_BRAKE = 1; //run
-                     
-                     delay_1ms(100);
+                     delay_1ms(80);
                      TMR1_Counter_Enable = 1;
 		            /* add a judeg if screwdriver start */
 					 if(TMR1H ==0xFF) //
@@ -278,7 +283,7 @@ void  main(void )
 		                 TMR1H=0;
 		                 TMR1L=0;
                      }
-                     Auto_OutPut_Brake=0;
+                     flag_power_on=1;
                      mydir = Manual_Operation_Dir();
 					 mykey =GetKeyPad();
 					 
@@ -286,19 +291,19 @@ void  main(void )
                 else if(mydir == 1)  //CCW ,motor run ,but don't works
 			    {
 	                 j =3;
-                     TRISCbits.TRISC5 =0; 
+                     TRISCbits.TRISC5 =0;
                      DRV_ENABLE=1;
 					 DRV_BRAKE = 1;
 					 TMR1_Counter_Enable = 0;
 		             k=0;
 					 TMR1H =0;
 					 TMR1L = 0;
-		
+					 flag_power_on=0;
 				     Auto_OutPut_Brake=0;
-                     
+                    
 		             mydir = Manual_Operation_Dir();
 					 mykey =GetKeyPad();
-				    
+				  
 			    }
            
             }
@@ -306,36 +311,31 @@ void  main(void )
 			case 1: //STOP_key
             {
                 j=3;
-                my_drv.drv_brake = 0;
-                TRISCbits.TRISC5 =1;
-                DRV_ENABLE=0;
+                 TRISCbits.TRISC5 =1;
 				DRV_BRAKE =0;
-               
+                DRV_ENABLE=0;
 		        k=0;
 				TMR1H =0;
 				TMR1L = 0;
-				flag_brake=0;
-				Auto_OutPut_Brake=0;
-                my_drv.drv_brake = 0;
-               // TRISCbits.TRISC4 = 1;
+				flag_power_on=0;
+				hall_number =0 ;
 		    }
             break;
-             default :
+
+	     default :
 	     	{
 			  TRISCbits.TRISC5 =1;
 			  DRV_ENABLE=0;
-			  flag_brake=0;
+			  flag_power_on=0;
 			  Auto_OutPut_Brake=0;
 			  TMR1_Counter_Enable = 0;
 			  k=0;
 			 TMR1H =0;
 			 TMR1L = 0;
-            // TRISCbits.TRISC4 = 1;
+           
 			 
 			}
             break;
-
-	    
          }//end switch(mykey)
     
      
@@ -355,17 +355,14 @@ void  main(void )
 
 void __interrupt() Hallsensor(void)
 {
-  
-    if((INTF == 1) ||(IOCAF2 == 1) || (IOCAP2 ==1)||(PORTAbits.RA2 == 0)||(IOCIF ==1))
+   if((INTF == 1) ||(IOCAF2 == 1) || (IOCAP2 ==1)||(PORTAbits.RA2 == 0)||(IOCIF ==1))
     {
-        DRV_BRAKE =0;
+      TRISCbits.TRISC5 =1;
       INTF =0;
 	  IOCIF =0;
       IOCAF2=0;
       IOCAP2=0;
-     // flag_brake=flag_brake + 1;
-      my_drv.drv_brake =1 ;
-      
+      flag_power_on=flag_power_on + 1;
    } 
 }
 

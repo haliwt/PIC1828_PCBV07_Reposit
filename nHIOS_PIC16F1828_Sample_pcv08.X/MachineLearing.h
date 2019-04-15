@@ -22,10 +22,7 @@ uchar Machine_N_Learning(void);   //output signal
 
 void Average_First(uchar size,uchar address);
 
-void  convertDecimalToHexa(uint number);
-
-
-
+void  convertDecimalToHexa(ulong number);
 void Average_Second(uchar size_n,uchar address);
 
 

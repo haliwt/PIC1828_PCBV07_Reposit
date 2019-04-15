@@ -42,19 +42,15 @@ uchar GetKeyPad(void)
 {
   if(Key_Start == 1) //stop
    {
-      
       TRISCbits.TRISC5 =1;
-      Auto_OutPut_Brake=0;
-      TMR1_Counter_Enable = 0;
-	  delay_10ms(2);
-	  DRV_ENABLE = 0;
-      DRV_BRAKE= 0;
+      delay_1ms(10);
+      DRV_BRAKE = 0;
       return 1;
         
     }
   else if (Key_Start == 0)  //run //WT.EDIT 2019-02-20
   {
-     
+      // DRV_DIR =0;
        return 0;
        
     
@@ -73,7 +69,7 @@ uchar  Manual_Operation_Dir(void)
    if(Key_Dir ==1)//anticlockwise Motor don't works run
     {
        
-        delay_100us(100);
+       delay_100us(100);
 	   if(Key_Dir ==1)
 	   	{
 		  
@@ -86,7 +82,7 @@ uchar  Manual_Operation_Dir(void)
    else if(Key_Dir ==0)  //clockwise Motor do works run
    {
        
-       delay_100us(10);
+       delay_100us(100);
        if(Key_Dir==0)
        {
            DRV_DIR =0;

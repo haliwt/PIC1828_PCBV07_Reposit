@@ -25,7 +25,7 @@ extern "C" {
 typedef struct
 {
     uchar drv_enable :1  ;
-    uchar drv_brake : 2 ;
+    uchar drv_brake: 1 ;
     uchar drv_dir:1 ;
     uchar key_press_start :1 ;
     uchar  drv_fault :1 ;  //input

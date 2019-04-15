@@ -12,16 +12,8 @@ extern "C" {
 #define Key_MachineL            PORTCbits.RC2  //machine learnign switch 
 #define  DRV_DIR                PORTCbits.RC3// PCB_V06
     
-typedef struct 
-{
-    uchar flag_brake_key;
-    uchar flag_run_key;
-    uchar flag_stop_key;
-    uchar flag_dir_key;
-
-}flag_key;
- 
-flag_key myflag_key;
+    
+    
 enum key {start=1, dir };
 
 void Key_Init(void);
