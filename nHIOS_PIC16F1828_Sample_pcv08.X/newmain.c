@@ -61,8 +61,8 @@ void  main(void )
     Drv8306_Init();
     HALL_Init();
     Drv8306_PWM();
-    DRV_ENABLE =0;
-	TRISCbits.TRISC5 =1;
+ 
+	
 
     while(1)
     {
@@ -70,22 +70,12 @@ void  main(void )
       machine_key =MachineLearning_Key();
 	  mydir = Manual_Operation_Dir();
       mykey =GetKeyPad();
-      if(flag_power_on==2)
+     if(flag_power_on==1)
       {
-
-        //TMR1_Counter_Enable = 0; //Stop counter number
-       
-      //  hall_number = hall_number + 1;
-     
-		//if(hall_number == 1)
-		//{
-         //  j=4;
-		   //TXREG  = hall_number ;
-           //delay_100us(5)
-       // }
-		//else if(hall_number == 6)
-		{
-                 DRV_BRAKE = 0;
+        {
+               
+                DRV_BRAKE = 0;
+               TRISCbits.TRISC5 =1;
                 TMR1_Counter_Enable = 0;
                
               
@@ -94,7 +84,8 @@ void  main(void )
                {     
                 case 0 :
                 {
-                   j=2;
+                    j=2;
+                  
                    size_n =0;
                    EEPROM_Write_OneByte(0x56,0);
                    
@@ -250,11 +241,9 @@ void  main(void )
         {
             case 0 : //run works
             {
-                 
-                 if((mydir == 0)&&(j ==2))  //CW motor brake
-                 {
-                   
-                     TRISCbits.TRISC5 =1;
+                if((mydir == 0)&&(j ==2))
+                {
+                    TRISCbits.TRISC5 =1;
                      DRV_ENABLE=0;
                      DRV_BRAKE = 0; //run
                 
@@ -265,9 +254,11 @@ void  main(void )
                      k=0;
                      mydir=Manual_Operation_Dir();
 					 mykey =GetKeyPad();
-                  
-                  }
-				 else if((mydir == 0)&&(j !=2))  //CW motor run works 
+                
+                
+                }
+                
+				else if((mydir == 0)&&(j !=2))  //CW motor run works 
                  {
                  
 					 TRISCbits.TRISC5 =0;
@@ -283,7 +274,7 @@ void  main(void )
 		                 TMR1H=0;
 		                 TMR1L=0;
                      }
-                     flag_power_on=1;
+                    Auto_OutPut_Brake=0;
                      mydir = Manual_Operation_Dir();
 					 mykey =GetKeyPad();
 					 
@@ -318,9 +309,10 @@ void  main(void )
 				TMR1H =0;
 				TMR1L = 0;
 				flag_power_on=0;
-				hall_number =0 ;
+				Auto_OutPut_Brake=0;
 		    }
             break;
+           
 
 	     default :
 	     	{
@@ -332,7 +324,7 @@ void  main(void )
 			  k=0;
 			 TMR1H =0;
 			 TMR1L = 0;
-           
+            
 			 
 			}
             break;
@@ -358,11 +350,16 @@ void __interrupt() Hallsensor(void)
    if((INTF == 1) ||(IOCAF2 == 1) || (IOCAP2 ==1)||(PORTAbits.RA2 == 0)||(IOCIF ==1))
     {
       TRISCbits.TRISC5 =1;
+      delay_10ms(10);
       INTF =0;
 	  IOCIF =0;
       IOCAF2=0;
       IOCAP2=0;
-      flag_power_on=flag_power_on + 1;
+      flag_power_on= 1;
+      my_drv.drv_brake =1;
+      Auto_OutPut_Brake=1;
+      DRV_BRAKE =0 ;
+      delay_10ms(5);
    } 
 }
 
