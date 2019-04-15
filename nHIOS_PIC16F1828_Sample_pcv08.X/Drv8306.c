@@ -11,12 +11,12 @@
 void Drv8306_Init(void)
 {
    
-   // TRISCbits.TRISC4 = 0;  //PCBV_08 DRV8306 Brake
+    TRISCbits.TRISC4 = 0;  //PCBV_08 DRV8306 Brake
    
     TRISAbits.TRISA4 = 0; //PCBV06 -DRV8306_ENABLE 2019-03-14
     ANSA4 =0;
     DRV_ENABLE = 0;
-   // DRV_BRAKE = 0;
+    DRV_BRAKE = 1;
   
   
     

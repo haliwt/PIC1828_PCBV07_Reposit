@@ -9,7 +9,7 @@
 #include "ShellSort.h"
 #include "Eeprom.h"
 #include "Timer1.h"
-#include "ADC.h"
+//#include "ADC.h"
 
 /*2019-04-03 */
 // #pragma config statements should precede project file includes.
@@ -63,22 +63,27 @@ void  main(void )
     Drv8306_Init();
     HALL_Init();
     Drv8306_PWM();
-    DRV_ENABLE =0;
-	TRISCbits.TRISC5 =1;
-
+    
     while(1)
     {
       
       machine_key =MachineLearning_Key();
 	  mydir = Manual_Operation_Dir();
       mykey =GetKeyPad();
-      if(flag_brake==2)
+      
+      switch(mykey)
       {
-                TRISCbits.TRISC4 = 0;
+           case 0 : //run works
+            {
+       
+          
+                if((my_drv.drv_brake == 1) &&(mydir == 0))
+                {
+               
                 TMR1_Counter_Enable = 0;
                 TRISCbits.TRISC5 =1;
                 DRV_BRAKE = 0;
-                //DRV_ENABLE=0;
+              //  DRV_ENABLE=0;
                   //brake = low high = run motor
                 Auto_OutPut_Brake=1;
                //adc_value =ADC_Conversion_More();//ADC_Conversion_One();
@@ -92,14 +97,12 @@ void  main(void )
                    EEPROM_Write_OneByte(0x56,0);
                    
                 }
-              break;
-             case 1 : //machine deep learning 
-             {
-                 // Auto_OutPut_Fail = 0;
-                 // delay_10ms(500);
+                 break;
+               case 1 : //machine deep learning 
+               {
+               
                   size_n = size_n + 1;
-                 // TXREG  = size_n ;
-                 // delay_100us(5);
+               
                  if( size_n ==1  )
                    {
 
@@ -232,40 +235,40 @@ void  main(void )
                         }
                        
 
-                }
-                break;
+                    }
+                     break;
              
-		   }//switch(machine_key))
+		          }//switch(machine_key))
 	
-    }//end if(flag_power_on))
+                }//end if(flag_power_on))
      
-	switch(mykey)
-        {
-            case 0 : //run works
-            {
+	//switch(mykey)
+      //  {
+          //  case 0 : //run works
+          //  {
                  
                  if((mydir == 0)&&(j==2))  //CW motor brake
                  {
                      TRISCbits.TRISC5 =1;
                      DRV_ENABLE =0;
-                    // DRV_BRAKE = 0;
+                     DRV_BRAKE = 0;
 				    // Auto_OutPut_Brake=1;
-				     flag_brake=0; //edit 2019-02-14
+				    // flag_brake=0; //edit 2019-02-14
                      TMR1H=0;
 		             TMR1L=0;
                      k=0;
                      mydir=Manual_Operation_Dir();
 					 mykey =GetKeyPad();
-                     TRISCbits.TRISC4 = 1;
+                    
                   }
-				 else if((mydir == 0)&&(j !=2)&&(j==3))  //CW motor run works 
+				 else if((mydir == 0)&&(j !=2))  //CW motor run works 
                  {
                  
 					 TRISCbits.TRISC5 =0;
-                     
-                    // DRV_BRAKE = 1; //run
                      DRV_ENABLE=1;
-                     delay_1ms(80);
+                     DRV_BRAKE = 1; //run
+                     
+                     delay_1ms(100);
                      TMR1_Counter_Enable = 1;
 		            /* add a judeg if screwdriver start */
 					 if(TMR1H ==0xFF) //
@@ -275,7 +278,6 @@ void  main(void )
 		                 TMR1H=0;
 		                 TMR1L=0;
                      }
-                     flag_brake=1;
                      Auto_OutPut_Brake=0;
                      mydir = Manual_Operation_Dir();
 					 mykey =GetKeyPad();
@@ -286,17 +288,17 @@ void  main(void )
 	                 j =3;
                      TRISCbits.TRISC5 =0; 
                      DRV_ENABLE=1;
-					// DRV_BRAKE = 1;
+					 DRV_BRAKE = 1;
 					 TMR1_Counter_Enable = 0;
 		             k=0;
 					 TMR1H =0;
 					 TMR1L = 0;
-					 flag_brake=0;
+		
 				     Auto_OutPut_Brake=0;
                      
 		             mydir = Manual_Operation_Dir();
 					 mykey =GetKeyPad();
-				     
+				    
 			    }
            
             }
@@ -304,14 +306,17 @@ void  main(void )
 			case 1: //STOP_key
             {
                 j=3;
-                TRISCbits.TRISC4 = 0; //brake 
-				DRV_BRAKE =0;
+                my_drv.drv_brake = 0;
+                TRISCbits.TRISC5 =1;
                 DRV_ENABLE=0;
+				DRV_BRAKE =0;
+               
 		        k=0;
 				TMR1H =0;
 				TMR1L = 0;
 				flag_brake=0;
 				Auto_OutPut_Brake=0;
+                my_drv.drv_brake = 0;
                // TRISCbits.TRISC4 = 1;
 		    }
             break;
@@ -350,13 +355,17 @@ void  main(void )
 
 void __interrupt() Hallsensor(void)
 {
-   if((INTF == 1) ||(IOCAF2 == 1) || (IOCAP2 ==1)||(PORTAbits.RA2 == 0)||(IOCIF ==1))
+  
+    if((INTF == 1) ||(IOCAF2 == 1) || (IOCAP2 ==1)||(PORTAbits.RA2 == 0)||(IOCIF ==1))
     {
+        DRV_BRAKE =0;
       INTF =0;
 	  IOCIF =0;
       IOCAF2=0;
       IOCAP2=0;
-      flag_brake=flag_brake + 1;
+     // flag_brake=flag_brake + 1;
+      my_drv.drv_brake =1 ;
+      
    } 
 }
 

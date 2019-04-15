@@ -47,14 +47,14 @@ uchar GetKeyPad(void)
       Auto_OutPut_Brake=0;
       TMR1_Counter_Enable = 0;
 	  delay_10ms(2);
-	  DRV_BRAKE = 0;
-      DRV_ENABLE =0;
+	  DRV_ENABLE = 0;
+      DRV_BRAKE= 0;
       return 1;
         
     }
   else if (Key_Start == 0)  //run //WT.EDIT 2019-02-20
   {
-      // DRV_DIR =0;
+     
        return 0;
        
     
@@ -85,8 +85,8 @@ uchar  Manual_Operation_Dir(void)
      }
    else if(Key_Dir ==0)  //clockwise Motor do works run
    {
-       DRV_ENABLE=1;
-        delay_100us(100);
+       
+       delay_100us(10);
        if(Key_Dir==0)
        {
            DRV_DIR =0;
