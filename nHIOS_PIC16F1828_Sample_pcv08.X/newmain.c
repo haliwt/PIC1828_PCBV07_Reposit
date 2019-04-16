@@ -350,7 +350,7 @@ void __interrupt() Hallsensor(void)
    if((INTF == 1) ||(IOCAF2 == 1) || (IOCAP2 ==1)||(PORTAbits.RA2 == 0)||(IOCIF ==1))
     {
       TRISCbits.TRISC5 =1;
-      delay_10ms(10);
+      delay_1ms(10);
       INTF =0;
 	  IOCIF =0;
       IOCAF2=0;
@@ -359,7 +359,7 @@ void __interrupt() Hallsensor(void)
       my_drv.drv_brake =1;
       Auto_OutPut_Brake=1;
       DRV_BRAKE =0 ;
-      delay_10ms(5);
+      delay_1ms(5);
    } 
 }
 
