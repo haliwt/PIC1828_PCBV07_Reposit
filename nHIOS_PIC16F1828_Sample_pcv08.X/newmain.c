@@ -71,15 +71,14 @@ void  main(void )
 	  mydir = Manual_Operation_Dir();
       mykey =GetKeyPad();
      if(flag_power_on==1)
-      {
+     {
         {
-               
-                DRV_BRAKE = 0;
-               TRISCbits.TRISC5 =1;
-                TMR1_Counter_Enable = 0;
-               
-              
-                Auto_OutPut_Brake=1;	
+                 TMR1_Counter_Enable = 0;
+                 TRISCbits.TRISC5 =1;
+                delay_1ms(10);
+                DRV_BRAKE =0 ;
+                delay_1ms(5);
+                Auto_OutPut_Brake=1;
                switch(machine_key)
                {     
                 case 0 :
@@ -243,7 +242,7 @@ void  main(void )
             {
                 if((mydir == 0)&&(j ==2))
                 {
-                    TRISCbits.TRISC5 =1;
+                     TRISCbits.TRISC5 =1;
                      DRV_ENABLE=0;
                      DRV_BRAKE = 0; //run
                 
@@ -254,17 +253,13 @@ void  main(void )
                      k=0;
                      mydir=Manual_Operation_Dir();
 					 mykey =GetKeyPad();
-                
-                
                 }
-                
-				else if((mydir == 0)&&(j !=2))  //CW motor run works 
+                else if((mydir == 0)&&(j !=2))  //CW motor run works 
                  {
-                 
-					 TRISCbits.TRISC5 =0;
+                     TRISCbits.TRISC5 =0;
                      DRV_ENABLE=1;
                      DRV_BRAKE = 1; //run
-                     delay_1ms(80);
+                     delay_1ms(100);
                      TMR1_Counter_Enable = 1;
 		            /* add a judeg if screwdriver start */
 					 if(TMR1H ==0xFF) //
@@ -275,6 +270,7 @@ void  main(void )
 		                 TMR1L=0;
                      }
                     Auto_OutPut_Brake=0;
+                    flag_power_on=0;
                      mydir = Manual_Operation_Dir();
 					 mykey =GetKeyPad();
 					 
@@ -302,7 +298,7 @@ void  main(void )
 			case 1: //STOP_key
             {
                 j=3;
-                 TRISCbits.TRISC5 =1;
+                TRISCbits.TRISC5 =1;
 				DRV_BRAKE =0;
                 DRV_ENABLE=0;
 		        k=0;
@@ -349,17 +345,13 @@ void __interrupt() Hallsensor(void)
 {
    if((INTF == 1) ||(IOCAF2 == 1) || (IOCAP2 ==1)||(PORTAbits.RA2 == 0)||(IOCIF ==1))
     {
-      TRISCbits.TRISC5 =1;
-      delay_1ms(10);
       INTF =0;
 	  IOCIF =0;
       IOCAF2=0;
       IOCAP2=0;
       flag_power_on= 1;
       my_drv.drv_brake =1;
-      Auto_OutPut_Brake=1;
-      DRV_BRAKE =0 ;
-      delay_1ms(5);
+     
    } 
 }
 
