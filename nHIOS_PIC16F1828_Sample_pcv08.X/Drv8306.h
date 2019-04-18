@@ -22,7 +22,7 @@ enum drv{DISABLE , ENABLE};
 extern "C" {
 #endif
 
-typedef struct
+typedef struct DRV8306
 {
     uchar drv_enable :1  ;
     uchar drv_brake: 1 ;
@@ -32,7 +32,8 @@ typedef struct
     uchar  drv_fgout;    //input Capture
     uint    drv_pwm;   //uint model
 }my_drv8306;
-my_drv8306 my_drv;
+
+struct DRV8306  my_drv;
 
     void Drv8306_Init(void);
     void Drv8306_PWM(void);

@@ -70,22 +70,27 @@ void  main(void )
       machine_key =MachineLearning_Key();
 	  mydir = Manual_Operation_Dir();
       mykey =GetKeyPad();
-     if(flag_power_on==1)
+     if((flag_power_on==2)||(my_drv.drv_brake ==1))
       {
         {
-               
-                DRV_BRAKE = 0;
-               TRISCbits.TRISC5 =1;
+                // DRV_BRAKE = 0;
+               //  TRISCbits.TRISC5 =1;
+                 
+               // delay_1ms(10);
+                  Auto_OutPut_Brake=1;
+                // DRV_BRAKE = 0;
+              //   delay_1ms(5);
+              //  TRISCbits.TRISC5 =1;
                 TMR1_Counter_Enable = 0;
                
               
-                Auto_OutPut_Brake=1;	
                switch(machine_key)
                {     
                 case 0 :
                 {
                     j=2;
-                  
+                   TXREG = j ;
+                   delay_100us(1);
                    size_n =0;
                    EEPROM_Write_OneByte(0x56,0);
                    
@@ -243,7 +248,7 @@ void  main(void )
             {
                 if((mydir == 0)&&(j ==2))
                 {
-                    TRISCbits.TRISC5 =1;
+                     TRISCbits.TRISC5 =1;
                      DRV_ENABLE=0;
                      DRV_BRAKE = 0; //run
                 
@@ -252,9 +257,9 @@ void  main(void )
                      TMR1H=0;
 		             TMR1L=0;
                      k=0;
-                     mydir=Manual_Operation_Dir();
+                   
 					 mykey =GetKeyPad();
-                
+                     
                 
                 }
                 
@@ -262,6 +267,7 @@ void  main(void )
                  {
                  
 					 TRISCbits.TRISC5 =0;
+                     delay_1ms(10);
                      DRV_ENABLE=1;
                      DRV_BRAKE = 1; //run
                      delay_1ms(80);
@@ -275,6 +281,8 @@ void  main(void )
 		                 TMR1L=0;
                      }
                     Auto_OutPut_Brake=0;
+                   
+  
                      mydir = Manual_Operation_Dir();
 					 mykey =GetKeyPad();
 					 
@@ -291,7 +299,7 @@ void  main(void )
 					 TMR1L = 0;
 					 flag_power_on=0;
 				     Auto_OutPut_Brake=0;
-                    
+             
 		             mydir = Manual_Operation_Dir();
 					 mykey =GetKeyPad();
 				  
@@ -308,8 +316,9 @@ void  main(void )
 		        k=0;
 				TMR1H =0;
 				TMR1L = 0;
-				flag_power_on=0;
+				flag_power_on=1;
 				Auto_OutPut_Brake=0;
+                my_drv.drv_brake =0;
 		    }
             break;
            
@@ -324,7 +333,7 @@ void  main(void )
 			  k=0;
 			 TMR1H =0;
 			 TMR1L = 0;
-            
+      
 			 
 			}
             break;
@@ -349,17 +358,19 @@ void __interrupt() Hallsensor(void)
 {
    if((INTF == 1) ||(IOCAF2 == 1) || (IOCAP2 ==1)||(PORTAbits.RA2 == 0)||(IOCIF ==1))
     {
-      TRISCbits.TRISC5 =1;
-      delay_1ms(10);
+     // TRISCbits.TRISC5 =1;
+     // delay_1ms(10);
       INTF =0;
 	  IOCIF =0;
       IOCAF2=0;
       IOCAP2=0;
-      flag_power_on= 1;
+      flag_power_on=flag_power_on+ 1;
       my_drv.drv_brake =1;
-      Auto_OutPut_Brake=1;
+     
+      TRISCbits.TRISC5 =1;
       DRV_BRAKE =0 ;
-      delay_1ms(5);
+      Auto_OutPut_Brake=1;
+      delay_10ms(5);
    } 
 }
 

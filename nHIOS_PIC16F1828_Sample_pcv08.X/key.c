@@ -43,7 +43,7 @@ uchar GetKeyPad(void)
   if(Key_Start == 1) //stop
    {
       TRISCbits.TRISC5 =1;
-      delay_1ms(10);
+      delay_1ms(20);
       DRV_BRAKE = 0;
       return 1;
         
@@ -69,7 +69,7 @@ uchar  Manual_Operation_Dir(void)
    if(Key_Dir ==1)//anticlockwise Motor don't works run
     {
        
-       delay_100us(100);
+       delay_100us(5);
 	   if(Key_Dir ==1)
 	   	{
 		  
@@ -82,7 +82,7 @@ uchar  Manual_Operation_Dir(void)
    else if(Key_Dir ==0)  //clockwise Motor do works run
    {
        
-       delay_100us(100);
+       delay_100us(5);
        if(Key_Dir==0)
        {
            DRV_DIR =0;
