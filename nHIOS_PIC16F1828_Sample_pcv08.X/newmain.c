@@ -73,14 +73,8 @@ void  main(void )
      if((flag_power_on==2)||(my_drv.drv_brake ==1))
       {
         {
-                // DRV_BRAKE = 0;
-               //  TRISCbits.TRISC5 =1;
-                 
-               // delay_1ms(10);
                   Auto_OutPut_Brake=1;
-                // DRV_BRAKE = 0;
-              //   delay_1ms(5);
-              //  TRISCbits.TRISC5 =1;
+             
                 TMR1_Counter_Enable = 0;
                
               
@@ -246,7 +240,7 @@ void  main(void )
         {
             case 0 : //run works
             {
-                if((mydir == 0)&&(j ==2))
+                if((mydir == 0)&&(j ==2)&&(j !=0))
                 {
                      TRISCbits.TRISC5 =1;
                      DRV_ENABLE=0;
@@ -266,9 +260,9 @@ void  main(void )
 				else if((mydir == 0)&&(j !=2))  //CW motor run works 
                  {
                  
-					 TRISCbits.TRISC5 =0;
-                     delay_1ms(10);
-                     DRV_ENABLE=1;
+					 DRV_ENABLE=1;
+                     TRISCbits.TRISC5 =0;
+                     delay_1ms(5);
                      DRV_BRAKE = 1; //run
                      delay_1ms(80);
                      TMR1_Counter_Enable = 1;
