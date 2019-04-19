@@ -50,7 +50,7 @@ uchar GetKeyPad(void)
     }
   else if (Key_Start == 0)  //run //WT.EDIT 2019-02-20
   {
-      // DRV_DIR =0;
+       delay_1ms(10);
        return 0;
        
     
@@ -68,7 +68,7 @@ uchar  Manual_Operation_Dir(void)
 {
    if(Key_Dir ==1)//anticlockwise Motor don't works run
     {
-       
+       Auto_OutPut_Brake=0;
        delay_100us(80);
 	   if(Key_Dir ==1)
 	   	{
@@ -103,7 +103,7 @@ uchar MachineLearning_Key(void)
 {
  if(Key_MachineL == 0) //disable machine learning model
  {
-      delay_100us(1);
+      delay_1ms(20);
 	   if(Key_MachineL == 0)
 	   {
           my_machine.machine_swtich =0 ;
@@ -114,7 +114,7 @@ uchar MachineLearning_Key(void)
  }
  else if(Key_MachineL == 1) //Enable machine learning model
   {
-    delay_100us(1);
+    delay_1ms(20);
 	if(Key_MachineL == 1)
 	   {
 		  my_machine.machine_swtich =1 ;

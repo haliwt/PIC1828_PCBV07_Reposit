@@ -319,7 +319,8 @@ void  main(void )
 
 	     default :
 	     	{
-			  TRISCbits.TRISC5 =1;
+			  Auto_OutPut_Brake=0;
+              TRISCbits.TRISC5 =1;
 			  DRV_ENABLE=0;
 			  flag_power_on=0;
 			  Auto_OutPut_Brake=0;
