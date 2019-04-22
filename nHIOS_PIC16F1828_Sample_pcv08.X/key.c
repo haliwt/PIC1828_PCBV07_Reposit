@@ -64,16 +64,26 @@ uchar GetKeyPad(void)
  ************************************************************/
 uchar  Manual_Operation_Dir(void)
 {
+   
    if(Key_Dir ==1)//anticlockwise Motor don't works run
     {
        
        delay_100us(5);
-	   if(Key_Dir ==1)
+	   if(Key_Dir ==1) //CCW
 	   	{
-		  
-          DRV_DIR =1;
-        
-	      return 1;
+		  if((my_drv.drv_dir ==4)&&(my_drv.drv_dir != 2))
+          {
+               DRV_DIR =0;
+			   my_drv.drv_dir=0;
+	           return 0;
+		  }
+		  else
+
+		  {
+			  DRV_DIR =1;
+	          my_drv.drv_dir=1;
+		      return 1;
+		  }
 	   	}
 		
      }
@@ -83,10 +93,21 @@ uchar  Manual_Operation_Dir(void)
        delay_100us(5);
        if(Key_Dir==0)
        {
-           DRV_DIR =0;
-           return 0;
+           if((my_drv.drv_dir ==3)&&(my_drv.drv_dir != 2)) //CCW motor don't works run
+           {
+              DRV_DIR =1;
+			  my_drv.drv_dir=1;
+	          return 1;
+		   }
+           else
+           	{
+			   DRV_DIR =0;
+			   my_drv.drv_dir=0;
+	           return 0;
+           	}
 	   }
    }
+   
   
 }
 /************************************************************

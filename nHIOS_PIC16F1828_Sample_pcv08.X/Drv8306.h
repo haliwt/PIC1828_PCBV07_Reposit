@@ -30,7 +30,7 @@ typedef struct DRV8306
    
 }my_drv8306;
 
-struct DRV8306  my_drv;
+struct DRV8306   my_drv={2,2,2};
 
     void Drv8306_Init(void);
     void Drv8306_PWM(void);
