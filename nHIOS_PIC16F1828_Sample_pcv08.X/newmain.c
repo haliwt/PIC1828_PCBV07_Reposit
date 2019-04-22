@@ -75,7 +75,7 @@ void  main(void )
                 Auto_OutPut_Brake=1;
              
                 TMR1_Counter_Enable = 0;
-               
+                Auto_Works_Signal = 1;
               
                switch(machine_key)
                {     
@@ -250,7 +250,7 @@ void  main(void )
                      TMR1H=0;
 		             TMR1L=0;
                      k=0;
-                   
+                     Auto_Works_Signal = 1;
 					 mykey =GetKeyPad();
                      
                 
@@ -274,7 +274,7 @@ void  main(void )
 		                 TMR1L=0;
                      }
                     Auto_OutPut_Brake=0;
-                   
+                    Auto_Works_Signal = 1;
   
                      mydir = Manual_Operation_Dir();
 					 mykey =GetKeyPad();
@@ -295,7 +295,7 @@ void  main(void )
 					 TMR1L = 0;
 					 flag_power_on=0;
 				     Auto_OutPut_Brake=0;
-             
+                     Auto_Works_Signal = 0;
 		             mydir = Manual_Operation_Dir();
 					 mykey =GetKeyPad();
 				}
@@ -313,6 +313,7 @@ void  main(void )
 				TMR1L = 0;
 				flag_power_on=1;
 				Auto_OutPut_Brake=0;
+				Auto_Works_Signal = 0;
                 my_drv.drv_brake =0;
                 mydir = Manual_Operation_Dir();
 			    mykey =GetKeyPad();
@@ -327,6 +328,7 @@ void  main(void )
 			  flag_power_on=0;
 			  Auto_OutPut_Brake=0;
 			  TMR1_Counter_Enable = 0;
+			   Auto_Works_Signal = 0;
 			  k=0;
 			 TMR1H =0;
 			 TMR1L = 0;
