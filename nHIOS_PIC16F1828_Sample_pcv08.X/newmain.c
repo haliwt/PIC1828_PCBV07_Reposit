@@ -61,9 +61,8 @@ void  main(void )
     Drv8306_Init();
     HALL_Init();
     Drv8306_PWM();
- 
-	
-
+    TRISCbits.TRISC5 =1;
+               
     while(1)
     {
       
@@ -73,7 +72,7 @@ void  main(void )
      if((flag_power_on==2)||(my_drv.drv_brake ==1))
       {
         {
-                  Auto_OutPut_Brake=1;
+                Auto_OutPut_Brake=1;
              
                 TMR1_Counter_Enable = 0;
                
@@ -82,9 +81,9 @@ void  main(void )
                {     
                 case 0 :
                 {
-                    j=2;
-                   TXREG = j ;
-                   delay_100us(1);
+                  // j=2;
+                  // TXREG = j ;
+                 //  delay_100us(1);
                    size_n =0;
                    EEPROM_Write_OneByte(0x56,0);
                    
@@ -240,7 +239,7 @@ void  main(void )
         {
             case 0 : //run works
             {
-                if((mydir == 0)&&(j ==2)&&(j !=0))
+                if((mydir == 0)&&(j ==2))
                 {
                      TRISCbits.TRISC5 =1;
                      DRV_ENABLE=0;
@@ -260,9 +259,9 @@ void  main(void )
 				else if((mydir == 0)&&(j !=2))  //CW motor run works 
                  {
                  
-					 DRV_ENABLE=1;
-                     TRISCbits.TRISC5 =0;
-                     delay_1ms(5);
+					 TRISCbits.TRISC5 =0;
+                     delay_1ms(10);
+                     DRV_ENABLE=1;
                      DRV_BRAKE = 1; //run
                      delay_1ms(80);
                      TMR1_Counter_Enable = 1;
@@ -283,10 +282,13 @@ void  main(void )
 				}
                 else if(mydir == 1)  //CCW ,motor run ,but don't works
 			    {
-	                 j =3;
+	                
                      TRISCbits.TRISC5 =0;
+                     delay_1ms(10);
                      DRV_ENABLE=1;
 					 DRV_BRAKE = 1;
+                     delay_1ms(80);
+                     j =3;
 					 TMR1_Counter_Enable = 0;
 		             k=0;
 					 TMR1H =0;
@@ -296,31 +298,31 @@ void  main(void )
              
 		             mydir = Manual_Operation_Dir();
 					 mykey =GetKeyPad();
-				  
-			    }
+				}
            
             }
             break;
 			case 1: //STOP_key
             {
+                TRISCbits.TRISC5 =1;
+                delay_1ms(5);
+                DRV_BRAKE =0;
                 j=3;
-                 TRISCbits.TRISC5 =1;
-				DRV_BRAKE =0;
-                DRV_ENABLE=0;
 		        k=0;
 				TMR1H =0;
 				TMR1L = 0;
 				flag_power_on=1;
 				Auto_OutPut_Brake=0;
                 my_drv.drv_brake =0;
+                mydir = Manual_Operation_Dir();
+			    mykey =GetKeyPad();
 		    }
             break;
            
 
 	     default :
 	     	{
-			  Auto_OutPut_Brake=0;
-              TRISCbits.TRISC5 =1;
+			  TRISCbits.TRISC5 =1;
 			  DRV_ENABLE=0;
 			  flag_power_on=0;
 			  Auto_OutPut_Brake=0;
