@@ -93,7 +93,7 @@ void  main(void )
              case 1 : //machine deep learning 
              {
                 
-                
+                 
                  TXREG  = size_n ;
                  delay_1ms(10);
                  if( size_n ==0  )
@@ -136,7 +136,7 @@ void  main(void )
                               Average_First(size_n,0xb5);
 
                               TXREG = 0xaa;     //flag bit 0xba
-                               delay_1ms(10);
+                              delay_1ms(10);
                               Average_Second(size_n,0x53);
                             }
                            else if(size_n > 80 && size_n < 161)
@@ -221,7 +221,7 @@ void  main(void )
                            {
                              j=2;
                            }
-                           else if((n + 0x0a) > times_n  && (times_n > 0x0a))
+                           else if((n + 0x0a) > times_n  && (times_n >= 0x0a))
                            {
                                j=2;
                            
@@ -272,7 +272,7 @@ void  main(void )
                      delay_1ms(80);
                      TMR1_Counter_Enable = 1;
 		            /* add a judeg if screwdriver start */
-					 if(TMR1H ==0xFF) //
+					 if(PIR1bits.TMR1IF ==1)//if(TMR1H ==0xFF) //
 		             {
 		                PIR1bits.TMR1IF=0;
 		                 k=k+1;
@@ -301,6 +301,7 @@ void  main(void )
 					 flag_power_on=0;
 				     Auto_OutPut_Brake=0;
                      Auto_Works_Signal = 0;
+                     
 					 my_drv.drv_dir =3;
 		          }
            
@@ -308,10 +309,12 @@ void  main(void )
             break;
 			case 1: //STOP_key
             {
-                TRISCbits.TRISC5 =1;
-                delay_1ms(5);
-                DRV_BRAKE =0;
+                
                 j=3;
+                TRISCbits.TRISC5 =1;
+                delay_1ms(20);
+                DRV_BRAKE =0;
+               
 		        k=0;
 				TMR1H =0;
 				TMR1L = 0;
@@ -319,7 +322,7 @@ void  main(void )
 				Auto_OutPut_Brake=0;
 				Auto_Works_Signal = 0;
                 my_drv.drv_brake =0;
-				my_drv.drv_dir=2;
+				
                 mydir = Manual_Operation_Dir();
 			    mykey =GetKeyPad();
 		    }
@@ -333,10 +336,10 @@ void  main(void )
 			  flag_power_on=0;
 			  Auto_OutPut_Brake=0;
 			  TMR1_Counter_Enable = 0;
-			   Auto_Works_Signal = 0;
+			  Auto_Works_Signal = 0;
 			  k=0;
-			 TMR1H =0;
-			 TMR1L = 0;
+			  TMR1H =0;
+			  TMR1L = 0;
       
 			 
 			}

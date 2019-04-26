@@ -42,10 +42,11 @@ uchar GetKeyPad(void)
 {
   if(Key_Start == 1) //stop
    {
+      
       TRISCbits.TRISC5 =1;
+      Auto_OutPut_Brake=0;
       delay_10ms(8);
       DRV_BRAKE =0;
-    //  DRV_ENABLE=0;
       return 1;
         
     }

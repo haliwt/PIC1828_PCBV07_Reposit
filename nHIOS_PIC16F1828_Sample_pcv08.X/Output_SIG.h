@@ -4,7 +4,7 @@
 #include "Delay.h"
 
 #define Auto_OutPut_Brake           PORTBbits.RB6//Version 05 of PC PORTBbits.RB5  //auto equipment output brake signal
-#define Auto_Works_Signal            PORTBbits.RB4  //auto equipment output fsult signal
+#define Auto_Works_Signal           PORTBbits.RB4  //auto equipment output fsult signal
 
 
 #ifdef	__cplusplus
