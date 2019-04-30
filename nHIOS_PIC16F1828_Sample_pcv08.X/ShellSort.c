@@ -8,9 +8,9 @@
   *
   *
 ********************************************************************************/
-void ShellSort(int *arr, int size)
+void ShellSort(uchar *arr, uchar size)
 {
-    int i, j, tmp, increment;
+    uchar i, j, tmp, increment;
     for (increment = size/ 2; increment > 0; increment = increment / 2)
     {
         for (i = increment; i < size; i++) 
@@ -30,7 +30,7 @@ void ShellSort(int *arr, int size)
  * 
  *********************************************/
 
-uint Maximum_Value(int *arr, uchar n)
+uchar Maximum_Value(uchar *arr, uchar n)
 {
     uchar i;
     uchar  max = 0; // the maximum
@@ -39,12 +39,13 @@ uint Maximum_Value(int *arr, uchar n)
     {
 	 /*??arr[i]???? ??????arr[i]??max???????max ?
 	    ?max????mid??????arr[i]??max  ??max???mid?*/
-	if(arr[i]>max)
-    {
-	       
-	        max = arr[i];
-	    
-     }
+        if(arr[i]>max)
+        {
+
+                max = arr[i];
+
+        }
+    }
     return max ;
 }
 
@@ -53,12 +54,12 @@ uint Maximum_Value(int *arr, uchar n)
  * look for mimiumum value
  *
  *********************************************/
-uint Minimum_Value(int *arr, uchar N)
+uchar Minimum_Value(uchar *arr, uchar n)
 {
     uchar i;
-    uchar min = 255; // the maximum
+    uchar min = 0x03; // the maximum
    
-    for(int i = 0; i<N; i++)
+    for(i = 0; i<n; i++)
     {
 	    /*??arr[i]???? ??????arr[i]??max???????max ?
 		?max????mid??????arr[i]??max  ??max???mid?*/

@@ -2,9 +2,9 @@
 #define	__SHELLSORT_H
 #include "Delay.h"
 
-void ShellSort(int *arr, int size)  ;
-uint Maximum_Value(int *arr,uchar n);
-uint Minimum_Value(int *arr, uchar n);
+void ShellSort(uchar *arr, uchar size)  ;
+uchar Maximum_Value(uchar *arr, uchar n);
+uchar Minimum_Value(uchar *arr, uchar n);
 
 
 
