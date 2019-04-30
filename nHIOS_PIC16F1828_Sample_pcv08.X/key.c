@@ -52,7 +52,8 @@ uchar GetKeyPad(void)
     }
   else if (Key_Start == 0)  //run //WT.EDIT 2019-02-20
   {
-    return 0;
+    delay_1ms(10);
+	return 0;
    }
  }
  
