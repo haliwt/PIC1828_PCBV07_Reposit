@@ -127,10 +127,8 @@ void  main(void )
                             size_n = size_n + 1;
                             TXREG = size_n ;
                             delay_1ms(10);
-                            
-                          
                            if(size_n < 81)
-                            {
+                           {
                               EEPROM_Write_OneByte(size_n+99,m); // m > n to save sample of data
                               EEPROM_Write_OneByte(size_n-1,n); // m > n
                               Average_First(size_n,0xb5);
@@ -138,7 +136,7 @@ void  main(void )
                               TXREG = 0xaa;     //flag bit 0xba
                               delay_1ms(10);
                               Average_Second(size_n,0x53);
-                            }
+                           }
                            else if(size_n > 80 && size_n < 161)
                            {
                               counter = size_n -80 ;
@@ -162,38 +160,32 @@ void  main(void )
                               Average_Second(counter,0x55);
 
                            }
-
-
-                          }
-                       }
+                        }
+                      }
                       else if(size_n > 241  && size_n < 244)
                       {
+                        size_n = 245;
+                        EEPROM_Write_OneByte(0x56,size_n);
+                        times_m = Machine_M_Learning();
+                        TXREG = times_m;     //flag bit 0xef
+                        delay_1ms(10);
 
-                          
-                          size_n = 245;
-                          EEPROM_Write_OneByte(0x56,size_n);
-                          times_m = Machine_M_Learning();
-                          TXREG = times_m;     //flag bit 0xef
-                          delay_1ms(10);
+                        times_n = Machine_N_Learning();
+                        TXREG = times_n;     //flag bit 0xef
+                        delay_1ms(10);
 
-                           times_n = Machine_N_Learning();
-                         TXREG = times_n;     //flag bit 0xef
-                         delay_1ms(10);
-
-                         TXREG = size_n;     //flag bit 0xef
-                          delay_1ms(10);
-
+                        TXREG = size_n;     //flag bit 0xef
+                        delay_1ms(10);
                        }
                       else if(size_n > 243)
                       {
-                           TXREG=size_n;
-                            delay_1ms(10);
+                        TXREG=size_n;
+                        delay_1ms(10);
                         
-                          if(size_n == 65535)
-                            size_n = 245;
+                        if(size_n == 65535)
+                          size_n = 245;
                         times_m = Machine_M_Learning();
                         times_n = Machine_N_Learning();
-
                        }
                   
                        m = k;
@@ -245,9 +237,9 @@ void  main(void )
         {
             case 0 : //run works
             {
-                if((my_drv.drv_dir == 0 )&&(j ==2))
+                if((my_drv.drv_dir == 0 )&&(j ==2)&&(j!=4)&&(j!=0)&&(j!=3))
                 {
-                     TRISCbits.TRISC5 =1;
+                    TRISCbits.TRISC5 =1;
                      DRV_ENABLE=0;
                      DRV_BRAKE = 0; //run
                 
@@ -258,11 +250,9 @@ void  main(void )
                      k=0;
                      Auto_Works_Signal = 1;
 					 mykey =GetKeyPad();
-                     my_drv.drv_dir =4;
-					
-                
+                   
                 }
-                else if((my_drv.drv_dir == 0)&&(j !=2))  //CW motor run works 
+                else if((my_drv.drv_dir == 0)&&(j !=2)&&(j!=4))  //CW motor run works 
                  {
                  
                      TRISCbits.TRISC5 =0;
@@ -282,9 +272,7 @@ void  main(void )
                     Auto_OutPut_Brake=0;
                     Auto_Works_Signal = 1;
   
-                    my_drv.drv_dir=4;
-					 
-				}
+                  }
                 else if(my_drv.drv_dir == 1) //CCW ,motor run ,but don't works
 			    {
                     
@@ -302,9 +290,8 @@ void  main(void )
 				     Auto_OutPut_Brake=0;
                      Auto_Works_Signal = 0;
                      
-					 my_drv.drv_dir =3;
+					 
 		          }
-           
             }
             break;
 			case 1: //STOP_key
@@ -321,9 +308,8 @@ void  main(void )
 				flag_power_on=1;
 				Auto_OutPut_Brake=0;
 				Auto_Works_Signal = 0;
-                my_drv.drv_brake =0;
-				
-                mydir = Manual_Operation_Dir();
+               
+				mydir = Manual_Operation_Dir();
 			    mykey =GetKeyPad();
 		    }
             break;

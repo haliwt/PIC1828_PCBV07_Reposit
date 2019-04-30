@@ -34,7 +34,7 @@ void Drv8306_PWM(void)
 
     TRISCbits.TRISC5=1;  //PWM CCP1,OSC =8MHZ
     PR2 =0x06 ;//0x06//mass PR2 = 0X06;//0x05//0x04     //Timer2 period Register,f =100Khz
-    CCPR1L = 0x07;    //MSB 8bit<>pulse duty of value
+    CCPR1L = 0x06;    //MSB 8bit<>pulse duty of value
     CCP1CON = 0x0d ;//LSB has 2 bits in <5:4>
     CCPTMRS0 = 0;//0xFC ;  //PWM timer selectiong control RE :Enable PWM
    //T2CON  = 0X07;     //TIMER2 of TIMER2,prescaler is 64
