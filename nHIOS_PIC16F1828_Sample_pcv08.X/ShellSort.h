@@ -4,7 +4,7 @@
 
 void ShellSort(int *arr, int size)  ;
 uint Maximum_Value(int *arr,uchar n);
-uint Minimum_Value(int arr[], uchar n);
+uint Minimum_Value(int *arr, uchar n);
 
 
 
