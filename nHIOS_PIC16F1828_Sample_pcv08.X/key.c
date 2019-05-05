@@ -47,12 +47,14 @@ uchar GetKeyPad(void)
       Auto_OutPut_Brake=0;
       delay_10ms(8);
       DRV_BRAKE =0;
+      if(Key_Start == 1)
       return 1;
         
     }
   else if (Key_Start == 0)  //run //WT.EDIT 2019-02-20
   {
     delay_1ms(10);
+    if(Key_Start == 0)
 	return 0;
    }
  }
