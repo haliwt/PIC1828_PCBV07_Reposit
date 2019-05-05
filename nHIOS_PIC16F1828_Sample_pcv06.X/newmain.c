@@ -50,7 +50,7 @@ void  main(void )
     uchar i,j, machine_key=0,k,m=0,n=0,power_on=1,counter=0,remm=0;
     uint size_n;
     uchar  mykey=1,times_m=0,times_n=0,mydir = 0;  //wt.edit 2019-02-21
-    uchar hall_number;  //judge hall of singal times 
+    
  
     init_fosc();
     USART_Init();
@@ -70,77 +70,68 @@ void  main(void )
       machine_key =MachineLearning_Key();
 	  mydir = Manual_Operation_Dir();
       mykey =GetKeyPad();
-      
     
-      
 #if 1
-      if(flag_power_on==2)
+      if((flag_power_on==2)||(my_drv.drv_brake ==1))
       {
 
-        //TMR1_Counter_Enable = 0; //Stop counter number
-       
-        hall_number = hall_number + 1;
-     
-		if(hall_number == 1)
-		{
-           j=4;
-		   //TXREG  = hall_number ;
-           //delay_100us(5);
-		   
-		}
-		else if(hall_number == 6)
-		{
+                Auto_OutPut_Brake=1;
                 TMR1_Counter_Enable = 0;
-                TRISCbits.TRISC5 =1;
-                DRV_ENABLE=0;
-                Auto_OutPut_Brake=1;	
-                hall_number =0;
+                Auto_Works_Signal = 1;
+               
+		      
+               
                switch(machine_key)
                {     
                 case 0 :
                 {
-                   j=2;
+                     j=2;
+                  // TXREG = j ;
+                 //  delay_100us(1);
                    size_n =0;
                    EEPROM_Write_OneByte(0x56,0);
-                   
+				   
                 }
               break;
              case 1 : //machine deep learning 
              {
                 
-                  size_n = size_n + 1;
-                 // TXREG  = size_n ;
-                 // delay_100us(5);
-                 if( size_n ==1  )
+                
+                 TXREG  = size_n ;
+                 delay_1ms(10);
+                 if( size_n ==0  )
                    {
 
-                        size_n = EEPROM_Read_OneByte(0x56);
+                       size_n = EEPROM_Read_OneByte(0x56);
 
                        if(size_n == 245)
                         {
                            size_n= 245 ; // rember
                         }
                        else 
-                        size_n  = 1;
+                        size_n  = 0;
                       
                        TXREG = size_n ;
-                       delay_100us(1);
+                       delay_1ms(10);
 
                   }
                   if(size_n < 242 )
-                     {
+                   {
 
-                           TXREG = size_n ;
-                           delay_100us(5);
-						 
-                           m = k;    // 262ms * k = m
-                           TXREG=m;
-                           delay_100us(5);
-
-
-                           n = TMR1H;  // 4* 256 * TMR1H / 1000 (ms) = n+++++++++++++++
-                           TXREG = n ;
-                           delay_100us(5);
+                       m = k;    // 262ms * k = m
+                       TXREG=m;
+                       delay_1ms(10);
+                      
+                       n = TMR1H;  // 4* 256 * TMR1H / 1000 (ms) = n+++++++++++++++
+                       TXREG = n ;
+                       delay_1ms(10);
+                       if((n >03) ||(k >1)||(k ==1))
+                       {
+                            size_n = size_n + 1;
+                            TXREG = size_n ;
+                            delay_1ms(10);
+                            
+                          
                            if(size_n < 81)
                             {
                               EEPROM_Write_OneByte(size_n+99,m); // m > n to save sample of data
@@ -148,7 +139,7 @@ void  main(void )
                               Average_First(size_n,0xb5);
 
                               TXREG = 0xaa;     //flag bit 0xba
-                              delay_100us(5);
+                               delay_1ms(10);
                               Average_Second(size_n,0x53);
                             }
                            else if(size_n > 80 && size_n < 161)
@@ -159,7 +150,7 @@ void  main(void )
                               Average_First(counter,0xb6);
 
                               TXREG = 0xbb;     //flag bit 0xba
-                               delay_100us(5);
+                               delay_1ms(10);
                               Average_Second(counter,0x54);
                            }
                            else if(size_n > 160 && size_n < 241)
@@ -170,34 +161,36 @@ void  main(void )
                               Average_First(counter,0xb7);
 
                               TXREG = 0xcc;     //flag bit 0xba
-                              delay_100us(5);
+                               delay_1ms(10);
                               Average_Second(counter,0x55);
 
                            }
 
 
+                          }
                        }
                       else if(size_n > 241  && size_n < 244)
                       {
 
+                          
                           size_n = 245;
                           EEPROM_Write_OneByte(0x56,size_n);
                           times_m = Machine_M_Learning();
                           TXREG = times_m;     //flag bit 0xef
-                          delay_100us(5);
+                          delay_1ms(10);
 
                            times_n = Machine_N_Learning();
                          TXREG = times_n;     //flag bit 0xef
-                         delay_100us(5);
+                         delay_1ms(10);
 
                          TXREG = size_n;     //flag bit 0xef
-                         delay_100us(5);
+                          delay_1ms(10);
 
                        }
                       else if(size_n > 243)
                       {
                            TXREG=size_n;
-                           delay_100us(5);
+                            delay_1ms(10);
                         
                           if(size_n == 65535)
                             size_n = 245;
@@ -205,13 +198,13 @@ void  main(void )
                         times_n = Machine_N_Learning();
 
                        }
-
+                  
                        m = k;
                        n = TMR1H;
                        TXREG = times_m;     //flag bit 0xef
-                       delay_100us(5);
+                         delay_1ms(10);
                        TXREG = times_n;     //flag bit 0xef
-                       delay_100us(5);
+                         delay_1ms(10);
 
                        if((m > times_m) && ( m != 0))
                        {
@@ -248,33 +241,38 @@ void  main(void )
                 break;
              
 		   }//switch(machine_key))
-	  } //end hall == 6
+	  
     }//end if(flag_power_on))
        
 	switch(mykey)
         {
             case 0 : //run works
             {
-               
-                 if((mydir == 0)&&(j ==2)&&(j !=4))  //CW motor brake
-                 {
+                if((my_drv.drv_dir == 0 )&&(j ==2))
+                {
                      TRISCbits.TRISC5 =1;
                      DRV_ENABLE=0;
+                     DRV_BRAKE = 0; //run
+                
 				     Auto_OutPut_Brake=1;
 				     flag_power_on=0; //edit 2019-02-14
                      TMR1H=0;
 		             TMR1L=0;
                      k=0;
-                     mydir=Manual_Operation_Dir();
+                     Auto_Works_Signal = 1;
 					 mykey =GetKeyPad();
-                    
-			      }
-				 else if(((mydir == 0)||(j==4))&&(j !=2))  //CW motor run works 
+                     my_drv.drv_dir =4;
+					
+                
+                }
+                else if((my_drv.drv_dir == 0)&&(j !=2))  //CW motor run works 
                  {
                  
-					 TRISCbits.TRISC5 =0;
-		             DRV_ENABLE=1;//WT.EDIT 2019-02-21
-		            // delay_1ms(); //WT.EDIT 2019-04-02  equivalence Think
+                     TRISCbits.TRISC5 =0;
+                     delay_1ms(10);
+                     DRV_ENABLE=1;
+                     DRV_BRAKE = 1; //run
+                     delay_1ms(80);
                      TMR1_Counter_Enable = 1;
 		            /* add a judeg if screwdriver start */
 					 if(TMR1H ==0xFF) //
@@ -284,42 +282,52 @@ void  main(void )
 		                 TMR1H=0;
 		                 TMR1L=0;
                      }
-                     flag_power_on=1;
-                     if(j==4)
-					 hall_number = 5;
-                     mydir = Manual_Operation_Dir();
-					 mykey =GetKeyPad();
+                    Auto_OutPut_Brake=0;
+                    Auto_Works_Signal = 1;
+  
+                    my_drv.drv_dir=4;
 					 
 				}
-				else if(mydir == 1)  //CCW ,motor run ,but don't works
-			     {
-	                 j =3;
-					 DRV_ENABLE = 1;
-					 TRISCbits.TRISC5 =0;
-                     TMR1_Counter_Enable = 0;
+                else if(my_drv.drv_dir == 1) //CCW ,motor run ,but don't works
+			    {
+                    
+                     TRISCbits.TRISC5 =0;
+                     delay_1ms(10);
+                     DRV_ENABLE=1;
+					 DRV_BRAKE = 1;
+                     delay_1ms(80);
+                     j =3;
+					 TMR1_Counter_Enable = 0;
 		             k=0;
 					 TMR1H =0;
 					 TMR1L = 0;
 					 flag_power_on=0;
 				     Auto_OutPut_Brake=0;
-		             mydir = Manual_Operation_Dir();
-					 mykey =GetKeyPad();
-				     hall_number = 0;
-			     }
+                     Auto_Works_Signal = 0;
+					 my_drv.drv_dir =3;
+		          }
            
             }
             break;
 			case 1: //STOP_key
             {
+                TRISCbits.TRISC5 =1;
+                delay_1ms(5);
+                DRV_BRAKE =0;
                 j=3;
-				DRV_ENABLE=0;
 		        k=0;
 				TMR1H =0;
 				TMR1L = 0;
-				flag_power_on=0;
-				hall_number =0 ;
+				flag_power_on=1;
+				Auto_OutPut_Brake=0;
+				Auto_Works_Signal = 0;
+                my_drv.drv_brake =0;
+				my_drv.drv_dir=2;
+                mydir = Manual_Operation_Dir();
+			    mykey =GetKeyPad();
 		    }
             break;
+           
 
 	     default :
 	     	{
@@ -328,10 +336,11 @@ void  main(void )
 			  flag_power_on=0;
 			  Auto_OutPut_Brake=0;
 			  TMR1_Counter_Enable = 0;
+			   Auto_Works_Signal = 0;
 			  k=0;
 			 TMR1H =0;
 			 TMR1L = 0;
-           
+      
 			 
 			}
             break;
@@ -352,13 +361,19 @@ void  main(void )
 
 void __interrupt() Hallsensor(void)
 {
-   if((INTF == 1) ||(IOCAF2 == 1) || (IOCAP2 ==1)||(PORTAbits.RA2 == 0)||(IOCIF ==1))
-    {
-      INTF =0;
+    TRISCbits.TRISC5 =1;
+    if((INTF == 1) ||(IOCAF2 == 1) || (IOCAP2 ==1)||(PORTAbits.RA2 == 0)||(IOCIF ==1))
+    { INTF =0;
 	  IOCIF =0;
       IOCAF2=0;
       IOCAP2=0;
       flag_power_on=flag_power_on + 1;
+      my_drv.drv_brake =1;
+      
+      TRISCbits.TRISC5 =1;
+      DRV_BRAKE =0 ;
+      Auto_OutPut_Brake=1;
+      delay_10ms(5);
    } 
 }
 

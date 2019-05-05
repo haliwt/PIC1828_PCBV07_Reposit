@@ -40,18 +40,32 @@ uchar GetKeyPad(void)
    {
       
       TRISCbits.TRISC5 =1;
+<<<<<<< HEAD
       Auto_OutPut_Brake=0;
       delay_10ms(8);
       DRV_BRAKE =0;
       if(Key_Start == 1)
+=======
+      delay_1ms(10);
+      DRV_ENABLE =0;
+      myflag_key.flag_run = 1; //This is motor stop.
+>>>>>>> master
       return 1;
         
     }
   else if (Key_Start == 0)  //run //WT.EDIT 2019-02-20
   {
+<<<<<<< HEAD
     delay_1ms(10);
     if(Key_Start == 0)
 	return 0;
+=======
+    
+       myflag_key.flag_run =0 ; //This is motor run.
+       return 0;
+       
+    
+>>>>>>> master
    }
  }
  
@@ -68,19 +82,32 @@ uchar  Manual_Operation_Dir(void)
    if(Key_Dir ==1)//anticlockwise Motor don't works run
     {
        
+<<<<<<< HEAD
        delay_1ms(10);
 	   if(Key_Dir ==1) //CCW
+=======
+       delay_100us(100);
+	  
+	   if(Key_Dir ==1)
+>>>>>>> master
 	   	{
             Auto_OutPut_Brake=0;
 			DRV_DIR =1;
             my_drv.drv_dir=1;
             return 1;
 		  
+<<<<<<< HEAD
+=======
+          DRV_DIR =1;
+          myflag_key.flag_dir = 1; //Motor back run .
+	      return 1;
+>>>>>>> master
 	   	}
     }
    else if(Key_Dir ==0)  //clockwise Motor do works run
    {
        
+<<<<<<< HEAD
        delay_1ms(10);
        if(Key_Dir==0)
        {
@@ -88,6 +115,16 @@ uchar  Manual_Operation_Dir(void)
         my_drv.drv_dir=0;
         return 0;
            	
+=======
+       delay_100us(100);
+	   
+       if(Key_Dir==0)
+       {
+           DRV_DIR =0;
+		   myflag_key.flag_dir =0; // Motor normal run
+           return 0;
+	   }
+>>>>>>> master
    }
     }
    

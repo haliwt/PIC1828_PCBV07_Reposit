@@ -24,10 +24,20 @@ extern "C" {
 
 typedef struct DRV8306
 {
+<<<<<<< HEAD
     uchar drv_enable  ;
     uchar drv_brake ;
     uchar drv_dir ;
    
+=======
+    uchar drv_enable   ;
+    uchar drv_brake ;
+    uchar drv_dir ;
+    uchar key_press_start ;
+    uchar  drv_fault  ;  //input
+    uchar  drv_fgout;    //input Capture
+    uint    drv_pwm;   //uint model
+>>>>>>> master
 }my_drv8306;
 
 struct DRV8306   my_drv={2,2,2};

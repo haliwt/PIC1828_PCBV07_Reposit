@@ -10,10 +10,10 @@
 #include "Delay.h"
 
 #define  DRV_ENABLE       PORTAbits.RA4// PCB_V06
-//#define  DRV_BRAKE       
+#define  DRV_BRAKE        PORTCbits.RC4 //PCB_V08
 #define  DRV_PWM          PORTCbits.RC5
 #define  DETECT_BRAKE     PORTCbits.RC0 //input 1
-#define  CPU_CAPTURE      PORTCbits.RC4   // caputre PWM signal
+//#define  CPU_CAPTURE      PORTCbits.RC4   // caputre PWM signal
 
 //volatile ulong pwm_duty=0 ;
 
@@ -24,13 +24,10 @@ extern "C" {
 
 typedef struct
 {
-    uchar drv_enable :1  ;
-    uchar drv_brake: 1 ;
-    uchar drv_dir:1 ;
-    uchar key_press_start :1 ;
-    uchar  drv_fault :1 ;  //input
-    uchar  drv_fgout;    //input Capture
-    uint    drv_pwm;   //uint model
+    uchar drv_enable   ;
+    uchar drv_brake ;
+    uchar drv_dir ;
+   
 }my_drv8306;
 my_drv8306 my_drv;
 

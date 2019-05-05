@@ -42,21 +42,16 @@ uchar GetKeyPad(void)
 {
   if(Key_Start == 1) //stop
    {
-      
       TRISCbits.TRISC5 =1;
-      Auto_OutPut_Brake=0;
-      TMR1_Counter_Enable = 0;
-	  delay_10ms(2);
-	  DRV_ENABLE = 0;
+      delay_10ms(8);
+      DRV_BRAKE =0;
+    //  DRV_ENABLE=0;
       return 1;
         
     }
   else if (Key_Start == 0)  //run //WT.EDIT 2019-02-20
   {
-      // DRV_DIR =0;
-       return 0;
-       
-    
+    return 0;
    }
  }
  
@@ -72,27 +67,45 @@ uchar  Manual_Operation_Dir(void)
    if(Key_Dir ==1)//anticlockwise Motor don't works run
     {
        
-       delay_100us(100);
-	   if(Key_Dir ==1)
+       delay_100us(5);
+	   if(Key_Dir ==1) //CCW
 	   	{
-		  
-          DRV_DIR =1;
-        
-	      return 1;
+		  if((my_drv.drv_dir ==4)&&(my_drv.drv_dir != 2))
+          {
+               DRV_DIR =0;
+			   my_drv.drv_dir=0;
+	           return 0;
+		  }
+		  else
+
+		  {
+			  DRV_DIR =1;
+	          my_drv.drv_dir=1;
+		      return 1;
+		  }
 	   	}
 		
      }
    else if(Key_Dir ==0)  //clockwise Motor do works run
    {
        
-       delay_100us(10);
+       delay_100us(5);
        if(Key_Dir==0)
        {
-           DRV_DIR =0;
-           return 0;
+           if((my_drv.drv_dir ==3)&&(my_drv.drv_dir != 2)) //CCW motor don't works run
+           {
+              DRV_DIR =1;
+			  my_drv.drv_dir=1;
+	          return 1;
+		   }
+           else
+           	{
+			   DRV_DIR =0;
+			   my_drv.drv_dir=0;
+	           return 0;
+           	}
 	   }
    }
-  
 }
 /************************************************************
  *
