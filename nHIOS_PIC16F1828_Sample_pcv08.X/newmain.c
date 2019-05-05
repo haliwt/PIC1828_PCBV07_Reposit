@@ -69,7 +69,6 @@ void  main(void )
       machine_key =MachineLearning_Key();
 	  mydir = Manual_Operation_Dir();
       mykey =GetKeyPad();
-<<<<<<< HEAD
      if((flag_power_on==2)||(my_drv.drv_brake ==1))
       {
         
@@ -80,17 +79,6 @@ void  main(void )
                 Auto_Works_Signal = 1;
               // TXREG=0xff;
               //delay_1ms(10);
-=======
-     if(flag_power_on==1)
-     {
-        {
-                 TMR1_Counter_Enable = 0;
-                 TRISCbits.TRISC5 =1;
-                delay_1ms(10);
-                DRV_BRAKE =0 ;
-                delay_1ms(5);
-                Auto_OutPut_Brake=1;
->>>>>>> master
                switch(machine_key)
                {     
                 case 0 :
@@ -251,10 +239,6 @@ void  main(void )
                 if((mydir == 0)&&(flag_brake ==2))
                 {
                      TRISCbits.TRISC5 =1;
-<<<<<<< HEAD
-=======
-                     DRV_ENABLE=0;
->>>>>>> master
                      DRV_BRAKE = 0; //run
                      DRV_ENABLE=0;
 				     Auto_OutPut_Brake=1;
@@ -262,7 +246,6 @@ void  main(void )
 				     TMR1H=0;
 		             TMR1L=0;
                      k=0;
-<<<<<<< HEAD
                      Auto_Works_Signal = 1;
                      TXREG=0x77;
                      delay_1ms(10);
@@ -270,14 +253,6 @@ void  main(void )
 				}
                 else if(mydir ==0) //CW motor run works 
                 {
-=======
-                     mydir=Manual_Operation_Dir();
-					 mykey =GetKeyPad();
-                }
-                else if((mydir == 0)&&(j !=2))  //CW motor run works 
-                 {
-                     TRISCbits.TRISC5 =0;
->>>>>>> master
                      DRV_ENABLE=1;
                      TRISCbits.TRISC5 =0;
                      delay_1ms(10);
@@ -293,7 +268,6 @@ void  main(void )
 		                 TMR1L=0;
                      }
                     Auto_OutPut_Brake=0;
-<<<<<<< HEAD
                     Auto_Works_Signal = 1;
                    
                       TXREG=0x88;
@@ -301,14 +275,6 @@ void  main(void )
                    
                   }
                 else if(mydir == 1) //CCW ,motor run ,but don't works
-=======
-                    flag_power_on=0;
-                     mydir = Manual_Operation_Dir();
-					 mykey =GetKeyPad();
-					 
-				}
-                else if(mydir == 1)  //CCW ,motor run ,but don't works
->>>>>>> master
 			    {
                      DRV_ENABLE=1;
                     TRISCbits.TRISC5 =0;
@@ -329,7 +295,6 @@ void  main(void )
             break;
 			case 1: //STOP_key
             {
-<<<<<<< HEAD
                 
                 flag_brake=3;
                 TRISCbits.TRISC5 =1;
@@ -337,12 +302,6 @@ void  main(void )
                 DRV_BRAKE =0;
                 DRV_ENABLE=1;
                 TMR1_Counter_Enable = 0;
-=======
-                j=3;
-                TRISCbits.TRISC5 =1;
-				DRV_BRAKE =0;
-                DRV_ENABLE=0;
->>>>>>> master
 		        k=0;
 				TMR1H =0;
 				TMR1L = 0;
@@ -395,11 +354,8 @@ void __interrupt() Hallsensor(void)
 {
    if((INTF == 1) ||(IOCAF2 == 1) || (IOCAP2 ==1)||(PORTAbits.RA2 == 0)||(IOCIF ==1))
     {
-<<<<<<< HEAD
      // TRISCbits.TRISC5 =1;
      // delay_1ms(10);
-=======
->>>>>>> master
       INTF =0;
 	  IOCIF =0;
       IOCAF2=0;
@@ -407,15 +363,12 @@ void __interrupt() Hallsensor(void)
       flag_power_on=flag_power_on+ 1;
       my_drv.drv_brake =1;
      
-<<<<<<< HEAD
       TRISCbits.TRISC5 =1;
       DRV_BRAKE =0 ;
       Auto_OutPut_Brake=1;
       delay_10ms(5);
       // TXREG=0x66;
       // delay_1ms(2);
-=======
->>>>>>> master
    } 
 }
 
