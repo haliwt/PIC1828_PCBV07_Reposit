@@ -27,10 +27,6 @@ void Key_Init(void)
     ANSC1 = 0;  //wt.edit New_direction key 
     ANSA0 = 0;
 	ANSC2 = 0;
-
-
-
-
 }
 /************************************************************
  *
@@ -72,27 +68,27 @@ uchar  Manual_Operation_Dir(void)
    if(Key_Dir ==1)//anticlockwise Motor don't works run
     {
        
-       delay_100us(5);
+       delay_1ms(10);
 	   if(Key_Dir ==1) //CCW
 	   	{
-            DRV_DIR =1;
+            Auto_OutPut_Brake=0;
+			DRV_DIR =1;
             my_drv.drv_dir=1;
             return 1;
 		  
 	   	}
-		
-     }
+    }
    else if(Key_Dir ==0)  //clockwise Motor do works run
    {
        
-       delay_100us(5);
+       delay_1ms(10);
        if(Key_Dir==0)
        {
         DRV_DIR =0;
         my_drv.drv_dir=0;
         return 0;
            	
-	   }
+   }
     }
    
   

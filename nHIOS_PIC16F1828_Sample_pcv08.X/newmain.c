@@ -47,10 +47,10 @@ uchar flag_power_on=0;
  *************************************************************/
 void  main(void )
 {
-    uchar i,j, machine_key=0,k=0,m=0,n=0,power_on=1,counter=0;
+    uchar i, machine_key=0,k=0,m=0,n=0,power_on=1,counter=0;
     uint size_n;
     uchar  mykey=1,times_m=0,times_n=0,mydir = 0;  //wt.edit 2019-02-21
-    uchar hall_number;  //judge hall of singal times 
+    uchar flag_brake;   
  
     init_fosc();
     USART_Init();
@@ -82,9 +82,7 @@ void  main(void )
                {     
                 case 0 :
                 {
-                     j=2;
-                  // TXREG = j ;
-                 //  delay_100us(1);
+                   flag_brake=2;
                    size_n =0;
                    EEPROM_Write_OneByte(0x56,0);
 				   
@@ -198,12 +196,12 @@ void  main(void )
                        if((m > times_m) && ( m != 0))
                        {
 
-                           j=2;
+                           flag_brake=2;
 
                         }
                        else if(m < times_m && m != 0)
                        {
-                          j=2; 
+                          flag_brake=2; 
                        
                        }
                        else if ((m == times_m)&&( m == 0))
@@ -211,16 +209,16 @@ void  main(void )
 
                            if (n > times_n || n == times_n)
                            {
-                             j=2;
+                             flag_brake=2;
                            }
                            else if((n + 0x0a) > times_n  && (times_n >= 0x0a))
                            {
-                               j=2;
+                               flag_brake=2;
                            
                            }
                            else if ( n > 0x05 || n == 0x05)
                            {
-                             j=2;
+                             flag_brake=2;
                            }
                          
                         }
@@ -237,27 +235,24 @@ void  main(void )
         {
             case 0 : //run works
             {
-                if((my_drv.drv_dir == 0 )&&(j ==2)&&(j!=4)&&(j!=0)&&(j!=3))
+                if((mydir == 0)&&(flag_brake ==2)&&(flag_brake!=3))
                 {
-                    TRISCbits.TRISC5 =1;
-                     DRV_ENABLE=0;
+                     TRISCbits.TRISC5 =1;
                      DRV_BRAKE = 0; //run
-                
+                     DRV_ENABLE=0;
 				     Auto_OutPut_Brake=1;
-				     flag_power_on=0; //edit 2019-02-14
-                     TMR1H=0;
+                     delay_10ms(20); //WT.EDIT 20190505
+				     TMR1H=0;
 		             TMR1L=0;
                      k=0;
                      Auto_Works_Signal = 1;
-					 mykey =GetKeyPad();
-                   
-                }
-                else if((my_drv.drv_dir == 0)&&(j !=2)&&(j!=4))  //CW motor run works 
-                 {
-                 
+                     
+				}
+                else if((mydir ==0)&&(flag_brake !=2))  //CW motor run works 
+                {
+                      DRV_ENABLE=1;
                      TRISCbits.TRISC5 =0;
                      delay_1ms(10);
-                     DRV_ENABLE=1;
                      DRV_BRAKE = 1; //run
                      delay_1ms(80);
                      TMR1_Counter_Enable = 1;
@@ -273,15 +268,15 @@ void  main(void )
                     Auto_Works_Signal = 1;
   
                   }
-                else if(my_drv.drv_dir == 1) //CCW ,motor run ,but don't works
+                else if(mydir == 1) //CCW ,motor run ,but don't works
 			    {
-                    
-                     TRISCbits.TRISC5 =0;
-                     delay_1ms(10);
                      DRV_ENABLE=1;
+                    TRISCbits.TRISC5 =0;
+                     delay_1ms(10);
+                    
 					 DRV_BRAKE = 1;
                      delay_1ms(80);
-                     j =3;
+                     flag_brake =3;
 					 TMR1_Counter_Enable = 0;
 		             k=0;
 					 TMR1H =0;
@@ -289,19 +284,17 @@ void  main(void )
 					 flag_power_on=0;
 				     Auto_OutPut_Brake=0;
                      Auto_Works_Signal = 0;
-                     
-					 
-		          }
+                 }
             }
             break;
 			case 1: //STOP_key
             {
                 
-                j=3;
+                flag_brake=3;
                 TRISCbits.TRISC5 =1;
-                delay_1ms(20);
+               // delay_1ms(20);  //WT.EDIT 20190505
                 DRV_BRAKE =0;
-               
+                DRV_ENABLE=1;
 		        k=0;
 				TMR1H =0;
 				TMR1L = 0;
@@ -309,8 +302,9 @@ void  main(void )
 				Auto_OutPut_Brake=0;
 				Auto_Works_Signal = 0;
                
-				mydir = Manual_Operation_Dir();
-			    mykey =GetKeyPad();
+				//mydir = Manual_Operation_Dir();
+			     mydir = Manual_Operation_Dir();
+                 mykey =GetKeyPad();
 		    }
             break;
            
@@ -326,7 +320,8 @@ void  main(void )
 			  k=0;
 			  TMR1H =0;
 			  TMR1L = 0;
-      
+             mydir = Manual_Operation_Dir();
+             mykey =GetKeyPad();
 			 
 			}
             break;
@@ -363,7 +358,7 @@ void __interrupt() Hallsensor(void)
       TRISCbits.TRISC5 =1;
       DRV_BRAKE =0 ;
       Auto_OutPut_Brake=1;
-      delay_10ms(5);
+      delay_10ms(10);
    } 
 }
 
