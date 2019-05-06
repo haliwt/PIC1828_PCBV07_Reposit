@@ -38,11 +38,11 @@ uchar GetKeyPad(void)
 {
   if(Key_Start == 1) //stop
    {
-      
+      DRV_BRAKE =0;//WT.EDIT 20190506
       TRISCbits.TRISC5 =1;
       Auto_OutPut_Brake=0;
-      delay_10ms(8);
-      DRV_BRAKE =0;
+      delay_1ms(20);//delay_10ms(8);//WT.EDIT 2019-0506
+      //DRV_BRAKE =0;
       if(Key_Start == 1)
       return 1;
         

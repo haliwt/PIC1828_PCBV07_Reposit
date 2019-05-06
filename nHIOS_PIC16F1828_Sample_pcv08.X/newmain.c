@@ -71,25 +71,22 @@ void  main(void )
       mykey =GetKeyPad();
      if((flag_power_on==2)||(my_drv.drv_brake ==1))
       {
-        
-                
-                
-                Auto_OutPut_Brake=1;
-                TMR1_Counter_Enable = 0;
-                Auto_Works_Signal = 1;
-              // TXREG=0xff;
-              //delay_1ms(10);
-               switch(machine_key)
-               {     
-                case 0 :
-                {
-                   flag_brake=2;
-                   size_n =0;
-                   EEPROM_Write_OneByte(0x56,0);
-				   
-                }
-              break;
-             case 1 : //machine deep learning 
+        Auto_OutPut_Brake=1;
+        TMR1_Counter_Enable = 0;
+        Auto_Works_Signal = 1;
+        // TXREG=0xff;
+        //delay_1ms(10);
+        switch(machine_key)
+        {     
+         case 0 :
+         {
+            flag_brake=2;
+            size_n =0;
+            EEPROM_Write_OneByte(0x56,0);
+
+         }
+         break;
+         case 1 : //machine deep learning 
              {
                 
                  
@@ -254,11 +251,11 @@ void  main(void )
                 else if(mydir ==0) //CW motor run works 
                 {
                      DRV_ENABLE=1;
-                     TRISCbits.TRISC5 =0;
-                     delay_1ms(10);
                      DRV_BRAKE = 1; //run
+                     TRISCbits.TRISC5 =0;
                      delay_1ms(100);
-                     TMR1_Counter_Enable = 1;
+                    TMR1_Counter_Enable = 1;
+                     DRV_BRAKE = 1; //run
                     /* add a judeg if screwdriver start */
 					 if(PIR1bits.TMR1IF ==1)//if(TMR1H ==0xFF) //
 		             {
@@ -276,19 +273,24 @@ void  main(void )
                   }
                 else if(mydir == 1) //CCW ,motor run ,but don't works
 			    {
-                     DRV_ENABLE=1;
-                    TRISCbits.TRISC5 =0;
-                     delay_1ms(10);
+                    
+                    DRV_ENABLE=1;
+                    //TRISCbits.TRISC5 =0;
+                  //  delay_1ms(1);
                     DRV_BRAKE = 1;
-                     delay_1ms(80);
+                    TRISCbits.TRISC5 =0;
+                     delay_1ms(100);
                      flag_brake =3;
+                     DRV_BRAKE = 1;
 					 TMR1_Counter_Enable = 0;
 		             k=0;
 					 TMR1H =0;
 					 TMR1L = 0;
+                    
 					 my_drv.drv_brake =0;
 				     Auto_OutPut_Brake=0;
                      Auto_Works_Signal = 0;
+                      DRV_BRAKE = 1;
                  }
                
             }

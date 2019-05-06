@@ -16,7 +16,7 @@ void Drv8306_Init(void)
     TRISAbits.TRISA4 = 0; //PCBV06 -DRV8306_ENABLE 2019-03-14
     ANSA4 =0;
     DRV_ENABLE = 0;
-    DRV_BRAKE = 1;
+    DRV_BRAKE = 1; //WT.EDIT 2019-0506 This is key
   
   
     
