@@ -49,8 +49,6 @@ uchar GetKeyPad(void)
   }
    else if (Key_Start == 0)  //run //WT.EDIT 2019-02-20
   {
-    
-    if(Key_Start == 0)
 	return 0;
    }
   else 
