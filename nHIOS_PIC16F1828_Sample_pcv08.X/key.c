@@ -38,18 +38,20 @@ uchar GetKeyPad(void)
 {
   if(Key_Start == 1) //stop
    {
-      DRV_BRAKE =0;//WT.EDIT 20190506
+	  
+      
       TRISCbits.TRISC5 =1;
+      delay_10ms(1);
       Auto_OutPut_Brake=0;
-      delay_1ms(20);//delay_10ms(8);//WT.EDIT 2019-0506
-      //DRV_BRAKE =0;
+      delay_10ms(1);//delay_10ms(8);//WT.EDIT 2019-0506
+      DRV_BRAKE =0;//WT.EDIT 20190506
       if(Key_Start == 1)
       return 1;
         
     }
   else if (Key_Start == 0)  //run //WT.EDIT 2019-02-20
   {
-    delay_1ms(10);
+    
     if(Key_Start == 0)
 	return 0;
    }
@@ -66,30 +68,48 @@ uchar  Manual_Operation_Dir(void)
 {
    
    if(Key_Dir ==1)//anticlockwise Motor don't works run
-    {
+   {
        
-       delay_1ms(10);
+       delay_1ms(20);
 	   if(Key_Dir ==1) //CCW
 	   	{
+          
+           if(my_drv.drv_dir ==4)
+           {
+              DRV_DIR =0;
+              return 0;
+           }
+           else
+           {
             Auto_OutPut_Brake=0;
 			DRV_DIR =1;
             my_drv.drv_dir=1;
             return 1;
+           }
 		  
 	   	}
-    }
+   }
    else if(Key_Dir ==0)  //clockwise Motor do works run
    {
        
-       delay_1ms(10);
+       delay_1ms(20);
        if(Key_Dir==0)
        {
-        DRV_DIR =0;
-        my_drv.drv_dir=0;
-        return 0;
-           	
+           if(my_drv.drv_dir ==3)
+           {
+              Auto_OutPut_Brake=0;
+			  DRV_DIR =1;
+              return 1;
+           }
+           else
+           {
+           
+           DRV_DIR =0;
+           my_drv.drv_dir=2;
+            return 0;
+           }
+        }
    }
-    }
    
   
 }
