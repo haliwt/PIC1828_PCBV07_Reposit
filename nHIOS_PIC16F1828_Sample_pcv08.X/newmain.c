@@ -253,13 +253,13 @@ void  main(void )
                 {
                      
                      TXREG=0x77;
-                     delay_1ms(10);
+                     delay_100us(5);
                      DRV_ENABLE=1;
                      DRV_BRAKE = 1; //run
                      TRISCbits.TRISC5 =0;
-                     delay_1ms(100);
+                     delay_1ms(50);
                     TMR1_Counter_Enable = 1;
-                     DRV_BRAKE = 1; //run
+                    // DRV_BRAKE = 1; //run
                     /* add a judeg if screwdriver start */
 					 if(PIR1bits.TMR1IF ==1)//if(TMR1H ==0xFF) //
 		             {
@@ -286,9 +286,8 @@ void  main(void )
                   //  delay_1ms(1);
                     DRV_BRAKE = 1;
                     TRISCbits.TRISC5 =0;
-                     delay_10ms(50);
                      flag_brake=5;
-                     DRV_BRAKE = 1;
+                    // DRV_BRAKE = 1;
 					 TMR1_Counter_Enable = 0;
 		             k=0;
 					 TMR1H =0;
@@ -298,7 +297,7 @@ void  main(void )
 					my_drv.drv_brake =3; //WT.EDIT 20190508
 				     Auto_OutPut_Brake=0;
                      Auto_Works_Signal = 0;
-                     DRV_BRAKE = 1;
+                    // DRV_BRAKE = 1;
                     TXREG=0x33;
                     delay_100us(10);
                  }
@@ -356,9 +355,10 @@ void  main(void )
             {
                 
                 TRISCbits.TRISC5 =1;
-                delay_1ms(20);  //WT.EDIT 20190505
+                delay_10ms(2);  //WT.EDIT 20190505
                 DRV_BRAKE =0;
 				DRV_ENABLE=0;
+                delay_10ms(10);  //WT.EDIT 20190505
 				flag_brake=3;
                 TMR1_Counter_Enable = 0;
 		        k=0;
@@ -415,10 +415,10 @@ void  main(void )
 
 void __interrupt() Hallsensor(void)
 {
-   if((INTF == 1) ||(IOCAF2 == 1) || (IOCAP2 ==1)||(PORTAbits.RA2 == 0)||(IOCIF ==1))
-    {
-     // TRISCbits.TRISC5 =1;
-     // delay_1ms(10);
+   
+   if((IOCAF2 == 1) || (IOCAP2 ==1)||(PORTAbits.RA2 == 0))
+{
+     
       INTF =0;
 	  IOCIF =0;
       IOCAF2=0;
@@ -432,8 +432,11 @@ void __interrupt() Hallsensor(void)
       delay_10ms(5);
        TXREG=0x66;
        delay_1ms(2);
-   } 
-}
+     
+   }
+  
+}  
+
 
    
  

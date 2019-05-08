@@ -15,8 +15,9 @@
 void Key_Init(void)
 {
     TRISAbits.TRISA0 =1;  //Key_start input
-  
-    TRISCbits.TRISC2 =1 ; //machine learning switch IO 
+    ANSA0 = 0;
+   
+   TRISCbits.TRISC2 =1 ; //machine learning switch IO 
 
     TRISCbits.TRISC1 = 1;  //manual directin key
     
@@ -25,7 +26,7 @@ void Key_Init(void)
 	DRV_DIR = 0;
     
     ANSC1 = 0;  //wt.edit New_direction key 
-    ANSA0 = 0;
+   
 	ANSC2 = 0;
 }
 /************************************************************
@@ -36,26 +37,25 @@ void Key_Init(void)
  ************************************************************/
 uchar GetKeyPad(void)
 {
-  if(Key_Start == 1) //stop
-   {
-	  
-      
-      TRISCbits.TRISC5 =1;
-      delay_10ms(1);
+
+   if(Key_Start == 1) //stop
+  {
+	  TRISCbits.TRISC5 =1;
       Auto_OutPut_Brake=0;
-      delay_10ms(1);//delay_10ms(8);//WT.EDIT 2019-0506
+      delay_10ms(2);//delay_10ms(8);//WT.EDIT 2019-0506
       DRV_BRAKE =0;//WT.EDIT 20190506
       if(Key_Start == 1)
       return 1;
-        
-    }
-  else if (Key_Start == 0)  //run //WT.EDIT 2019-02-20
+  }
+   else if (Key_Start == 0)  //run //WT.EDIT 2019-02-20
   {
     
     if(Key_Start == 0)
 	return 0;
    }
- }
+  else 
+      return 1;
+}
  
 /************************************************************
  *
