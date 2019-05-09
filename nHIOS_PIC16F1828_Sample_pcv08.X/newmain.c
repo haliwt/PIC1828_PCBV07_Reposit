@@ -13,7 +13,7 @@
 /*2019-04-03 */
 // #pragma config statements should precede project file includes.
 // Use project enums instead of #define for ON and OFF.
-
+/*ChenYu_Co. Soft 2019-05-09*/
 // CONFIG1
 #pragma config FOSC = EXTRC       // Oscillator Selection (ECH, External Clock, High Power Mode (4-32 MHz): device clock supplied to CLKIN pin)
 #pragma config WDTE = ON        // Watchdog Timer Enable (WDT enabled)
@@ -71,7 +71,12 @@ void  main(void )
       mykey =GetKeyPad();
      if((flag_power_on==2)||(my_drv.drv_brake ==1))
       {
+        TRISCbits.TRISC5 =1;
+        DRV_BRAKE =0 ;
         Auto_OutPut_Brake=1;
+        delay_10ms(5);
+         
+        //Auto_OutPut_Brake=1;
         TMR1_Counter_Enable = 0;
         Auto_Works_Signal = 1;
         TXREG=0xff;
@@ -94,7 +99,6 @@ void  main(void )
                  delay_1ms(10);
                  if( size_n ==0  )
                    {
-
                        size_n = EEPROM_Read_OneByte(0x56);
 
                        if(size_n == 245)
@@ -251,13 +255,19 @@ void  main(void )
                 else if((mydir == 0)&&(flag_brake!=5)&&(my_drv.drv_dir !=0)
                         &&(flag_brake==3||flag_brake==4))//CW motor run works 
                 {
-                     
-                     TXREG=0x77;
-                     delay_100us(5);
+                  
                      DRV_ENABLE=1;
                      DRV_BRAKE = 1; //run
                      TRISCbits.TRISC5 =0;
-                     delay_1ms(50);
+                     delay_10ms(30);
+                     IOCIE =1; 
+                      PEIE =1;   
+                      GIE = 1; 
+                      IOCAP2 = 1;  //Flag IOCAF0  //WT.EDIT 2019-02-20
+                       IOCAN2 =1; 
+                     TXREG=0x77;
+                     delay_100us(5);
+                     
                     TMR1_Counter_Enable = 1;
                     // DRV_BRAKE = 1; //run
                     /* add a judeg if screwdriver start */
@@ -355,10 +365,17 @@ void  main(void )
             {
                 
                 TRISCbits.TRISC5 =1;
-                delay_10ms(2);  //WT.EDIT 20190505
+                delay_10ms(1);  //WT.EDIT 20190505
                 DRV_BRAKE =0;
-				DRV_ENABLE=0;
-                delay_10ms(10);  //WT.EDIT 20190505
+                delay_10ms(1);  //WT.EDIT 20190505
+              
+                 IOCIE =0;
+                  PEIE =0;   
+                  GIE = 0;
+                  IOCAP2 = 0;  //Flag IOCAF0  //WT.EDIT 2019-02-20
+                  IOCAN2 =0; 
+                  IOCAP0 = 0;  //Flag IOCAF0  //WT.EDIT 2019-02-20
+                  IOCAN0 =0; 
 				flag_brake=3;
                 TMR1_Counter_Enable = 0;
 		        k=0;
@@ -367,7 +384,7 @@ void  main(void )
 			    flag_run=0;
 				Auto_OutPut_Brake=0;
 				Auto_Works_Signal = 0;
-                mydir= 2;
+                 DRV_ENABLE=0;
 			    mydir = Manual_Operation_Dir();
                 mykey =GetKeyPad();
                 my_drv.drv_brake=0;
@@ -416,7 +433,7 @@ void  main(void )
 void __interrupt() Hallsensor(void)
 {
    
-   if((IOCAF2 == 1) || (IOCAP2 ==1)||(PORTAbits.RA2 == 0))
+if((IOCAF2 == 1) || (IOCAP2 ==1)||(PORTAbits.RA2 == 0))
 {
      
       INTF =0;
@@ -425,15 +442,18 @@ void __interrupt() Hallsensor(void)
       IOCAP2=0;
       flag_power_on=flag_power_on+ 1;
       my_drv.drv_brake =1;
-     
+       TXREG=0x66;
+       delay_1ms(2);
+#if 0     
       TRISCbits.TRISC5 =1;
       DRV_BRAKE =0 ;
       Auto_OutPut_Brake=1;
       delay_10ms(5);
        TXREG=0x66;
        delay_1ms(2);
-     
+#endif 
    }
+
   
 }  
 
