@@ -1,7 +1,7 @@
 #ifndef DELAY_H
 #define	DELAY_H
 #include <xc.h>
-//#include <pic16f1828.h>
+#include <pic16f1828.h>
 #include <stdio.h>
 #include <stdlib.h>
 #define uchar       unsigned char   /*8bit 0~ 255*/

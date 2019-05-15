@@ -1,4 +1,4 @@
-//#include <xc.h>
+#include <xc.h>
 #include "Delay.h"
 #include "Hall_int.h"
 #include "Drv8306.h"
@@ -251,51 +251,56 @@ void  main(void )
                      TXREG=0x55;
                      delay_1ms(10);
                      
-				}
-                else if((mydir == 0)&&(flag_brake!=5)&&(my_drv.drv_dir !=0)
-                        &&(flag_brake==3||flag_brake==4))//CW motor run works 
+                }
+                else if((mydir == 0||my_drv.drv_enable==2)&&(flag_brake!=5)&&(my_drv.drv_dir !=0) 
+                        &&(flag_brake==3||flag_brake==4||my_drv.drv_dir==2))//CW motor run works 
                 {
-                  
-                     DRV_ENABLE=1;
                      DRV_BRAKE = 1; //run
+                     DRV_ENABLE=1;
                      TRISCbits.TRISC5 =0;
-                     delay_10ms(30);
-                     IOCIE =1; 
+                     DRV_BRAKE = 1; //run
+                     delay_1ms(5);
+                     //delay_1ms(30);
+                      IOCIE =1; 
                       PEIE =1;   
                       GIE = 1; 
                       IOCAP2 = 1;  //Flag IOCAF0  //WT.EDIT 2019-02-20
-                       IOCAN2 =1; 
-                     TXREG=0x77;
+                      IOCAN2 =1; 
+                      TXREG=0x77;
                      delay_100us(5);
-                     
                     TMR1_Counter_Enable = 1;
-                    // DRV_BRAKE = 1; //run
-                    /* add a judeg if screwdriver start */
-					 if(PIR1bits.TMR1IF ==1)//if(TMR1H ==0xFF) //
+                   if(PIR1bits.TMR1IF ==1)//if(TMR1H ==0xFF) //
 		             {
 		                PIR1bits.TMR1IF=0;
 		                 k=k+1;
 		                 TMR1H=0;
 		                 TMR1L=0;
                      }
-                    Auto_OutPut_Brake=0;
-                    Auto_Works_Signal = 1;
+                     Auto_OutPut_Brake=0;
+                     Auto_Works_Signal = 1;
                      flag_brake =4;
-                    my_drv.drv_dir=4; //WT.EDIT 20190508
-                      TXREG=0x88;
-                      delay_1ms(10);
-                   
-                  }
-                else if((mydir == 1)&&(flag_brake!=4)&&(my_drv.drv_dir !=0)
-                        &&(flag_brake ==3 || flag_brake==5)) //motor counter-clockwise don't works 
+                     my_drv.drv_dir=4; //WT.EDIT 20190508
+                     TXREG=0x88;
+                     delay_100us(2);
+                     my_drv.drv_enable=2;
+                }
+                else if((mydir == 1)&&(flag_brake!=4)&&(my_drv.drv_enable !=2)
+                        &&(flag_brake ==3 || flag_brake==5||my_drv.drv_dir ==1)) //motor counter-clockwise don't works 
 			    {
                     TXREG=0x22;
                     delay_100us(10);
-                    DRV_ENABLE=1;
+                     TRISCbits.TRISC5 =0;
+                     DRV_BRAKE = 1;
+                     DRV_ENABLE=1;
                     //TRISCbits.TRISC5 =0;
-                  //  delay_1ms(1);
-                    DRV_BRAKE = 1;
-                    TRISCbits.TRISC5 =0;
+                    delay_1ms(10);
+                    IOCIE =0;
+                    PEIE =0;   
+                    GIE = 0;
+                    IOCAP2 = 0;  //Flag IOCAF0  //WT.EDIT 2019-02-20
+                    IOCAN2 =0; 
+                  
+                   
                      flag_brake=5;
                     // DRV_BRAKE = 1;
 					 TMR1_Counter_Enable = 0;
@@ -310,43 +315,35 @@ void  main(void )
                     // DRV_BRAKE = 1;
                     TXREG=0x33;
                     delay_100us(10);
+                    my_drv.drv_enable=1;
                  }
-                else if ((mydir==0)&&(flag_brake == 5)&&(my_drv.drv_dir !=0)
-                        &&(flag_brake!=4)) //dont't support be changed direction
+                else if ((mydir==0)&&(flag_brake == 5)&&(flag_brake!=4)) //don't support be changed direction
                 {
                     DRV_DIR =1;
 					TXREG=0x12;
                     delay_100us(10);
-                    DRV_ENABLE=1;
-                    //TRISCbits.TRISC5 =0;
-                  //  delay_1ms(1);
                     DRV_BRAKE = 1;
+                    DRV_ENABLE=1;
                     TRISCbits.TRISC5 =0;
-                     delay_10ms(50);
-                     flag_brake=5;
-                     DRV_BRAKE = 1;
-					 TMR1_Counter_Enable = 0;
-		             k=0;
-					 TMR1H =0;
-					 TMR1L = 0;
-                    flag_power_on=0; //WT.EIDT 20190508
-                    my_drv.drv_dir=3;
+                    delay_1ms(50);
+                    flag_brake=5;
+					my_drv.drv_dir=3;
 					my_drv.drv_brake =3; //WT.EDIT 20190508
 				     Auto_OutPut_Brake=0;
                      Auto_Works_Signal = 0;
                      DRV_BRAKE = 1;
                     TXREG=0x23;
-                    delay_100us(10);
+                    delay_100us(5);
                 }
-                else if ((mydir==1)&&(flag_brake == 4)&&(my_drv.drv_dir !=0)
-                        &&(flag_brake!=5)) //dont't support be changed CW direction
+                else if ((mydir==1)&&(flag_brake == 4)&&(flag_brake!=5)) //dont't support be changed CW direction
                 {
 					
                      DRV_DIR =0;
                      TXREG=0x67;
 					 delay_100us(10);
-					 DRV_ENABLE=1;
                      DRV_BRAKE = 1; //run
+					 DRV_ENABLE=1;
+                    
                      TRISCbits.TRISC5 =0;
                      delay_1ms(100);
 					
@@ -361,40 +358,40 @@ void  main(void )
                
             }
             break;
+           
 			case 1: //STOP_key
             {
-                
+                Auto_OutPut_Brake=0;
+				DRV_ENABLE=0;
                 TRISCbits.TRISC5 =1;
-                delay_10ms(1);  //WT.EDIT 20190505
                 DRV_BRAKE =0;
-                delay_10ms(1);  //WT.EDIT 20190505
-              
-                 IOCIE =0;
+                delay_10ms(10);  //WT.EDIT 20190505
+                  IOCIE =0;
                   PEIE =0;   
                   GIE = 0;
                   IOCAP2 = 0;  //Flag IOCAF0  //WT.EDIT 2019-02-20
                   IOCAN2 =0; 
-                  IOCAP0 = 0;  //Flag IOCAF0  //WT.EDIT 2019-02-20
-                  IOCAN0 =0; 
-				flag_brake=3;
-                TMR1_Counter_Enable = 0;
+                 
+                flag_brake=3;
+                
 		        k=0;
 				TMR1H =0;
 				TMR1L = 0;
 			    flag_run=0;
-				Auto_OutPut_Brake=0;
+		
 				Auto_Works_Signal = 0;
-                 DRV_ENABLE=0;
-			    mydir = Manual_Operation_Dir();
-                mykey =GetKeyPad();
-                my_drv.drv_brake=0;
+                my_drv.drv_enable = 0;
+			     my_drv.drv_brake=0;
                 my_drv.drv_dir=0;
                  flag_power_on=1;
                   TXREG=0x11;
                   delay_1ms(10);
+				  mydir = Manual_Operation_Dir();
+                mykey =GetKeyPad();
                  
 		    }
             break;
+           
            
 
 	     default :
@@ -406,10 +403,9 @@ void  main(void )
 			  TMR1_Counter_Enable = 0;
 			  Auto_Works_Signal = 0;
 			  k=0;
-			  TMR1H =0;
-			  TMR1L = 0;
-             mydir = Manual_Operation_Dir();
-             mykey =GetKeyPad();
+			 TMR1H =0;
+			 TMR1L = 0;
+      
 			 
 			}
             break;
@@ -433,7 +429,7 @@ void  main(void )
 void __interrupt() Hallsensor(void)
 {
    
-if((IOCAF2 == 1) || (IOCAP2 ==1)||(PORTAbits.RA2 == 0))
+if((IOCAF2 == 1)||(PORTAbits.RA2 == 0))
 {
      
       INTF =0;
@@ -442,8 +438,8 @@ if((IOCAF2 == 1) || (IOCAP2 ==1)||(PORTAbits.RA2 == 0))
       IOCAP2=0;
       flag_power_on=flag_power_on+ 1;
       my_drv.drv_brake =1;
-       TXREG=0x66;
-       delay_1ms(2);
+      TXREG=0x66;
+      delay_100us(5);
 #if 0     
       TRISCbits.TRISC5 =1;
       DRV_BRAKE =0 ;
@@ -452,8 +448,23 @@ if((IOCAF2 == 1) || (IOCAP2 ==1)||(PORTAbits.RA2 == 0))
        TXREG=0x66;
        delay_1ms(2);
 #endif 
-   }
-
+ }
+#if 0
+ else if(IOCAP0 == 1) //||IOCAN0==1||(PORTAbits.RA0 == 0))
+{
+    INTF =0;
+	IOCIF =0;
+    IOCAF0=0;
+    IOCAP0=0;
+    TRISCbits.TRISC5 =1;
+    DRV_BRAKE =0 ;
+    Auto_OutPut_Brake=1;
+    delay_10ms(10);
+    TXREG=0x44;
+    delay_1ms(2);
+    my_drv.drv_brake =3;
+}
+#endif 
   
 }  
 

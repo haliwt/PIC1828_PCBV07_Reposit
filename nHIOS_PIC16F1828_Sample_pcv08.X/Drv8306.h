@@ -27,6 +27,7 @@ typedef struct DRV8306
     uchar drv_enable  ;
     uchar drv_brake ;
     uchar drv_dir ;
+    
    
 }my_drv8306;
 

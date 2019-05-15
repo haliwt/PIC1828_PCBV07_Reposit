@@ -41,23 +41,25 @@ uchar GetKeyPad(void)
 
   if(Key_Start == 1) //stop
   {
-	 
-      TRISCbits.TRISC5 =1;
-      Auto_OutPut_Brake=0;
-      delay_10ms(10);
        DRV_BRAKE =0 ;
-       TXREG=0xaa;
+       TRISCbits.TRISC5 =1;
+	   Auto_OutPut_Brake=0;
+       delay_10ms(1);
+       DRV_BRAKE =0 ;
+       TXREG=0xbb;
        delay_100us(10);
        return 1;
       
   }
 
-  else if (Key_Start == 0)  //run //WT.EDIT 2019-02-20
+  else //if (Key_Start == 0)  //run //WT.EDIT 2019-02-20
   {
-	return 0;
+	  TXREG=0xaa;
+     // delay_100us(5);
+      return 0;
    }
-  else 
-      return 1;
+ // else 
+      //return 1;
 }
  
 /************************************************************
@@ -73,13 +75,14 @@ uchar  Manual_Operation_Dir(void)
    if(Key_Dir ==1)//anticlockwise Motor don't works run
    {
        
-       delay_1ms(20);
-	   if(Key_Dir ==1) //CCW
-	   	{
+      // delay_1ms(20); //WT.EDIT DISABLE 201905.14
+	   //if(Key_Dir ==1) //CCW
+	   //	{
           
            if(my_drv.drv_dir ==4)
            {
               DRV_DIR =0;
+			   TXREG=0x21;
               return 0;
            }
            else
@@ -87,21 +90,24 @@ uchar  Manual_Operation_Dir(void)
             Auto_OutPut_Brake=0;
 			DRV_DIR =1;
             my_drv.drv_dir=1;
+            TXREG=0x11;
+           delay_100us(5);
             return 1;
            }
 		  
-	   	}
+	   //	}
    }
    else if(Key_Dir ==0)  //clockwise Motor do works run
    {
        
-       delay_1ms(20);
-       if(Key_Dir==0)
-       {
+       //delay_1ms(20); //WT.EDIT 201905.14
+      // if(Key_Dir==0)
+      // {
            if(my_drv.drv_dir ==3)
            {
               Auto_OutPut_Brake=0;
 			  DRV_DIR =1;
+			  TXREG=0x01;
               return 1;
            }
            else
@@ -109,9 +115,11 @@ uchar  Manual_Operation_Dir(void)
            
            DRV_DIR =0;
            my_drv.drv_dir=2;
+           TXREG=0x00;
+           delay_100us(5);
             return 0;
            }
-        }
+      //  }
    }
    
   
@@ -143,6 +151,7 @@ uchar MachineLearning_Key(void)
 	if(Key_MachineL == 1)
 	   {
 		  my_machine.machine_swtich =1 ;
+		  TXREG=0xcc;
 		  return 1;
         
 	   }
