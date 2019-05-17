@@ -259,7 +259,7 @@ void  main(void )
                      DRV_ENABLE=1;
                      TRISCbits.TRISC5 =0;
                      DRV_BRAKE = 1; //run
-                     delay_1ms(5);
+                    // delay_1ms(5);
                      //delay_1ms(30);
                       IOCIE =1; 
                       PEIE =1;   
@@ -267,7 +267,7 @@ void  main(void )
                       IOCAP2 = 1;  //Flag IOCAF0  //WT.EDIT 2019-02-20
                       IOCAN2 =1; 
                       TXREG=0x77;
-                     delay_100us(5);
+                    // delay_100us(5);
                     TMR1_Counter_Enable = 1;
                    if(PIR1bits.TMR1IF ==1)//if(TMR1H ==0xFF) //
 		             {
@@ -281,25 +281,26 @@ void  main(void )
                      flag_brake =4;
                      my_drv.drv_dir=4; //WT.EDIT 20190508
                      TXREG=0x88;
-                     delay_100us(2);
+                    // delay_100us(2);
                      my_drv.drv_enable=2;
                 }
                 else if((mydir == 1)&&(flag_brake!=4)&&(my_drv.drv_enable !=2)
                         &&(flag_brake ==3 || flag_brake==5||my_drv.drv_dir ==1)) //motor counter-clockwise don't works 
 			    {
-                    TXREG=0x22;
-                    delay_100us(10);
-                     TRISCbits.TRISC5 =0;
+                   
+                    // TRISCbits.TRISC5 =0;
                      DRV_BRAKE = 1;
                      DRV_ENABLE=1;
-                    //TRISCbits.TRISC5 =0;
-                    delay_1ms(10);
+                     TRISCbits.TRISC5 =0;
+                    // DRV_BRAKE = 1;
+                    //delay_1ms(10);
                     IOCIE =0;
                     PEIE =0;   
                     GIE = 0;
                     IOCAP2 = 0;  //Flag IOCAF0  //WT.EDIT 2019-02-20
                     IOCAN2 =0; 
-                  
+                     TXREG=0x22;
+                    //delay_100us(10);
                    
                      flag_brake=5;
                     // DRV_BRAKE = 1;
@@ -314,7 +315,7 @@ void  main(void )
                      Auto_Works_Signal = 0;
                     // DRV_BRAKE = 1;
                     TXREG=0x33;
-                    delay_100us(10);
+                   // delay_100us(10);
                     my_drv.drv_enable=1;
                  }
                 else if ((mydir==0)&&(flag_brake == 5)&&(flag_brake!=4)) //don't support be changed direction

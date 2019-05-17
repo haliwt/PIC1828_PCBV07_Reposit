@@ -91,7 +91,7 @@ uchar  Manual_Operation_Dir(void)
 			DRV_DIR =1;
             my_drv.drv_dir=1;
             TXREG=0x11;
-           delay_100us(5);
+          // delay_100us(5);
             return 1;
            }
 		  
