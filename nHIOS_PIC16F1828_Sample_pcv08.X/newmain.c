@@ -266,32 +266,41 @@ void  main(void )
                          TRISCbits.TRISC5 =0;
                          delay_1ms(1);
                         
-                        PR2 =0x5;//
+                         PR2 =0x5;//
                          CCPR1L =0x5;    //MSB 8bit<>pulse duty of value
                          TRISCbits.TRISC5 =0;
                          delay_1ms(1);
+                         
                          PR2 =0x6;//
                          CCPR1L =0x6;    //MSB 8bit<>pulse duty of value
                          TRISCbits.TRISC5 =0;
                          delay_1ms(1);
+                         
                          PR2 =0x7;//
                          CCPR1L =0x7;    //MSB 8bit<>pulse duty of value
                          TRISCbits.TRISC5 =0;
                          delay_1ms(1);
+                         
                          PR2 =0x8;//
                          CCPR1L =0x8;    //MSB 8bit<>pulse duty of value
                          TRISCbits.TRISC5 =0;
-                         delay_1ms(1);
+                        delay_1ms(1);
+                        
                         PR2 =0x9;//
                          CCPR1L =0x9;    //MSB 8bit<>pulse duty of value
                          TRISCbits.TRISC5 =0;
                          delay_1ms(1);
+                         
                          PR2 =0x0a;//
                          CCPR1L =0x0a;    //MSB 8bit<>pulse duty of value
+                         TRISCbits.TRISC5 =0;
                          delay_1ms(1);
+                         
                          PR2 =0xb;//
                          CCPR1L =0x0b;    //MSB 8bit<>pulse duty of value
+                         TRISCbits.TRISC5 =0;
                          delay_1ms(1);
+                         
                          PR2 =0x0c ;//
                          CCPR1L = 0x0c;    //MSB 8bit<>pulse duty of value
                          TRISCbits.TRISC5 =0;
@@ -335,7 +344,7 @@ void  main(void )
                    if(i==0)
                     {
                         i++;
-                          DRV_DIR =1;
+                         DRV_DIR =1;
                          PR2 =0x4;//
                          CCPR1L =0x4;    //MSB 8bit<>pulse duty of value
                          TRISCbits.TRISC5 =0;
@@ -351,7 +360,7 @@ void  main(void )
                          PR2 =0x7;//
                          CCPR1L =0x7;    //MSB 8bit<>pulse duty of value
                          TRISCbits.TRISC5 =0;
-                         delay_1ms(1);
+                        delay_1ms(1);
                         PR2 =0x8;//
                          CCPR1L =0x8;    //MSB 8bit<>pulse duty of value
                          TRISCbits.TRISC5 =0;
@@ -359,17 +368,19 @@ void  main(void )
                         PR2 =0x9;//
                          CCPR1L =0x9;    //MSB 8bit<>pulse duty of value
                          TRISCbits.TRISC5 =0;
-                         delay_1ms(1);
+                        delay_1ms(1);
                          PR2 =0x0a;//
                          CCPR1L =0x0a;    //MSB 8bit<>pulse duty of value
+                         TRISCbits.TRISC5 =0;
                          delay_1ms(1);
                          PR2 =0xb;//
                          CCPR1L =0x0b;    //MSB 8bit<>pulse duty of value
+                        TRISCbits.TRISC5 =0;
                          delay_1ms(1);
                          PR2 =0x0c ;//
                          CCPR1L = 0x0c;    //MSB 8bit<>pulse duty of value
                          TRISCbits.TRISC5 =0;
-                         delay_1ms(1);
+                        delay_1ms(1);
                          TXREG=0x23;
                        //  delay_100us(2);
                     }
@@ -398,17 +409,17 @@ void  main(void )
                     TXREG=0x33;
                    // delay_100us(10);
                     my_drv.drv_enable=1;
-                    DRV_DIR =1;
+                    
                  }
                 else if ((mydir==0)&&(flag_brake == 5)&&(flag_brake!=4)) //don't support be changed direction
                 {
                     DRV_DIR =1;
 					TXREG=0x12;
-                    delay_100us(10);
+                   // delay_100us(10);
                     DRV_BRAKE = 1;
                     DRV_ENABLE=1;
                     TRISCbits.TRISC5 =0;
-                    delay_1ms(50);
+                    //delay_1ms(50);
                     flag_brake=5;
 					my_drv.drv_dir=3;
 					my_drv.drv_brake =3; //WT.EDIT 20190508
@@ -416,26 +427,26 @@ void  main(void )
                      Auto_Works_Signal = 0;
                      DRV_BRAKE = 1;
                     TXREG=0x23;
-                    delay_100us(5);
+                   // delay_100us(5);
                 }
                 else if ((mydir==1)&&(flag_brake == 4)&&(flag_brake!=5)) //dont't support be changed CW direction
                 {
 					
                      DRV_DIR =0;
                      TXREG=0x67;
-					 delay_100us(10);
+					// delay_100us(10);
                      DRV_BRAKE = 1; //run
 					 DRV_ENABLE=1;
                     
                      TRISCbits.TRISC5 =0;
-                     delay_1ms(100);
+                    // delay_1ms(100);
 					
                       Auto_OutPut_Brake=0;
                       Auto_Works_Signal = 1;
                       flag_brake =4;
                       my_drv.drv_dir=4; //WT.EDIT 20190508
                       TXREG=0x78;
-                      delay_1ms(10);
+                      //delay_1ms(10);
                 }
               
                
