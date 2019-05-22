@@ -44,18 +44,19 @@ uchar GetKeyPad(void)
        DRV_BRAKE =0 ;
        TRISCbits.TRISC5 =1;
 	   Auto_OutPut_Brake=0;
-       delay_10ms(1);
+       delay_10ms(5);
        DRV_BRAKE =0 ;
        TXREG=0xbb;
-       delay_100us(10);
+      // delay_100us(10);
        return 1;
       
   }
 
-  else //if (Key_Start == 0)  //run //WT.EDIT 2019-02-20
+  else if (Key_Start == 0)  //run //WT.EDIT 2019-02-20
   {
 	  TXREG=0xaa;
      // delay_100us(5);
+     my_drv.drv_enable=2;
       return 0;
    }
  // else 

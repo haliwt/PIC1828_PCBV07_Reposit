@@ -47,7 +47,7 @@ uchar flag_power_on=0;
  *************************************************************/
 void  main(void )
 {
-    uchar i, machine_key=0,k=0,m=0,n=0,power_on=1,counter=0;
+    uchar i=0, machine_key=0,k=0,m=0,n=0,power_on=1,counter=0;
     uint size_n;
     uchar  mykey=1,times_m=0,times_n=0,mydir = 0;  //wt.edit 2019-02-21
     uchar flag_brake,flag_run=0;   
@@ -252,22 +252,41 @@ void  main(void )
                      delay_1ms(10);
                      
                 }
-                else if((mydir == 0||my_drv.drv_enable==2)&&(flag_brake!=5)&&(my_drv.drv_dir !=0) 
+                else if((mydir == 0)&&(flag_brake!=5)&&(my_drv.drv_dir !=0) 
                         &&(flag_brake==3||flag_brake==4||my_drv.drv_dir==2))//CW motor run works 
                 {
-                     DRV_BRAKE = 1; //run
-                     DRV_ENABLE=1;
-                     TRISCbits.TRISC5 =0;
-                     DRV_BRAKE = 1; //run
-                    // delay_1ms(5);
-                     //delay_1ms(30);
+                    DRV_BRAKE = 1; //run
+                    DRV_ENABLE=1;
+                   
+                    if(i==0)
+                    {
+                        i++;
+                         PR2 =0xa;//
+                         CCPR1L =0x0a;    //MSB 8bit<>pulse duty of value
+                         TRISCbits.TRISC5 =0;
+                         delay_1ms(1);
+                         PR2 =0xb;//
+                         CCPR1L =0x0b;    //MSB 8bit<>pulse duty of value
+                         delay_1ms(1);
+                        
+                        
+                         PR2 =0x0c ;//
+                         CCPR1L = 0x0c;    //MSB 8bit<>pulse duty of value
+                         TRISCbits.TRISC5 =0;
+                         delay_1ms(1);
+                         TXREG=0x12;
+                         delay_100us(2);
+                    }
+                      TRISCbits.TRISC5 =0;
+                     
                       IOCIE =1; 
                       PEIE =1;   
                       GIE = 1; 
                       IOCAP2 = 1;  //Flag IOCAF0  //WT.EDIT 2019-02-20
                       IOCAN2 =1; 
                       TXREG=0x77;
-                    // delay_100us(5);
+                      i=5;
+                   
                     TMR1_Counter_Enable = 1;
                    if(PIR1bits.TMR1IF ==1)//if(TMR1H ==0xFF) //
 		             {
@@ -282,23 +301,40 @@ void  main(void )
                      my_drv.drv_dir=4; //WT.EDIT 20190508
                      TXREG=0x88;
                     // delay_100us(2);
+                   
                      my_drv.drv_enable=2;
                 }
-                else if((mydir == 1)&&(flag_brake!=4)&&(my_drv.drv_enable !=2)
+                else if((mydir == 1|| my_drv.drv_dir==1)&&(flag_brake!=4)&&(my_drv.drv_enable !=2)
                         &&(flag_brake ==3 || flag_brake==5||my_drv.drv_dir ==1)) //motor counter-clockwise don't works 
 			    {
-                   
-                    // TRISCbits.TRISC5 =0;
-                     DRV_BRAKE = 1;
-                     DRV_ENABLE=1;
-                     TRISCbits.TRISC5 =0;
-                    // DRV_BRAKE = 1;
-                    //delay_1ms(10);
+                    DRV_BRAKE = 1; //run
+                    DRV_ENABLE=1;
+                   if(i==0)
+                    {
+                        i++;
+                         PR2 =0xa;//
+                         CCPR1L =0x0a;    //MSB 8bit<>pulse duty of value
+                         TRISCbits.TRISC5 =0;
+                         delay_1ms(1);
+                         PR2 =0xb;//
+                         CCPR1L =0x0b;    //MSB 8bit<>pulse duty of value
+                         delay_1ms(1);
+                        
+                        
+                         PR2 =0x0c ;//
+                         CCPR1L = 0x0c;    //MSB 8bit<>pulse duty of value
+                         TRISCbits.TRISC5 =0;
+                         delay_1ms(1);
+                         TXREG=0x23;
+                         delay_100us(2);
+                    }
+                    TRISCbits.TRISC5 =0;
                     IOCIE =0;
                     PEIE =0;   
                     GIE = 0;
                     IOCAP2 = 0;  //Flag IOCAF0  //WT.EDIT 2019-02-20
                     IOCAN2 =0; 
+                    i=5;
                      TXREG=0x22;
                     //delay_100us(10);
                    
@@ -366,13 +402,13 @@ void  main(void )
 				DRV_ENABLE=0;
                 TRISCbits.TRISC5 =1;
                 DRV_BRAKE =0;
-                delay_10ms(10);  //WT.EDIT 20190505
+                delay_10ms(5);  //WT.EDIT 20190505
                   IOCIE =0;
                   PEIE =0;   
                   GIE = 0;
                   IOCAP2 = 0;  //Flag IOCAF0  //WT.EDIT 2019-02-20
                   IOCAN2 =0; 
-                 
+                  i=0;
                 flag_brake=3;
                 
 		        k=0;
@@ -385,13 +421,15 @@ void  main(void )
 			     my_drv.drv_brake=0;
                 my_drv.drv_dir=0;
                  flag_power_on=1;
-                  TXREG=0x11;
-                  delay_1ms(10);
+                  TXREG=0xf1;
+                  delay_100us(5);
 				  mydir = Manual_Operation_Dir();
                 mykey =GetKeyPad();
                  
 		    }
             break;
+            
+            
            
            
 
