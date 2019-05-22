@@ -253,7 +253,7 @@ void  main(void )
                      
                 }
                 else if((mydir == 0)&&(flag_brake!=5)&&(my_drv.drv_dir !=0) 
-                        &&(flag_brake==3||flag_brake==4||my_drv.drv_dir==2))//CW motor run works 
+                        &&(flag_brake==3||flag_brake==4))//CW motor run works 
                 {
                     DRV_BRAKE = 1; //run
                     DRV_ENABLE=1;
@@ -326,14 +326,16 @@ void  main(void )
                    
                      my_drv.drv_enable=2;
                 }
-                else if((mydir == 1|| my_drv.drv_dir==1)&&(flag_brake!=4)&&(my_drv.drv_enable !=2)
-                        &&(flag_brake ==3 || flag_brake==5||my_drv.drv_dir ==1)) //motor counter-clockwise don't works 
+                else if((mydir == 1)&&(flag_brake!=4)&&(my_drv.drv_enable !=2)
+                        &&(flag_brake ==3 || flag_brake==5)) //motor counter-clockwise don't works 
 			    {
+                    DRV_DIR =1;
                     DRV_BRAKE = 1; //run
                     DRV_ENABLE=1;
                    if(i==0)
                     {
                         i++;
+                          DRV_DIR =1;
                          PR2 =0x4;//
                          CCPR1L =0x4;    //MSB 8bit<>pulse duty of value
                          TRISCbits.TRISC5 =0;
@@ -396,6 +398,7 @@ void  main(void )
                     TXREG=0x33;
                    // delay_100us(10);
                     my_drv.drv_enable=1;
+                    DRV_DIR =1;
                  }
                 else if ((mydir==0)&&(flag_brake == 5)&&(flag_brake!=4)) //don't support be changed direction
                 {
