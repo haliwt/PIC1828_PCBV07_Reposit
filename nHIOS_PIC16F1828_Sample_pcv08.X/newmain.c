@@ -320,7 +320,6 @@ void  main(void )
                          CCPR1L =0x0b;    //MSB 8bit<>pulse duty of value
                          delay_1ms(1);
                         
-                        
                          PR2 =0x0c ;//
                          CCPR1L = 0x0c;    //MSB 8bit<>pulse duty of value
                          TRISCbits.TRISC5 =0;
@@ -399,10 +398,11 @@ void  main(void )
 			case 1: //STOP_key
             {
                 Auto_OutPut_Brake=0;
+                DRV_BRAKE =0;
 				DRV_ENABLE=0;
                 TRISCbits.TRISC5 =1;
-                DRV_BRAKE =0;
-                delay_10ms(5);  //WT.EDIT 20190505
+                
+                delay_10ms(10);  //WT.EDIT 20190505
                   IOCIE =0;
                   PEIE =0;   
                   GIE = 0;
