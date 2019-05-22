@@ -261,9 +261,19 @@ void  main(void )
                     if(i==0)
                     {
                         i++;
+                         PR2 =0x4;//
+                         CCPR1L =0x4;    //MSB 8bit<>pulse duty of value
+                         TRISCbits.TRISC5 =0;
+                         delay_1ms(1);
+                        
+                        PR2 =0x5;//
+                         CCPR1L =0x5;    //MSB 8bit<>pulse duty of value
+                         TRISCbits.TRISC5 =0;
+                         delay_1ms(1);
                          PR2 =0x6;//
                          CCPR1L =0x6;    //MSB 8bit<>pulse duty of value
                          TRISCbits.TRISC5 =0;
+                         delay_1ms(1);
                          PR2 =0x7;//
                          CCPR1L =0x7;    //MSB 8bit<>pulse duty of value
                          TRISCbits.TRISC5 =0;
@@ -282,8 +292,6 @@ void  main(void )
                          PR2 =0xb;//
                          CCPR1L =0x0b;    //MSB 8bit<>pulse duty of value
                          delay_1ms(1);
-                        
-                        
                          PR2 =0x0c ;//
                          CCPR1L = 0x0c;    //MSB 8bit<>pulse duty of value
                          TRISCbits.TRISC5 =0;
@@ -326,9 +334,18 @@ void  main(void )
                    if(i==0)
                     {
                         i++;
-                         PR2 =0x6;//
+                         PR2 =0x4;//
+                         CCPR1L =0x4;    //MSB 8bit<>pulse duty of value
+                         TRISCbits.TRISC5 =0;
+                         delay_1ms(1);
+                         PR2 =0x5;//
+                         CCPR1L =0x5;    //MSB 8bit<>pulse duty of value
+                         TRISCbits.TRISC5 =0;
+                         delay_1ms(1);
+                        PR2 =0x6;//
                          CCPR1L =0x6;    //MSB 8bit<>pulse duty of value
                          TRISCbits.TRISC5 =0;
+                         delay_1ms(1);
                          PR2 =0x7;//
                          CCPR1L =0x7;    //MSB 8bit<>pulse duty of value
                          TRISCbits.TRISC5 =0;
@@ -347,8 +364,6 @@ void  main(void )
                          PR2 =0xb;//
                          CCPR1L =0x0b;    //MSB 8bit<>pulse duty of value
                          delay_1ms(1);
-                        
-                        
                          PR2 =0x0c ;//
                          CCPR1L = 0x0c;    //MSB 8bit<>pulse duty of value
                          TRISCbits.TRISC5 =0;
