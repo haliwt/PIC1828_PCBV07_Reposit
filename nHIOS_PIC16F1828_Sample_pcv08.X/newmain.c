@@ -335,16 +335,17 @@ void  main(void )
                    
                      my_drv.drv_enable=2;
                 }
-                else if((mydir == 1||my_drv.drv_dir==1)&&(flag_brake!=4)&&(my_drv.drv_enable !=2)
-                        &&(flag_brake ==3 || flag_brake==5)) //motor counter-clockwise don't works 
+                else if((mydir == 1||my_drv.drv_dir==1)&&(flag_brake!=4))//&&(my_drv.drv_enable !=2)
+                       // &&(flag_brake ==3 || flag_brake==5)) //motor counter-clockwise don't works 
 			    {
                     DRV_DIR =1;
                     DRV_BRAKE = 1; //run
                     DRV_ENABLE=1;
                    if(i==0)
                     {
-                        i++;
+                        
                          DRV_DIR =1;
+                         i++;
                          PR2 =0x4;//
                          CCPR1L =0x4;    //MSB 8bit<>pulse duty of value
                          TRISCbits.TRISC5 =0;
