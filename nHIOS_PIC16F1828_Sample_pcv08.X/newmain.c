@@ -69,7 +69,7 @@ void  main(void )
       machine_key =MachineLearning_Key();
 	  mydir = Manual_Operation_Dir();
       mykey =GetKeyPad();
-     if((flag_power_on==2)||(my_drv.drv_brake ==1))
+     if(flag_power_on==2)//||(my_drv.drv_brake ==1))
       {
         TRISCbits.TRISC5 =1;
         DRV_BRAKE =0 ;
@@ -243,13 +243,15 @@ void  main(void )
                      DRV_BRAKE = 0; //run
                      DRV_ENABLE=0;
 				     Auto_OutPut_Brake=1;
-                     delay_10ms(20); //WT.EDIT 20190505
+                     delay_10ms(2); //WT.EDIT 20190505
 				     TMR1H=0;
 		             TMR1L=0;
                      k=0;
                      Auto_Works_Signal = 1;
                      TXREG=0x55;
-                     delay_1ms(10);
+                     my_drv.drv_brake=5;
+                     flag_power_on=0;
+                 
                      
                 }
                 else if((mydir == 0 ||my_drv.drv_dir==2)&&(flag_brake!=5))
@@ -332,7 +334,7 @@ void  main(void )
                      my_drv.drv_dir=4; //WT.EDIT 20190508
                      TXREG=0x88;
                     // delay_100us(2);
-                   
+                      flag_power_on=1;
                      my_drv.drv_enable=2;
                 }
                 else if((mydir == 1||my_drv.drv_dir==1)&&(flag_brake!=4))//&&(my_drv.drv_enable !=2)
@@ -456,7 +458,13 @@ void  main(void )
            
 			case 1: //STOP_key
             {
-                Auto_OutPut_Brake=0;
+               
+               my_drv.drv_brake=5;
+               flag_power_on=0;
+               Auto_OutPut_Brake=0;
+               my_drv.drv_enable = 0;
+			   flag_brake=3;
+               my_drv.drv_dir=0;
                DRV_ENABLE=0;
                 TRISCbits.TRISC5 =1;
                 delay_10ms(10);  //WT.EDIT 20190505
@@ -467,7 +475,7 @@ void  main(void )
                   IOCAP2 = 0;  //Flag IOCAF0  //WT.EDIT 2019-02-20
                   IOCAN2 =0; 
                   i=0;
-                flag_brake=3;
+                
                 
 		        k=0;
 				TMR1H =0;
@@ -475,12 +483,10 @@ void  main(void )
 			    flag_run=0;
 		
 				Auto_Works_Signal = 0;
-                my_drv.drv_enable = 0;
-			     my_drv.drv_brake=0;
-                my_drv.drv_dir=0;
-                 flag_power_on=1;
+              
+                
                   TXREG=0xf1;
-                 
+                Auto_OutPut_Brake=0;
 				  mydir = Manual_Operation_Dir();
                 mykey =GetKeyPad();
                  
