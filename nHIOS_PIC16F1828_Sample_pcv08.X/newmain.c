@@ -345,9 +345,8 @@ void  main(void )
                     DRV_ENABLE=1;
                    if(i==0)
                     {
-                        
-                         DRV_DIR =1;
                          i++;
+                         DRV_DIR =1;
                          PR2 =0x4;//
                          CCPR1L =0x4;    //MSB 8bit<>pulse duty of value
                          TRISCbits.TRISC5 =0;
