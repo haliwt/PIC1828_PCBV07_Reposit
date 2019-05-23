@@ -252,8 +252,8 @@ void  main(void )
                      delay_1ms(10);
                      
                 }
-                else if((mydir == 0)&&(flag_brake!=5)&&(my_drv.drv_dir !=0) 
-                        &&(flag_brake==3||flag_brake==4))//CW motor run works 
+                else if((mydir == 0 ||my_drv.drv_dir==2)&&(flag_brake!=5))
+                       // &&(flag_brake==3))//||flag_brake==4))//CW motor run works //&&(my_drv.drv_dir !=0) 
                 {
                     DRV_BRAKE = 1; //run
                     DRV_ENABLE=1;
@@ -335,7 +335,7 @@ void  main(void )
                    
                      my_drv.drv_enable=2;
                 }
-                else if((mydir == 1)&&(flag_brake!=4)&&(my_drv.drv_enable !=2)
+                else if((mydir == 1||my_drv.drv_dir==1)&&(flag_brake!=4)&&(my_drv.drv_enable !=2)
                         &&(flag_brake ==3 || flag_brake==5)) //motor counter-clockwise don't works 
 			    {
                     DRV_DIR =1;
