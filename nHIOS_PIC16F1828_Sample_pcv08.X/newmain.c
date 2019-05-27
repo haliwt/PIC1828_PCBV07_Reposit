@@ -256,10 +256,12 @@ void  main(void )
                        // &&(flag_brake==3||flag_brake==4))//CW motor run works 
                 {
                     DRV_BRAKE = 1; //run
+                    Auto_OutPut_Brake=0;
                     DRV_ENABLE=1;
-                   
+                    DRV_DIR =0;
                     if(i==0)
                     {
+                        DRV_DIR =0;
                         i++;
                          PR2 =0x4;//
                          CCPR1L =0x4;    //MSB 8bit<>pulse duty of value
@@ -308,7 +310,8 @@ void  main(void )
                          TXREG=0x12;
                         // delay_100us(2);
                     }
-                      TRISCbits.TRISC5 =0;
+                    DRV_DIR =0; 
+                    TRISCbits.TRISC5 =0;
                      
                       IOCIE =1; 
                       PEIE =1;   
