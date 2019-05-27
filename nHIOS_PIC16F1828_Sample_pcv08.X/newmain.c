@@ -237,19 +237,19 @@ void  main(void )
         {
             case 0 : //run works
             {
-                if((mydir == 0)&&(flag_brake ==2))
+                if((mydir == 0)&&(flag_brake ==2)&&(flag_brake!=3))
                 {
                      TRISCbits.TRISC5 =1;
                      DRV_BRAKE = 0; //run
                      DRV_ENABLE=0;
 				     Auto_OutPut_Brake=1;
-                     delay_10ms(20); //WT.EDIT 20190505
+                     delay_10ms(2); //WT.EDIT 20190505
 				     TMR1H=0;
 		             TMR1L=0;
                      k=0;
                      Auto_Works_Signal = 1;
                      TXREG=0x55;
-                     delay_1ms(10);
+                     //delay_1ms(10);
                      
                 }
                 else if(((mydir == 0)||(my_drv.drv_dir==2))&&(flag_brake!=5)) //&&(my_drv.drv_dir !=0) 
@@ -439,7 +439,7 @@ void  main(void )
                 {
                     DRV_DIR =1;
 					TXREG=0x12;
-                   // delay_100us(10);
+                    Auto_OutPut_Brake=0;
                     DRV_BRAKE = 1;
                     DRV_ENABLE=1;
                     TRISCbits.TRISC5 =0;
@@ -458,7 +458,7 @@ void  main(void )
 					
                      DRV_DIR =0;
                      TXREG=0x67;
-					// delay_100us(10);
+					 Auto_OutPut_Brake=0;
                      DRV_BRAKE = 1; //run
 					 DRV_ENABLE=1;
                     
@@ -503,7 +503,7 @@ void  main(void )
                 my_drv.drv_dir=0;
                  flag_power_on=1;
                   TXREG=0xf1;
-                 
+                Auto_OutPut_Brake=0;
 				  mydir = Manual_Operation_Dir();
                 mykey =GetKeyPad();
                  

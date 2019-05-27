@@ -41,10 +41,10 @@ uchar GetKeyPad(void)
 
   if(Key_Start == 1) //stop
   {
+      // Auto_OutPut_Brake=0; 
        DRV_BRAKE =0 ;
        TRISCbits.TRISC5 =1;
-	   Auto_OutPut_Brake=0;
-       delay_10ms(10);
+	   delay_10ms(1);
        DRV_BRAKE =0 ;
        TXREG=0xbb;
       // delay_100us(10);
@@ -82,7 +82,8 @@ uchar  Manual_Operation_Dir(void)
           
            if(my_drv.drv_dir ==4)
            {
-              DRV_DIR =0;
+              // Auto_OutPut_Brake=0;
+               DRV_DIR =0;
 			   TXREG=0x21;
               return 0;
            }
@@ -113,7 +114,7 @@ uchar  Manual_Operation_Dir(void)
            }
            else
            {
-           
+           //Auto_OutPut_Brake=0;
            DRV_DIR =0;
            my_drv.drv_dir=2;
            TXREG=0x00;
