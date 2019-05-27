@@ -38,10 +38,9 @@ void Key_Init(void)
  ************************************************************/
 uchar GetKeyPad(void)
 {
-  
+
   if(Key_Start == 1) //stop
   {
-       
        DRV_BRAKE =0 ;
        TRISCbits.TRISC5 =1;
 	   Auto_OutPut_Brake=0;
@@ -56,7 +55,7 @@ uchar GetKeyPad(void)
   else if (Key_Start == 0)  //run //WT.EDIT 2019-02-20
   {
 	  TXREG=0xaa;
-      Auto_OutPut_Brake=0;
+     // delay_100us(5);
      
      return 0;
    }
@@ -74,13 +73,13 @@ uchar GetKeyPad(void)
 uchar  Manual_Operation_Dir(void)
 {
    
-  if(Key_Dir ==1)//anticlockwise Motor don't works run
+   if(Key_Dir ==1)//anticlockwise Motor don't works run
    {
        
       // delay_1ms(20); //WT.EDIT DISABLE 201905.14
 	   //if(Key_Dir ==1) //CCW
 	   //	{
-        
+          
            if(my_drv.drv_dir ==4)
            {
               DRV_DIR =0;
