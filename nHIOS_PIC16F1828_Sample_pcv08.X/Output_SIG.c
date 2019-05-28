@@ -11,10 +11,13 @@ void Output_SIG_Init(void)
 {
       TRISBbits.TRISB6 =0;  //IO  -output fault signal
       
+       Auto_OutPut_Brake = 0; //PORTBbits.RB6 =0;   //output error signal
+      
       TRISBbits.TRISB4 = 0;
 	  ANSB4 =0;
+     
       
-      Auto_OutPut_Brake = 0; //PORTBbits.RB6 =0;   //output error signal
+     
       Auto_Works_Signal = 0;
 }
 

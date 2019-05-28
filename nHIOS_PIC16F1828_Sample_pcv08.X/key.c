@@ -38,20 +38,19 @@ void Key_Init(void)
  ************************************************************/
 uchar GetKeyPad(void)
 {
-
+  
   if(Key_Start == 1) //stop
   {
-      // Auto_OutPut_Brake=0; 
+       //Auto_OutPut_Brake=0; 
        DRV_BRAKE =0 ;
        TRISCbits.TRISC5 =1;
-	   delay_10ms(10);
+	   delay_10ms(6);
        DRV_BRAKE =0 ;
        TXREG=0xbb;
       // delay_100us(10);
        return 1;
       
   }
-
   else if (Key_Start == 0)  //run //WT.EDIT 2019-02-20
   {
 	  TXREG=0xaa;
@@ -72,58 +71,54 @@ uchar GetKeyPad(void)
  ************************************************************/
 uchar  Manual_Operation_Dir(void)
 {
-   
+ 
+ 
    if(Key_Dir ==1)//anticlockwise Motor don't works run
    {
        
-      // delay_1ms(20); //WT.EDIT DISABLE 201905.14
-	   //if(Key_Dir ==1) //CCW
-	   //	{
-          
-           if(my_drv.drv_dir ==4)
-           {
+     if(my_drv.drv_dir ==4)
+     {
               // Auto_OutPut_Brake=0;
                DRV_DIR =0;
               // my_drv.drv_dir=2;
 			   TXREG=0x21;
               return 0;
-           }
-           else
-           {
-           // Auto_OutPut_Brake=0;
-			DRV_DIR =1;
-            my_drv.drv_dir=1;
-            TXREG=0x11;
-          // delay_100us(5);
-            return 1;
-           }
-		  
-	   //	}
+    }
+    else
+    {
+    // Auto_OutPut_Brake=0;
+     DRV_DIR =1;
+     my_drv.drv_dir=1;
+     Auto_Works_Signal = 0;
+     TXREG=0x11;
+   // delay_100us(5);
+     return 1;
+    }
+		 
    }
    else if(Key_Dir ==0)  //clockwise Motor do works run
    {
        
-       //delay_1ms(20); //WT.EDIT 201905.14
-      // if(Key_Dir==0)
-      // {
-           if(my_drv.drv_dir ==3)
-           {
-             // Auto_OutPut_Brake=0;
-			  DRV_DIR =1;
-             // my_drv.drv_dir=1;
-			  TXREG=0x01;
-              return 1;
-           }
-           else
-           {
-           //Auto_OutPut_Brake=0;
-           DRV_DIR =0;
-           my_drv.drv_dir=2;
-           TXREG=0x00;
-         
-            return 0;
-           }
-      //  }
+    if(my_drv.drv_dir ==3)
+    {
+      // Auto_OutPut_Brake=0;
+       DRV_DIR =1;
+       Auto_Works_Signal = 0;
+       TXREG=0x01;
+       return 1;
+    }
+    else 
+    {
+
+       DRV_DIR =0;
+        my_drv.drv_dir=2;
+
+        TXREG=0x00;
+
+        return 0;
+     }
+           
+      
    }
    
   
