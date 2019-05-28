@@ -84,6 +84,7 @@ uchar  Manual_Operation_Dir(void)
            {
               // Auto_OutPut_Brake=0;
                DRV_DIR =0;
+              // my_drv.drv_dir=2;
 			   TXREG=0x21;
               return 0;
            }
@@ -109,6 +110,7 @@ uchar  Manual_Operation_Dir(void)
            {
              // Auto_OutPut_Brake=0;
 			  DRV_DIR =1;
+             // my_drv.drv_dir=1;
 			  TXREG=0x01;
               return 1;
            }
@@ -118,7 +120,7 @@ uchar  Manual_Operation_Dir(void)
            DRV_DIR =0;
            my_drv.drv_dir=2;
            TXREG=0x00;
-           delay_100us(5);
+         
             return 0;
            }
       //  }

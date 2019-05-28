@@ -252,8 +252,8 @@ void  main(void )
                      //delay_1ms(10);
                      
                 }
-                else if(((mydir == 0)||(my_drv.drv_dir==2))&&(flag_brake!=5)) //&&(my_drv.drv_dir !=0) 
-                       // &&(flag_brake==3||flag_brake==4))//CW motor run works 
+                else if((((mydir == 0)||(my_drv.drv_dir==2)) 
+					     ||((mydir==1)&&(flag_brake == 4)))&&(flag_brake!=5))
                 {
                     DRV_BRAKE = 1; //run
                     Auto_OutPut_Brake=0;
@@ -323,7 +323,7 @@ void  main(void )
                       TXREG=0x77;
                       i=5;
                    
-                    TMR1_Counter_Enable = 1;
+                   TMR1_Counter_Enable = 1;
                    if(PIR1bits.TMR1IF ==1)//if(TMR1H ==0xFF) //
 		            {
 		                PIR1bits.TMR1IF=0;
@@ -340,8 +340,8 @@ void  main(void )
                    
                      my_drv.drv_enable=2;
                 }
-                else if((mydir == 1 || my_drv.drv_dir ==1)&&(flag_brake!=4))//&&(my_drv.drv_enable !=2)
-                        //&&(flag_brake ==3 || flag_brake==5)) //motor counter-clockwise don't works 
+                else if(((mydir == 1 || my_drv.drv_dir ==1)
+					      ||((mydir==0)&&(flag_brake == 5)))&&(flag_brake!=4))
 			    {
                     Auto_OutPut_Brake=0;
                     DRV_DIR =1;
@@ -440,6 +440,7 @@ void  main(void )
                     mykey =GetKeyPad();
                     
                  }
+			#if 0
                 else if ((mydir==0)&&(flag_brake == 5)&&(flag_brake!=4)) //don't support be changed direction
                 {
                     Auto_OutPut_Brake=0;
@@ -481,7 +482,9 @@ void  main(void )
                 }
               
                
-            }
+            
+			#endif 
+         }
             break;
            
 			case 1: //STOP_key
