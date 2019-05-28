@@ -76,50 +76,49 @@ uchar  Manual_Operation_Dir(void)
    if(Key_Dir ==1)//anticlockwise Motor don't works run
    {
        
-     if(my_drv.drv_dir ==4)
-     {
-              // Auto_OutPut_Brake=0;
-               DRV_DIR =0;
-              // my_drv.drv_dir=2;
-			   TXREG=0x21;
-              return 0;
-    }
-    else
-    {
-    // Auto_OutPut_Brake=0;
-     DRV_DIR =1;
-     my_drv.drv_dir=1;
-     Auto_Works_Signal = 0;
-     TXREG=0x11;
-   // delay_100us(5);
-     return 1;
-    }
+        if(my_drv.drv_dir ==4)
+        {
+                DRV_DIR =0;
+            //   my_drv.drv_dir=2;
+              TXREG=0x12;
+
+           return 0;
+       }
+       else
+       {
+       
+        DRV_DIR =1;
+        my_drv.drv_dir=1;
+        Auto_Works_Signal = 0;
+        TXREG=0x11;
+      
+        return 1;
+       }
 		 
    }
    else if(Key_Dir ==0)  //clockwise Motor do works run
    {
        
-    if(my_drv.drv_dir ==3)
-    {
-      // Auto_OutPut_Brake=0;
-       DRV_DIR =1;
-       Auto_Works_Signal = 0;
-       TXREG=0x01;
-       return 1;
-    }
-    else 
-    {
+        if(my_drv.drv_dir ==3)
+        {
+            DRV_DIR =1;
+           // my_drv.drv_dir=1;
+            Auto_Works_Signal = 0;
+            TXREG=0x11;
+            return 1;
+        }
+        else 
+        {
 
-       DRV_DIR =0;
-        my_drv.drv_dir=2;
+           DRV_DIR =0;
+            my_drv.drv_dir=2;
 
-        TXREG=0x00;
+            TXREG=0x00;
 
-        return 0;
-     }
+            return 0;
+         }
            
-      
-   }
+    }
    
   
 }
