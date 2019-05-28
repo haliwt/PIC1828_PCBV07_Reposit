@@ -262,6 +262,7 @@ void  main(void )
                     if(i==0)
                     {
                         DRV_DIR =0;
+                        Auto_OutPut_Brake=0;
                         i++;
                          PR2 =0x4;//
                          CCPR1L =0x4;    //MSB 8bit<>pulse duty of value
@@ -313,7 +314,7 @@ void  main(void )
                     }
                     DRV_DIR =0; 
                     TRISCbits.TRISC5 =0;
-                     
+                    
                       IOCIE =1; 
                       PEIE =1;   
                       GIE = 1; 
@@ -349,6 +350,7 @@ void  main(void )
                    if(i==0)
                     {
                         DRV_DIR =1; 
+                        Auto_OutPut_Brake=0;
                        i++;
                         
                          PR2 =0x4;//

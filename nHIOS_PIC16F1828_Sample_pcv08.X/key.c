@@ -44,7 +44,7 @@ uchar GetKeyPad(void)
       // Auto_OutPut_Brake=0; 
        DRV_BRAKE =0 ;
        TRISCbits.TRISC5 =1;
-	   delay_10ms(1);
+	   delay_10ms(10);
        DRV_BRAKE =0 ;
        TXREG=0xbb;
       // delay_100us(10);
