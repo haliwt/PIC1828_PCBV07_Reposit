@@ -308,6 +308,7 @@ void  main(void )
                          TRISCbits.TRISC5 =0;
                          delay_1ms(1);
                          TXREG=0x12;
+                         Auto_OutPut_Brake=0;
                         // delay_100us(2);
                     }
                     DRV_DIR =0; 
@@ -323,7 +324,7 @@ void  main(void )
                    
                     TMR1_Counter_Enable = 1;
                    if(PIR1bits.TMR1IF ==1)//if(TMR1H ==0xFF) //
-		             {
+		            {
 		                PIR1bits.TMR1IF=0;
 		                 k=k+1;
 		                 TMR1H=0;
@@ -341,6 +342,7 @@ void  main(void )
                 else if((mydir == 1 || my_drv.drv_dir ==1)&&(flag_brake!=4))//&&(my_drv.drv_enable !=2)
                         //&&(flag_brake ==3 || flag_brake==5)) //motor counter-clockwise don't works 
 			    {
+                    Auto_OutPut_Brake=0;
                     DRV_DIR =1;
                     DRV_BRAKE = 1; //run
                     DRV_ENABLE=1;
@@ -403,6 +405,7 @@ void  main(void )
                          TRISCbits.TRISC5 =0;
                         delay_1ms(1);
                          TXREG=0x23;
+                         Auto_OutPut_Brake=0;
                        //  delay_100us(2);
                     }
                     DRV_DIR =1;
@@ -437,6 +440,7 @@ void  main(void )
                  }
                 else if ((mydir==0)&&(flag_brake == 5)&&(flag_brake!=4)) //don't support be changed direction
                 {
+                    Auto_OutPut_Brake=0;
                     DRV_DIR =1;
 					TXREG=0x12;
                     Auto_OutPut_Brake=0;
@@ -456,7 +460,8 @@ void  main(void )
                 else if ((mydir==1)&&(flag_brake == 4)&&(flag_brake!=5)) //dont't support be changed CW direction
                 {
 					
-                     DRV_DIR =0;
+                    Auto_OutPut_Brake=0;
+                    DRV_DIR =0;
                      TXREG=0x67;
 					 Auto_OutPut_Brake=0;
                      DRV_BRAKE = 1; //run

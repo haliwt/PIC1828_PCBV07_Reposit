@@ -89,7 +89,7 @@ uchar  Manual_Operation_Dir(void)
            }
            else
            {
-            Auto_OutPut_Brake=0;
+           // Auto_OutPut_Brake=0;
 			DRV_DIR =1;
             my_drv.drv_dir=1;
             TXREG=0x11;
@@ -107,7 +107,7 @@ uchar  Manual_Operation_Dir(void)
       // {
            if(my_drv.drv_dir ==3)
            {
-              Auto_OutPut_Brake=0;
+             // Auto_OutPut_Brake=0;
 			  DRV_DIR =1;
 			  TXREG=0x01;
               return 1;
