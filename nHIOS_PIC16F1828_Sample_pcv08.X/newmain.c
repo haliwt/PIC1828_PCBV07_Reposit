@@ -330,9 +330,13 @@ void  main(void )
                     //DRV_DIR =0; 
                     TRISCbits.TRISC5 =0;
                     
-                    
+                       INTF=0;
+                      IOCIE =1;
                       PEIE =1;   
-                      GIE = 1; 
+                
+                  IOCAP2 = 1;  //Flag IOCAF0  //WT.EDIT 2019-02-20
+                  IOCAN2 =1; 
+                    GIE = 1; 
                    
                       TXREG=0x77;
                       rem=5;
@@ -421,7 +425,10 @@ void  main(void )
                    // DRV_DIR =1;
                     TRISCbits.TRISC5 =0;
                     
-                    PEIE =0;   
+                 
+                  PEIE =0;   
+                
+                  
                     GIE = 0;
                   
                     rem=5;
