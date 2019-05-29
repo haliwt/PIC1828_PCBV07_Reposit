@@ -357,81 +357,73 @@ void  main(void )
                 else if(((mydir == 1 || my_drv.drv_dir ==1)
 					      ||((mydir==0)&&(flag_brake == 5)))&&(flag_brake!=4)&&(flag_brake !=0))
 			    {
+                    DRV_DIR =1;
+                    
                     Auto_Works_Signal = 0;
                     Auto_OutPut_Brake=0;
-                    DRV_DIR =1;
+                    
                     DRV_BRAKE = 1; //run
                     DRV_ENABLE=1;
                    if(rem==0)
                     {
-                        DRV_DIR =1; 
-                        Auto_OutPut_Brake=0;
+                        //DRV_DIR =1; 
+                       // Auto_OutPut_Brake=0;
                        rem++;
                         
                          PR2 =0x4;//
-                    
                          CCPR1L =0x4;    //MSB 8bit<>pulse duty of value
-                   
                          TRISCbits.TRISC5 =0;
-                   
                          delay_1ms(1);
+                         
                          PR2 =0x5;//
-                 
                          CCPR1L =0x5;    //MSB 8bit<>pulse duty of value
-                    
                          TRISCbits.TRISC5 =0;
                          delay_1ms(1);
+                         
                          PR2 =0x6;//
-                      
                          CCPR1L =0x6;    //MSB 8bit<>pulse duty of value
-                      
                          TRISCbits.TRISC5 =0;
                          delay_1ms(1);
                       
                          PR2 =0x7;//
-                  
                          CCPR1L =0x7;    //MSB 8bit<>pulse duty of value
-                      
-                         TRISCbits.TRISC5 =0;
+                        TRISCbits.TRISC5 =0;
                         delay_1ms(1);
+                        
                         PR2 =0x8;//
-                         CCPR1L =0x8;    //MSB 8bit<>pulse duty of value
-                    
-                         TRISCbits.TRISC5 =0;
+                        CCPR1L =0x8;    //MSB 8bit<>pulse duty of value
+                        TRISCbits.TRISC5 =0;
                          delay_1ms(1);
                   
                          PR2 =0x9;//
-              
                          CCPR1L =0x9;    //MSB 8bit<>pulse duty of value
-                 
                          TRISCbits.TRISC5 =0;
-                        delay_1ms(1);
+                         delay_1ms(1);
+                         
                          PR2 =0x0a;//
                          CCPR1L =0x0a;    //MSB 8bit<>pulse duty of value
-                
                          TRISCbits.TRISC5 =0;
                          delay_1ms(1);
+                         
                          PR2 =0xb;//
                          CCPR1L =0x0b;    //MSB 8bit<>pulse duty of value
-                  
                          TRISCbits.TRISC5 =0;
                          delay_1ms(1);
+                         
                          PR2 =0x0c ;//
                          CCPR1L = 0x0c;    //MSB 8bit<>pulse duty of value
-                    
                          TRISCbits.TRISC5 =0;
-                        delay_1ms(1);
+                         delay_1ms(1);
                          TXREG=0x23;
                          Auto_OutPut_Brake=0;
                        //  delay_100us(2);
                     }
-                    DRV_DIR =1;
+                   // DRV_DIR =1;
                     TRISCbits.TRISC5 =0;
-                    IOCIE =0;
+                    
                     PEIE =0;   
                     GIE = 0;
-                    IOCAP2 = 0;  //Flag IOCAF0  //WT.EDIT 2019-02-20
-                    IOCAN2 =0; 
+                  
                     rem=5;
                      TXREG=0x22;
                     //delay_100us(10);
@@ -447,12 +439,12 @@ void  main(void )
 					my_drv.drv_brake =3; //WT.EDIT 20190508
 				     Auto_OutPut_Brake=0;
                      Auto_Works_Signal = 0;
-                    // DRV_BRAKE = 1;
+                
                     TXREG=0x33;
-                   // delay_100us(10);
+              
                     my_drv.drv_enable=1;
-                     mydir = Manual_Operation_Dir();
-                    mykey =GetKeyPad();
+                  //   mydir = Manual_Operation_Dir();
+                  //  mykey =GetKeyPad();
                     
                  }
 			
