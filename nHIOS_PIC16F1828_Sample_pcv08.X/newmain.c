@@ -258,10 +258,10 @@ void  main(void )
                      
                 }
                 else if((((mydir == 0)||(my_drv.drv_dir==2)) 
-					     ||((mydir==1)&&(flag_brake == 4)))&&(flag_brake!=5)&&(flag_brake !=0))
+					     ||((mydir==1)&&(flag_brake == 4)))&&(flag_brake!=5))
                 {
                    
-                    //DRV_DIR =0;
+                    DRV_DIR =0;
                     Auto_OutPut_Brake=0;
                     DRV_BRAKE = 1; //run
                    
@@ -359,7 +359,7 @@ void  main(void )
                      my_drv.drv_enable=2;
                 }
                 else if(((mydir == 1 || my_drv.drv_dir ==1)
-					      ||((mydir==0)&&(flag_brake == 5)))&&(flag_brake!=4)&&(flag_brake !=0))
+					      ||((mydir==0)&&(flag_brake == 5)))&&(flag_brake!=4))
 			    {
                     DRV_DIR =1;
                     

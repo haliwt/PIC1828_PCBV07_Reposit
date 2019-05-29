@@ -75,16 +75,17 @@ uchar  Manual_Operation_Dir(void)
  
    if(Key_Dir ==1)//anticlockwise Motor don't works run
    {
-       
+
         if(my_drv.drv_dir ==4)
         {
                 DRV_DIR =0;
-            //   my_drv.drv_dir=2;
+               my_drv.drv_dir=2;
               TXREG=0x12;
 
-           return 1;
+           return 0;
        }
        else
+
        {
        
         DRV_DIR =1;
@@ -99,15 +100,17 @@ uchar  Manual_Operation_Dir(void)
    else if(Key_Dir ==0)  //clockwise Motor do works run
    {
        
-        if(my_drv.drv_dir ==3)
+
+       if(my_drv.drv_dir ==3)
         {
             DRV_DIR =1;
-           // my_drv.drv_dir=1;
+            my_drv.drv_dir=1;
             Auto_Works_Signal = 0;
             TXREG=0x11;
-            return 0;
+            return 1;
         }
         else 
+ 
         {
 
            DRV_DIR =0;
