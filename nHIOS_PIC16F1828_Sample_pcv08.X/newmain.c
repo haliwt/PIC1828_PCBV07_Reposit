@@ -261,17 +261,18 @@ void  main(void )
 					     ||((mydir==1)&&(flag_brake == 4)))&&(flag_brake!=5)&&(flag_brake !=0))
                 {
                    
+                    //DRV_DIR =0;
                     Auto_OutPut_Brake=0;
                     DRV_BRAKE = 1; //run
                    
                     DRV_ENABLE=1;
                     Auto_Works_Signal = 1;
-                    DRV_DIR =0;
+                 
                     if(rem==0)
                     {
-                       DRV_DIR =0;
-                       Auto_Works_Signal = 1;
-                       Auto_OutPut_Brake=0;
+                       //DRV_DIR =0;
+                     //  Auto_Works_Signal = 1;
+                     //  Auto_OutPut_Brake=0;
                         rem++;
                          PR2 =0x4;//
                          CCPR1L =0x4;    //MSB 8bit<>pulse duty of value
@@ -307,7 +308,7 @@ void  main(void )
                          CCPR1L =0x0a;    //MSB 8bit<>pulse duty of value
                          TRISCbits.TRISC5 =0;
                          delay_1ms(1);
-                          Auto_OutPut_Brake=0;
+                         
                          PR2 =0xb;//
                          CCPR1L =0x0b;    //MSB 8bit<>pulse duty of value
                          TRISCbits.TRISC5 =0;
@@ -317,18 +318,22 @@ void  main(void )
                          CCPR1L = 0x0c;    //MSB 8bit<>pulse duty of value
                          TRISCbits.TRISC5 =0;
                          delay_1ms(1);
+                         
+                          PR2 =0x0d ;//
+                         CCPR1L = 0x0d;    //MSB 8bit<>pulse duty of value
+                         TRISCbits.TRISC5 =0;
+                         delay_1ms(1);
                          TXREG=0x12;
-                         Auto_OutPut_Brake=0;
+                    
                         // delay_100us(2);
                     }
-                    DRV_DIR =0; 
+                    //DRV_DIR =0; 
                     TRISCbits.TRISC5 =0;
                     
-                      IOCIE =1; 
+                    
                       PEIE =1;   
                       GIE = 1; 
-                      IOCAP2 = 1;  //Flag IOCAF0  //WT.EDIT 2019-02-20
-                      IOCAN2 =1; 
+                   
                       TXREG=0x77;
                       rem=5;
                     Auto_OutPut_Brake=0;
