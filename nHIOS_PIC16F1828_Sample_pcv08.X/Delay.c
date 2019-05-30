@@ -6,9 +6,25 @@
   *Input Reference: times
   *
  **************************************/
-void delay_100us(uint t)
+void delay_100us(uchar t)
 {
      uint i= 6*t ;
+      while(i --)
+        {
+          ;
+        }
+
+}
+/**************************************
+  *
+  *Function Name:
+  *Function active : delay times 100us
+  *Input Reference: times
+  *
+ **************************************/
+void delay_10us(uchar t)
+{
+     uint i= 3*t ;
       while(i --)
         {
           ;
@@ -22,7 +38,7 @@ void delay_100us(uint t)
  * input regerence :
  *
  *************************************************************************/
-void delay_1ms(uint tim)  //8MHZ OSC
+void delay_1ms(uchar tim)  //8MHZ OSC
 {
      ulong i= 25*tim ;
       while(i --)

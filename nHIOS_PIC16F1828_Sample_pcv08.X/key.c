@@ -51,12 +51,17 @@ uchar GetKeyPad(void)
        return 1;
       
   }
-  else if (Key_Start == 0)  //run //WT.EDIT 2019-02-20
+  
+  if (Key_Start == 0)  //run //WT.EDIT 2019-02-20
   {
-	  TXREG=0xaa;
+	  delay_10us(2);
+    
+     
+      TXREG=0xaa;
      // delay_100us(5);
      
      return 0;
+     
    }
  // else 
       //return 1;
@@ -79,7 +84,7 @@ uchar  Manual_Operation_Dir(void)
         if(my_drv.drv_dir ==4)
         {
                 DRV_DIR =0;
-               my_drv.drv_dir=2;
+              // my_drv.drv_dir=2;
               TXREG=0x12;
 
            return 0;
@@ -104,7 +109,7 @@ uchar  Manual_Operation_Dir(void)
        if(my_drv.drv_dir ==3)
         {
             DRV_DIR =1;
-            my_drv.drv_dir=1;
+            //my_drv.drv_dir=1;
             Auto_Works_Signal = 0;
             TXREG=0x11;
             return 1;

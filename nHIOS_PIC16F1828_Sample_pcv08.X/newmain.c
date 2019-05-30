@@ -264,16 +264,20 @@ void  main(void )
                     //DRV_DIR =0;
                     Auto_OutPut_Brake=0;
                     DRV_BRAKE = 1; //run
-                   
                     DRV_ENABLE=1;
-                    Auto_Works_Signal = 1;
-                 
                     if(rem==0)
                     {
                        //DRV_DIR =0;
                      //  Auto_Works_Signal = 1;
                      //  Auto_OutPut_Brake=0;
                         rem++;
+                        
+                         PR2 =0x3;//
+                         CCPR1L =0x3;    //MSB 8bit<>pulse duty of value
+                         TRISCbits.TRISC5 =0;
+                         delay_1ms(1);
+                        
+                        
                          PR2 =0x4;//
                          CCPR1L =0x4;    //MSB 8bit<>pulse duty of value
                          TRISCbits.TRISC5 =0;
@@ -329,8 +333,9 @@ void  main(void )
                     }
                     //DRV_DIR =0; 
                     TRISCbits.TRISC5 =0;
-                    
-                      IOCIE =1; 
+                    Auto_Works_Signal = 1;
+                      IOCIE =1;
+                      IOCIF=0;
                       PEIE =1;   
                       GIE = 1; 
                       IOCAP2 = 1;  //Flag IOCAF0  //WT.EDIT 2019-02-20
@@ -545,7 +550,8 @@ void  main(void )
                   DRV_BRAKE =0;
                   DRV_ENABLE=0;
                  
-                 IOCIE =0;
+                  IOCIE =0;
+                  IOCIF=1;
                   PEIE =0;   
                   GIE = 0;
                   IOCAP2 = 0;  //Flag IOCAF0  //WT.EDIT 2019-02-20
