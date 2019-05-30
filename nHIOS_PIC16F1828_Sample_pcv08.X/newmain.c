@@ -34,6 +34,9 @@
 #pragma config LVP = ON         // Low-Voltage Programming Enable (Low-voltage programming enabled)
 
 
+
+#define DELAY_STOP   
+
 //#define LENGTH(a) ((sizeof(a))/(sizeof(a[0])))
 uchar flag_power_on=0;
 
@@ -465,7 +468,7 @@ void  main(void )
            
 			case 1: //STOP_key
             {
-#if 0
+#if defined(DELAY_STOP)
                 if(flag_brake == 2)
                 {
                       GIE = 0;
