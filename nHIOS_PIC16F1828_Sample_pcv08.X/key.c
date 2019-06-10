@@ -43,6 +43,7 @@ uchar GetKeyPad(void)
   {
        //Auto_OutPut_Brake=0; 
        DRV_BRAKE =0 ;
+       CCPR1L =0;   //WT.EDIT 2019-06-10
        TRISCbits.TRISC5 =1;
 	   delay_10ms(5);
        DRV_BRAKE =0 ;

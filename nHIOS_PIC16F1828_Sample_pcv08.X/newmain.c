@@ -75,17 +75,17 @@ void  main(void )
       mykey =GetKeyPad();
      if((flag_power_on==2)||(my_drv.drv_brake ==1))
       {
-       
+#if 0
         TRISCbits.TRISC5 =1;
         DRV_BRAKE =0 ;
         Auto_OutPut_Brake=1;
         delay_10ms(5);
-         
+#endif 
         //Auto_OutPut_Brake=1;
         TMR1_Counter_Enable = 0;
         Auto_Works_Signal = 1;
         TXREG=0xff;
-        delay_1ms(10);
+       // delay_1ms(10);
         switch(machine_key)
         {     
          case 0 :
@@ -246,6 +246,7 @@ void  main(void )
                 {
                     
                     Auto_Works_Signal = 1;
+                    CCPR1L =0;   //WT.EDIT 2019-06-10
                     TRISCbits.TRISC5 =1;
                      DRV_BRAKE = 0; //run
                      DRV_ENABLE=0;
@@ -268,7 +269,7 @@ void  main(void )
                     Auto_OutPut_Brake=0;
                     DRV_BRAKE = 1; //run
                     DRV_ENABLE=1;
-                     TRISCbits.TRISC5 =0;
+                    TRISCbits.TRISC5 =0;
                     if(rem==0)
                     {
                        //DRV_DIR =0;
@@ -280,87 +281,34 @@ void  main(void )
                        
                          CCPR1L =0x0;    //MSB 8bit<>pulse duty of value
                         
-                       //  PR2 =0xd;//
                          CCPR1L =0x01;    //MSB 8bit<>pulse duty of value
                       
-                        // TRISCbits.TRISC5 =0;
-                        // delay_1ms(1);
-                        
-                       //  PR2 =0xd;//
                          CCPR1L =0x02;    //MSB 8bit<>pulse duty of value
                        
-                        // TRISCbits.TRISC5 =0;
-                        // delay_1ms(1);
-                         
-                       //  PR2 =0xd;//
                          CCPR1L =0x03;    //MSB 8bit<>pulse duty of value
                         
-                       //  TRISCbits.TRISC5 =0;
-                       //  delay_1ms(1);
-                         
-                      
-                       //  PR2 =0xd;//
                          CCPR1L =0x04;    //MSB 8bit<>pulse duty of value
                         
-                       //  TRISCbits.TRISC5 =0;
-                       // delay_1ms(1);
-                        
-                       // PR2 =0xd;//
                          CCPR1L =0x05;    //MSB 8bit<>pulse duty of value
                         
-                       //  TRISCbits.TRISC5 =0;
-                       //  delay_1ms(1);
-                         
-                       //  PR2 =0x0d;//
                          CCPR1L =0x06;    //MSB 8bit<>pulse duty of value
                        
-                       //  TRISCbits.TRISC5 =0;
-                       //  delay_1ms(1);
-                         
-                       //  PR2 =0xd;//
                          CCPR1L =0x07;    //MSB 8bit<>pulse duty of value
                          
-                       //  TRISCbits.TRISC5 =0;
-                       //  delay_1ms(1);
-                         
-                       //   PR2 =0xd;//
                          CCPR1L =0x08;    //MSB 8bit<>pulse duty of value
                        
-                       //  TRISCbits.TRISC5 =0;
-                       //  delay_1ms(1);
-                         
-                       //   PR2 =0xd;//
                          CCPR1L =0x09;    //MSB 8bit<>pulse duty of value
-                       //  TRISCbits.TRISC5 =0;
-                       //  delay_1ms(1);
-                         
-                       //   PR2 =0xd;//
+                     
                          CCPR1L =0x0a;    //MSB 8bit<>pulse duty of value
-                       //  TRISCbits.TRISC5 =0;
-                       //  delay_1ms(1);
-                         
-                       //   PR2 =0xd;//
+                      
                          CCPR1L =0x0b;    //MSB 8bit<>pulse duty of value
-                       //  TRISCbits.TRISC5 =0;
-                       //  delay_1ms(1);
-                         
-                      //   PR2 =0x0d ;//
+                     
                          CCPR1L = 0x0c;    //MSB 8bit<>pulse duty of value
-                        // TRISCbits.TRISC5 =0;
-                       //  delay_1ms(1);
-                         
-                         
-                      //    PR2 =0x0d ;//
+                      
                          CCPR1L = 0x0d;    //MSB 8bit<>pulse duty of value
-                       //  TRISCbits.TRISC5 =0;
-                       //  delay_1ms(1);
-                         
-                       //  TXREG=0x12;
-                    
-                        // delay_100us(2);
+                      
                     }
-                    //DRV_DIR =0; 
-                  // TRISCbits.TRISC5 =0;
+                 
                     Auto_Works_Signal = 1;
                       IOCIE =1;
                       IOCIF=0;
@@ -407,57 +355,42 @@ void  main(void )
                        // Auto_OutPut_Brake=0;
                        rem++;
                         
-                     
-                         CCPR1L =0x0;    //MSB 8bit<>pulse duty of value
-                         //TRISCbits.TRISC5 =0;
-                         //delay_1ms(1);
+                        CCPR1L =0x0;    //MSB 8bit<>pulse duty of value
+                       
                          DRV_DIR =1; 
-                    
                          CCPR1L =0x1;    //MSB 8bit<>pulse duty of value
-                        // TRISCbits.TRISC5 =0;
-                        // delay_1ms(1);
-                         
+                       
                          DRV_DIR =1; 
-                      
                          CCPR1L =0x2;    //MSB 8bit<>pulse duty of value
-                        // TRISCbits.TRISC5 =0;
-                        // delay_1ms(1);
-                         
+                     
                          DRV_DIR =1; 
-                        
                          CCPR1L =0x3;    //MSB 8bit<>pulse duty of value
                       
-                        DRV_DIR =1; 
+                         DRV_DIR =1; 
+                         CCPR1L =0x4;    //MSB 8bit<>pulse duty of value
                       
-                        CCPR1L =0x4;    //MSB 8bit<>pulse duty of value
-                      
-                       DRV_DIR =1; 
-                       CCPR1L =0x5;    //MSB 8bit<>pulse duty of value
+                         DRV_DIR =1; 
+                         CCPR1L =0x5;    //MSB 8bit<>pulse duty of value
                        
-                      DRV_DIR =1;    
-                        
-                         CCPR1L =0x06;    //MSB 8bit<>pulse duty of value
-                        
-                      DRV_DIR =1;    
-                     
-                         CCPR1L =0x07;    //MSB 8bit<>pulse duty of value
                          DRV_DIR =1;    
+                        CCPR1L =0x06;    //MSB 8bit<>pulse duty of value
                         
-                          DRV_DIR =1;   
+                         DRV_DIR =1;    
+                         CCPR1L =0x07;    //MSB 8bit<>pulse duty of value
+                           
+                         DRV_DIR =1;   
                          CCPR1L = 0x08;    //MSB 8bit<>pulse duty of value
                         
                          DRV_DIR =1;    
-                    
                          CCPR1L = 0x09;    //MSB 8bit<>pulse duty of value
                          
-                          DRV_DIR =1;    
-                    
+                         DRV_DIR =1;    
                          CCPR1L = 0x0a;    //MSB 8bit<>pulse duty of value
                        
                           DRV_DIR =1;    
                           CCPR1L = 0x0b;    //MSB 8bit<>pulse duty of value
                           
-                           DRV_DIR =1;    
+                          DRV_DIR =1;    
                           CCPR1L = 0x0c;    //MSB 8bit<>pulse duty of value
                           
                            DRV_DIR =1;    
@@ -503,83 +436,8 @@ void  main(void )
            
 			case 1: //STOP_key
             {
-#if defined(DELAY_STOP)
-                if(flag_brake == 2)
-                {
-                      GIE = 0;
-                      PEIE =0 ;
-                      flag_brake=0;
-					  flag_power_on=0;
-					  Auto_OutPut_Brake=0;
-                      Auto_Works_Signal = 0;
-				
-	                 DRV_BRAKE = 1; //run
-                     DRV_ENABLE=1;
-                     DRV_DIR =0;
-                    
-                         PR2 =0x4;//
-                         CCPR1L =0x4;    //MSB 8bit<>pulse duty of value
-                         TRISCbits.TRISC5 =0;
-                         delay_1ms(1);
-                        
-                         PR2 =0x5;//
-                         CCPR1L =0x5;    //MSB 8bit<>pulse duty of value
-                         TRISCbits.TRISC5 =0;
-                         delay_1ms(1);
-                         
-                         PR2 =0x6;//
-                         CCPR1L =0x6;    //MSB 8bit<>pulse duty of value
-                         TRISCbits.TRISC5 =0;
-                         delay_1ms(1);
-                         
-                         PR2 =0x7;//
-                         CCPR1L =0x7;    //MSB 8bit<>pulse duty of value
-                         TRISCbits.TRISC5 =0;
-                         delay_1ms(1);
-                         
-                         PR2 =0x8;//
-                         CCPR1L =0x8;    //MSB 8bit<>pulse duty of value
-                         TRISCbits.TRISC5 =0;
-                        delay_1ms(1);
-                        
-                        PR2 =0x9;//
-                         CCPR1L =0x9;    //MSB 8bit<>pulse duty of value
-                         TRISCbits.TRISC5 =0;
-                         delay_1ms(1);
-                         
-                         PR2 =0x0a;//
-                         CCPR1L =0x0a;    //MSB 8bit<>pulse duty of value
-                         TRISCbits.TRISC5 =0;
-                         delay_1ms(1);
-                         
-                         PR2 =0xb;//
-                         CCPR1L =0x0b;    //MSB 8bit<>pulse duty of value
-                         TRISCbits.TRISC5 =0;
-                         delay_1ms(1);
-                         
-                         PR2 =0x0c ;//
-                         CCPR1L = 0x0c;    //MSB 8bit<>pulse duty of value
-                         TRISCbits.TRISC5 =0;
-                         delay_1ms(1);
-                         TXREG=0x45;
-                        
-                        
-                 
-                    delay_10ms(20);
 
-				  DRV_BRAKE =0;
-                //  DRV_ENABLE=0;
-                  TRISCbits.TRISC5 =1;
-                  delay_10ms(4);  //WT.EDIT 20190505
-                  DRV_BRAKE =0;
-                   Auto_OutPut_Brake=0;
-                   Auto_Works_Signal = 0;
-                 
-                  
-				}
-                else 
-#endif 
-                {
+                  CCPR1L = 0; //WT.EDIT 2019-06-10
                   Auto_OutPut_Brake=0;
                   Auto_Works_Signal = 0;
                   DRV_BRAKE =0;
@@ -614,7 +472,7 @@ void  main(void )
              
 				mydir = Manual_Operation_Dir();
                 mykey =GetKeyPad();
-			   }
+			   
                  
 		    }
             break;
@@ -669,13 +527,14 @@ if((IOCAF2 == 1)||(PORTAbits.RA2 == 0))
       my_drv.drv_brake =1;
       TXREG=0x66;
       delay_100us(5);
-#if 0     
+#if 1     
+      CCPR1L =0;   //WT.EDIT 2019-06-10
       TRISCbits.TRISC5 =1;
       DRV_BRAKE =0 ;
       Auto_OutPut_Brake=1;
       delay_10ms(5);
-       TXREG=0x66;
-       delay_1ms(2);
+      TXREG=0x66;
+      //delay_1ms(2);
 #endif 
  }
 #if 0
