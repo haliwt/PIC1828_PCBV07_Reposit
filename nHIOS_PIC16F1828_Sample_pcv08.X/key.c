@@ -78,22 +78,27 @@ uchar GetKeyPad(void)
 uchar  Manual_Operation_Dir(void)
 {
  
- 
+
    if(Key_Dir ==1)//anticlockwise Motor don't works run
    {
 
-        if(my_drv.drv_dir ==4)
-        {
-                DRV_DIR =0;
-              // my_drv.drv_dir=2;
+       if(my_drv.drv_dir ==4)
+       {
+      
+            delay_10ms(1); //WT.EDIT 2019-06-10
+            if(my_drv.drv_dir ==4)
+            {
+              DRV_DIR =0;
+             
               TXREG=0x12;
 
-           return 0;
+              return 0;
+            }
        }
        else
 
        {
-       
+        delay_1ms(5); //WT.EDIT 2019-06-10
         DRV_DIR =1;
         my_drv.drv_dir=1;
         Auto_Works_Signal = 0;
@@ -106,19 +111,22 @@ uchar  Manual_Operation_Dir(void)
    else if(Key_Dir ==0)  //clockwise Motor do works run
    {
        
-
        if(my_drv.drv_dir ==3)
         {
+           delay_10ms(1);//WT.EDIT 2019-06-10
+          if(my_drv.drv_dir ==3) 
+          {
             DRV_DIR =1;
             //my_drv.drv_dir=1;
             Auto_Works_Signal = 0;
             TXREG=0x11;
             return 1;
+          }
         }
         else 
- 
-        {
 
+        {
+           delay_1ms(5); //WT.EDIT 2019-06-10
            DRV_DIR =0;
             my_drv.drv_dir=2;
 

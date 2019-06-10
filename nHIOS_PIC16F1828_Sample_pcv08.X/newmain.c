@@ -262,7 +262,7 @@ void  main(void )
                      
                 }
                 else if((((mydir == 0)||(my_drv.drv_dir==2)) 
-					     ||((mydir==1)&&(flag_brake == 4)))&&(flag_brake!=5))
+					     ||((mydir==1)&&(flag_brake == 4)))&&(my_drv.drv_enable!=1 && flag_brake !=5))
                 {
                    
                     //DRV_DIR =0;
@@ -272,9 +272,7 @@ void  main(void )
                     TRISCbits.TRISC5 =0;
                     if(rem==0)
                     {
-                       //DRV_DIR =0;
-                     //  Auto_Works_Signal = 1;
-                     //  Auto_OutPut_Brake=0;
+                     
                     
                         rem++;
                         
@@ -338,7 +336,7 @@ void  main(void )
                      my_drv.drv_enable=2;
                 }
                 else if(((mydir == 1 || my_drv.drv_dir ==1)
-					      ||((mydir==0)&&(flag_brake == 5)))&&(flag_brake!=4)) //CCW
+					      ||((mydir==0)&&(flag_brake == 5)))&&(my_drv.drv_enable!=2 && flag_brake !=4)) //CCW
 			    {
                     DRV_DIR =1;
                     
@@ -398,7 +396,7 @@ void  main(void )
                        
                        
                          TXREG=0x23;
-                         DRV_DIR =1; //Auto_OutPut_Brake=0;
+                         //DRV_DIR =1; //Auto_OutPut_Brake=0;
                        //  delay_100us(2);
                     }
                     DRV_DIR =1;
