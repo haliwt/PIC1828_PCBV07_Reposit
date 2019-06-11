@@ -41,9 +41,8 @@ uchar GetKeyPad(void)
   
   if(Key_Start == 1) //stop
   {
-       //Auto_OutPut_Brake=0; 
+       CCPR1L =0x0;  
        DRV_BRAKE =0 ;
-       CCPR1L =0;   //WT.EDIT 2019-06-10
        TRISCbits.TRISC5 =1;
 	   delay_10ms(5);
        DRV_BRAKE =0 ;
