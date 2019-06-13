@@ -265,7 +265,7 @@ void  main(void )
 					     ||((mydir==1)&&(flag_brake == 4)))&&(my_drv.drv_enable!=1 && flag_brake !=5 && flag_brake !=2))
                 {
                    
-                    //DRV_DIR =0;
+                    DRV_DIR =0;//WT.EDIT 2019-06-13
                     Auto_OutPut_Brake=0;
                     DRV_BRAKE = 1; //run
                     DRV_ENABLE=1;
@@ -273,7 +273,7 @@ void  main(void )
                     if(rem==0)
                     {
                      
-                    
+                        DRV_DIR =0; //WT.EDIT 2019-06-13
                         rem++;
                         
                        
@@ -535,22 +535,7 @@ if((IOCAF2 == 1)||(PORTAbits.RA2 == 0))
       //delay_1ms(2);
 #endif 
  }
-#if 0
- else if(IOCAP0 == 1) //||IOCAN0==1||(PORTAbits.RA0 == 0))
-{
-    INTF =0;
-	IOCIF =0;
-    IOCAF0=0;
-    IOCAP0=0;
-    TRISCbits.TRISC5 =1;
-    DRV_BRAKE =0 ;
-    Auto_OutPut_Brake=1;
-    delay_10ms(10);
-    TXREG=0x44;
-    delay_1ms(2);
-    my_drv.drv_brake =3;
-}
-#endif 
+
   
 }  
 
