@@ -278,32 +278,46 @@ void  main(void )
                         
                        
                          CCPR1L =0x0;    //MSB 8bit<>pulse duty of value
-                        
+                         DRV_DIR =0;
                          CCPR1L =0x01;    //MSB 8bit<>pulse duty of value
                       
+                         DRV_DIR =0;
                          CCPR1L =0x02;    //MSB 8bit<>pulse duty of value
                        
+                         DRV_DIR =0;
                          CCPR1L =0x03;    //MSB 8bit<>pulse duty of value
                         
+                         DRV_DIR =0;
                          CCPR1L =0x04;    //MSB 8bit<>pulse duty of value
                         
+                         DRV_DIR =0;
                          CCPR1L =0x05;    //MSB 8bit<>pulse duty of value
                         
+                         DRV_DIR =0;
                          CCPR1L =0x06;    //MSB 8bit<>pulse duty of value
                        
+                         DRV_DIR =0;
                          CCPR1L =0x07;    //MSB 8bit<>pulse duty of value
                          
+                         DRV_DIR =0;
                          CCPR1L =0x08;    //MSB 8bit<>pulse duty of value
                        
+                         DRV_DIR =0;
                          CCPR1L =0x09;    //MSB 8bit<>pulse duty of value
                      
+                         DRV_DIR =0;
                          CCPR1L =0x0a;    //MSB 8bit<>pulse duty of value
                       
+                         DRV_DIR =0;
                          CCPR1L =0x0b;    //MSB 8bit<>pulse duty of value
                      
+                         DRV_DIR =0;
                          CCPR1L = 0x0c;    //MSB 8bit<>pulse duty of value
                       
+                         DRV_DIR =0;
                          CCPR1L = 0x0d;    //MSB 8bit<>pulse duty of value
+                         
+                        
                       
                     }
                  
@@ -387,14 +401,18 @@ void  main(void )
                        
                           DRV_DIR =1;    
                           CCPR1L = 0x0b;    //MSB 8bit<>pulse duty of value
-                          
+#ifdef HIGHSPEED 
+                          DRV_DIR =1;    
+                          CCPR1L = 0x0c;    //MSB 8bit<>pulse duty of value
+#else
                           DRV_DIR =1;    
                           CCPR1L = 0x0c;    //MSB 8bit<>pulse duty of value
                           
-                           DRV_DIR =1;    
+                          DRV_DIR =1;    
                           CCPR1L = 0x0d;    //MSB 8bit<>pulse duty of value
-                       
-                       
+#endif 
+                         
+                          
                          TXREG=0x23;
                          //DRV_DIR =1; //Auto_OutPut_Brake=0;
                        //  delay_100us(2);

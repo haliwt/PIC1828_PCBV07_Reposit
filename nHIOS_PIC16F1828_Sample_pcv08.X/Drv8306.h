@@ -16,6 +16,7 @@
 //#define  CPU_CAPTURE      PORTCbits.RC4   // caputre PWM signal
 
 //volatile ulong pwm_duty=0 ;
+//#define HIGHSPEED 1 
 
 enum drv{DISABLE , ENABLE};
 #ifdef	__cplusplus
