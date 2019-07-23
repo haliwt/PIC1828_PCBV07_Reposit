@@ -27,11 +27,12 @@ typedef struct DRV8306
     uchar drv_enable  ;
     uchar drv_brake ;
     uchar drv_dir ;
+    uchar error_f;      //judge output overcurrent flag bit
     
    
 }my_drv8306;
 
-struct DRV8306   my_drv={0,0,0};
+struct DRV8306   my_drv={0,0,0,0};
 
     void Drv8306_Init(void);
     void Drv8306_PWM(void);

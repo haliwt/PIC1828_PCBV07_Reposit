@@ -38,7 +38,9 @@ void Key_Init(void)
  ************************************************************/
 uchar GetKeyPad(void)
 {
-  
+   
+ 
+    
   if(Key_Start == 1) //stop
   {
        CCPR1L =0x0;  
@@ -52,17 +54,17 @@ uchar GetKeyPad(void)
       
   }
   
-  else if (Key_Start == 0)  //WT.EDIT 2019-07-22
+  else if (Key_Start == 0) //WT.EDIT 2019-07-22
   {
 	  delay_1ms(5); //WT.EID 2019-07-22
-    
      
-     // TXREG=0x00;
-     // delay_100us(5);
+      
+      return 0;
      
-     return 0;
      
    }
+  
+ 
  // else 
       //return 1;
 }
@@ -87,7 +89,7 @@ uchar  Manual_Operation_Dir(void)
             delay_10ms(1); //WT.EDIT 2019-06-10
             if(my_drv.drv_dir ==4)
             {
-              DRV_DIR =0;
+              //DRV_DIR =0;
              
               TXREG=0x12;
 
@@ -98,7 +100,7 @@ uchar  Manual_Operation_Dir(void)
 
        {
         delay_1ms(5); //WT.EDIT 2019-06-10
-        DRV_DIR =1;
+       // DRV_DIR =1;
         my_drv.drv_dir=1;
         Auto_Works_Signal = 0;
        // TXREG=0x11;
@@ -115,7 +117,7 @@ uchar  Manual_Operation_Dir(void)
            delay_10ms(1);//WT.EDIT 2019-06-10
           if(my_drv.drv_dir ==3) 
           {
-            DRV_DIR =1;
+            //DRV_DIR =1;
             //my_drv.drv_dir=1;
             Auto_Works_Signal = 0;
           //  TXREG=0x11;
@@ -126,7 +128,7 @@ uchar  Manual_Operation_Dir(void)
 
         {
            delay_1ms(5); //WT.EDIT 2019-06-10
-           DRV_DIR =0;
+           //DRV_DIR =0;
             my_drv.drv_dir=2;
 
            // TXREG=0x00;

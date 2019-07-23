@@ -273,7 +273,8 @@ void  main(void )
                     DRV_ENABLE=1;
                     TRISCbits.TRISC5 =0;
                     TMR1_Counter_Enable = 1;
-                    if(rem==0)
+                    rem++;
+                    if(rem==1)
                     {
                      
                         DRV_DIR =0; //WT.EDIT 2019-06-13
@@ -281,36 +282,72 @@ void  main(void )
                         
                        
                          CCPR1L =0x0;    //MSB 8bit<>pulse duty of value
-                        
+                         DRV_DIR =0;
                          CCPR1L =0x01;    //MSB 8bit<>pulse duty of value
-                      
+                         DRV_DIR =0;
                          CCPR1L =0x02;    //MSB 8bit<>pulse duty of value
-                       
+                         DRV_DIR =0;
                          CCPR1L =0x03;    //MSB 8bit<>pulse duty of value
-                        
+                         DRV_DIR =0;
                          CCPR1L =0x04;    //MSB 8bit<>pulse duty of value
-                        
+                         DRV_DIR =0;
                          CCPR1L =0x05;    //MSB 8bit<>pulse duty of value
-                        
+                         DRV_DIR =0;
                          CCPR1L =0x06;    //MSB 8bit<>pulse duty of value
-                       
+                         DRV_DIR =0;
                          CCPR1L =0x07;    //MSB 8bit<>pulse duty of value
-                         
+                         DRV_DIR =0;
                          CCPR1L =0x08;    //MSB 8bit<>pulse duty of value
-                       
+                         DRV_DIR =0;
                          CCPR1L =0x09;    //MSB 8bit<>pulse duty of value
-                     
+                         DRV_DIR =0;
                          CCPR1L =0x0a;    //MSB 8bit<>pulse duty of value
-                      
+                         DRV_DIR =0;
                          CCPR1L =0x0b;    //MSB 8bit<>pulse duty of value
-                     
+                         DRV_DIR =0;
                          CCPR1L = 0x0c;    //MSB 8bit<>pulse duty of value
-                      
+                         DRV_DIR =0;
                          CCPR1L = 0x0d;    //MSB 8bit<>pulse duty of value
+                         TXREG=0xa1;
+                         my_drv.error_f = 1;
+                    }
+                     /*judge overcurrent value*/
+                    if(PIR1bits.TMR1IF == 1) 
+                    {
+                       my_drv.error_f ++;
+                       TXREG= 0xff ;
+                       //delay_1ms(5);
+                       TXREG= 0xaa ;
+                       //delay_1ms(5);
+                       TMR1_Counter_Enable = 0;
+                       PIR1bits.TMR1IF =0;
+                       TMR1L =0;
+                       TMR1H =0;
+                       adc_value = ADC_GetValue();
+#if 1
+                       if(adc_value > 9400)
+                       {
+                           TXREG = 0xab;
+                            CCPR1L = 0; //WT.EDIT 2019-06-10
+                            Auto_OutPut_Brake=0;
+                            Auto_Works_Signal = 0;
+                            DRV_BRAKE =0;
+                            TRISCbits.TRISC5 =1;
+                            delay_10ms(6);  //WT.EDIT 20190505
+                            DRV_BRAKE =0;
+                            DRV_ENABLE=0;
+                            convertDecimalToHexa(adc_value);
+                            delay_10ms(100);
+                       }
+                       else
+#endif 
+                       convertDecimalToHexa(adc_value);
                       
                     }
-                 
+                     rem=5;
                     Auto_Works_Signal = 1;
+                    Auto_OutPut_Brake=0;
+                  
                       IOCIE =1;
                       IOCIF=0;
                       PEIE =1;   
@@ -318,35 +355,16 @@ void  main(void )
                       IOCAP2 = 1;  //Flag IOCAF0  //WT.EDIT 2019-02-20
                       IOCAN2 =1; 
                    
-                     // TXREG=0x77;
-                     // rem=5;
-                    Auto_OutPut_Brake=0;
-                   
-                   
-                     Auto_OutPut_Brake=0;
-                     Auto_Works_Signal = 1;
+                 
+                     
+                     
                      flag_brake =4;
                      my_drv.drv_dir=4; //WT.EDIT 20190508
-                   //  TXREG=0x88;
-                    // delay_100us(2);
+                  
                      flag_power_on=1;
                      my_drv.drv_enable=2;
-                     /*judge overcurrent value*/
-                    if(PIR1bits.TMR1IF == 1) 
-                    {
                     
-                       TXREG= 0xff ;
-                       //delay_1ms(5);
-                       TXREG= 0xaa ;
-                       //delay_1ms(5);
-                       PIR1bits.TMR1IF =0;
-                       TMR1L =0;
-                       TMR1H =0;
-                       adc_value = ADC_GetValue();
-                     
-                       convertDecimalToHexa(adc_value);
-                       delay_1ms(5);
-                    }
+                   
                    
                 }
                 else if(((mydir == 1 || my_drv.drv_dir ==1)
@@ -409,9 +427,8 @@ void  main(void )
                           CCPR1L = 0x0d;    //MSB 8bit<>pulse duty of value
                        
                        
-                         TXREG=0x23;
-                         //DRV_DIR =1; //Auto_OutPut_Brake=0;
-                       //  delay_100us(2);
+                         TXREG=0xb1;
+                         
                     }
                     DRV_DIR =1;
                    // TRISCbits.TRISC5 =0;
