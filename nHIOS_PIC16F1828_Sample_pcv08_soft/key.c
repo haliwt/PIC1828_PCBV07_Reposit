@@ -101,7 +101,7 @@ uchar  Manual_Operation_Dir(void)
         DRV_DIR =1;
         my_drv.drv_dir=1;
         Auto_Works_Signal = 0;
-        TXREG=0x11;
+       // TXREG=0x11;
       
         return 1;
        }
@@ -118,7 +118,7 @@ uchar  Manual_Operation_Dir(void)
             DRV_DIR =1;
             //my_drv.drv_dir=1;
             Auto_Works_Signal = 0;
-            TXREG=0x11;
+          //  TXREG=0x11;
             return 1;
           }
         }
