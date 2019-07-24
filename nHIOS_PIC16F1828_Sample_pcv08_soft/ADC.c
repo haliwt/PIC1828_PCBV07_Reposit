@@ -12,7 +12,7 @@
          ADCON1bits.ADFM = 0b1;
          ADCON1bits.ADCS = 0b111;
          ADCON1bits.ADNREF = 0b0;
-         ADCON1bits.ADPREF = 0b10;
+         ADCON1bits.ADPREF = 0b00;//0b01;
 }
 
   /***************************************************************************
@@ -24,10 +24,10 @@
  ****************************************************************************/
  ulong  ADC_GetValue(void)
  {
-     
-    ulong  adval[5]={0};
-    float  adc_sum;
-	ulong  advalf[5]={0};
+     uchar i;
+    ulong  adval[3]={0};
+    float  adc_sum=0;
+	ulong  advalf[3]={0};
 	ADCON0bits.GO = 1;//ADGO=1;
     while(ADCON0bits.GO);
     {
@@ -36,7 +36,7 @@
          adval[0] = (adval[0] << 8) | ADRESL;//00000011 11111111
          delay_100us(1);
          advalf[0] = (adval[0] * 10000) >> 10 ; //  adval / 1024;
-         delay_100us(1); 
+         delay_10us(1); 
     }
    // return (advalf[0]);
 
@@ -48,9 +48,9 @@
         adval[1] = (adval[1] << 8) | ADRESL;//00000011 11111111
         delay_100us(1);
         advalf[1] = (adval[1] * 10000) >> 10 ; //  adval / 1024;
-        delay_100us(1);
+        delay_10us(1);
     }
-    
+   
   // adc_sum = (advalf[0] + advalf[1]) / 2;
    //delay_10us(5);
    //return (adc_sum);
@@ -63,11 +63,42 @@
         adval[2] = (adval[2] << 8) | ADRESL;//00000011 11111111
         delay_100us(1);
         advalf[2] = (adval[2] * 10000) >> 10 ; //  adval / 1024;
-        delay_100us(1);
+        delay_10us(1);
     }
     adc_sum = (advalf[0] + advalf[1]+ advalf[2]) / 3;
-    delay_100us(5);
+    delay_10us(5);
+    for(i=0;i<3;i++)
+    {
+        advalf[i]=0;
+        adval[i]=0;
+        
+    
+    }
     return (adc_sum);
+    
+#if 0   
+     ADCON0bits.GO = 1;//ADGO=1;
+    while(ADCON0bits.GO);
+    {
+        adval[3]= ADRESH;//00000000 00000011
+
+        adval[3] = (adval[3] << 8) | ADRESL;//00000011 11111111
+        delay_100us(1);
+        advalf[3] = (adval[3] * 10000) >> 10 ; //  adval / 1024;
+        delay_100us(1);
+    }
+
+    adc_sum = (advalf[0] + advalf[1]+ advalf[2]+advalf[3]) / 4;
+    delay_100us(5);
+    for(i=0;i<4;i++)
+    {
+        advalf[i]=0;
+        adval[i]=0;
+        
+    
+    }
+    return (adc_sum);
+#endif 
  #if 0
     ADCON0bits.GO = 1;//ADGO=1;
     while(ADCON0bits.GO);

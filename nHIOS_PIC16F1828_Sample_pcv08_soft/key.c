@@ -44,9 +44,9 @@ uchar GetKeyPad(void)
   if(Key_Start == 1) //stop
   {
        CCPR1L =0x0;  
-       DRV_BRAKE =0 ;
+       //DRV_BRAKE =0 ;
        TRISCbits.TRISC5 =1;
-	   delay_10ms(5);
+	   delay_10ms(1);
        DRV_BRAKE =0 ;
       // TXREG=0xbb;
       // delay_100us(10);
