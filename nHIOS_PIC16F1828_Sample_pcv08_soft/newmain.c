@@ -55,7 +55,7 @@ void  main(void )
     uint size_n,i;
     uint adc_value;
     uchar  mykey=1,times_m=0,times_n=0,mydir = 0;  //wt.edit 2019-02-21
-    uchar flag_brake,flag_run=0;   
+    uchar flag_brake,flag_run;   
  
     init_fosc();
     USART_Init();
@@ -267,7 +267,7 @@ void  main(void )
                 {
                    
                    
-                    {
+                    
                     DRV_DIR =0;//WT.EDIT 2019-06-13
                     Auto_OutPut_Brake=0;
                     DRV_BRAKE = 1; //run
@@ -275,7 +275,7 @@ void  main(void )
                     TRISCbits.TRISC5 =0;
                     TMR1_Counter_Enable = 1;
                     rem++;
-                    if((rem==2)&&(flag_run !=1))
+                    if(rem==2)
                     {
                      
                         DRV_DIR =0; //WT.EDIT 2019-06-13
@@ -312,12 +312,12 @@ void  main(void )
                          TXREG=0xa1;
                         // my_drv.error_f = 1;
                     }
-                    else 
-                        ;
+                    
+                     
                      /*judge overcurrent value*/
                     if(PIR1bits.TMR1IF == 1) 
                     {
-                      
+#if 1
                        TXREG= 0xff ;
                        //delay_1ms(5);
                        TXREG= 0xaa ;
@@ -326,17 +326,19 @@ void  main(void )
                        PIR1bits.TMR1IF =0;
                        TMR1L =0;
                        TMR1H =0;
+#endif 
                        adc_value = ADC_GetValue();
 #if 1
                        if(adc_value > 32 || adc_value ==32)
                        {
                              my_drv.error_f ++;
+                             flag_run ++;
                              TXREG = my_drv.error_f;
-                            if( my_drv.error_f ==2 || my_drv.error_f > 2||flag_run ==1)
+                            if( my_drv.error_f ==2 || my_drv.error_f > 2||flag_run == 2||flag_run >2)
                             {
                                 flag_brake=2;
                                 my_drv.default_f= 1;
-                                flag_run=1;
+                                
                                 TXREG = 0xab;
                                 CCPR1L = 0; //WT.EDIT 2019-06-10
                                 Auto_OutPut_Brake=0;
@@ -347,19 +349,6 @@ void  main(void )
                                 DRV_BRAKE =0;
                                 DRV_ENABLE=0;
                                 convertDecimalToHexa(adc_value);
-                                delay_10ms(1000);
-                                delay_10ms(1000);
-                                delay_10ms(1000);
-                                delay_10ms(1000);
-                                delay_10ms(1000);
-                                CCPR1L = 0; //WT.EDIT 2019-06-10
-                                Auto_OutPut_Brake=0;
-                                Auto_Works_Signal = 0;
-                                DRV_BRAKE =0;
-                                TRISCbits.TRISC5 =1;
-                                delay_10ms(6);  //WT.EDIT 20190505
-                                DRV_BRAKE =0;
-                                DRV_ENABLE=0;
                                 my_drv.error_f ++;
                                 
                                 
@@ -392,14 +381,14 @@ void  main(void )
                      flag_power_on=1;
                      my_drv.drv_enable=2;
                     
-                    }   
+                      
                    
                 }
                 else if(((mydir == 1 || my_drv.drv_dir ==1)
 					      ||((mydir==0)&&(flag_brake == 5)))&&(my_drv.drv_enable!=2 && flag_brake !=4 && flag_brake !=2)) //CCW
 			    {
                     DRV_DIR =1;
-                    
+                    /**/
                     Auto_Works_Signal = 0;
                     Auto_OutPut_Brake=0;
                     

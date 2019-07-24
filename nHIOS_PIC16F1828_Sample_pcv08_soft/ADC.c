@@ -66,14 +66,8 @@
         delay_10us(1);
     }
     adc_sum = (advalf[0] + advalf[1]+ advalf[2]) / 3;
-    delay_10us(5);
-    for(i=0;i<3;i++)
-    {
-        advalf[i]=0;
-        adval[i]=0;
-        
+    delay_10us(1);
     
-    }
     return (adc_sum);
     
 #if 0   
