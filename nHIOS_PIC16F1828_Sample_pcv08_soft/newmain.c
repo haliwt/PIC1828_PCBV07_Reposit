@@ -266,24 +266,7 @@ void  main(void )
 					     ||((mydir==1)&&(flag_brake == 4)))&&(my_drv.drv_enable!=1 && flag_brake !=5 && flag_brake !=2))
                 {
                    
-                    if((my_drv.default_f ==1)|| my_drv.error_f >= 2||flag_run==1)
-                    {
-                       CCPR1L = 0; //WT.EDIT 2019-06-10
-                               Auto_Works_Signal = 1;
-                    CCPR1L =0;   //WT.EDIT 2019-06-10
-                    TRISCbits.TRISC5 =1;
-                     DRV_BRAKE = 0; //run
-                     DRV_ENABLE=0;
-				     Auto_OutPut_Brake=1;
-                     delay_10ms(2); //WT.EDIT 20190505
-				     TMR1H=0;
-		             TMR1L=0;
-                     k=0;
-                     Auto_Works_Signal = 1;
-                     TXREG=0x55;
-                                
-                    }
-                    else 
+                   
                     {
                     DRV_DIR =0;//WT.EDIT 2019-06-13
                     Auto_OutPut_Brake=0;
