@@ -3,10 +3,10 @@
 
  void  ADC_Init(void)
  {
-        TRISCbits.TRISC0 = 1; //RC0
-        ANSC0 = 1;
+        TRISCbits.TRISC6 = 1; //RC6
+        ANSC6 = 1;
          //ADCON0=0x41;
-         ADCON0bits.CHS =0b00100; //AN4 channel 
+         ADCON0bits.CHS =0b01000; //AN8 channel 
          ADCON0bits.ADON = 0b1; //ADC enable
 	     //ADCON1=0x8e;
          ADCON1bits.ADFM = 0b1;

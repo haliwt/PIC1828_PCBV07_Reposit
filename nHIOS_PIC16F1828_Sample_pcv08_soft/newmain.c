@@ -253,8 +253,6 @@ void  main(void )
                      DRV_ENABLE=0;
 				     Auto_OutPut_Brake=1;
                      delay_10ms(2); //WT.EDIT 20190505
-				     TMR1H=0;
-		             TMR1L=0;
                      k=0;
                      Auto_Works_Signal = 1;
                      TXREG=0x55;
@@ -338,7 +336,7 @@ void  main(void )
                             {
                                 flag_brake=2;
                                 my_drv.default_f= 1;
-                                
+                                flag_run=0;
                                 TXREG = 0xab;
                                 CCPR1L = 0; //WT.EDIT 2019-06-10
                                 Auto_OutPut_Brake=0;
@@ -350,6 +348,12 @@ void  main(void )
                                 DRV_ENABLE=0;
                                 convertDecimalToHexa(adc_value);
                                 my_drv.error_f ++;
+                                delay_10ms(100);
+                                delay_10ms(100);
+                                delay_10ms(100);
+                                delay_10ms(100);
+                                delay_10ms(100);
+                                while(1);
                                 
                                 
                             }
