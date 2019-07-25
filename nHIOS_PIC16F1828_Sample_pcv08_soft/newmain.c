@@ -260,8 +260,9 @@ void  main(void )
                      //delay_1ms(10);
                      
                 }
-                else if((((mydir == 0)||(my_drv.drv_dir==2)) 
-					     ||((mydir==1)&&(flag_brake == 4)))&&(my_drv.drv_enable!=1 && flag_brake !=5 && flag_brake !=2))
+				/***********************CW*****************************/
+                else if((((mydir == 1)||(my_drv.drv_dir==1)) 
+					     ||((mydir==0)&&(flag_brake == 4)))&&(my_drv.drv_enable!=1 && flag_brake !=5 && flag_brake !=2))
                 {
                    
                    
@@ -389,8 +390,8 @@ void  main(void )
                    
                 }
 				/**********************ccw*******************************************************/
-                else if(((mydir == 1 || my_drv.drv_dir ==1)
-					      ||((mydir==0)&&(flag_brake == 5)))&&(my_drv.drv_enable!=2 && flag_brake !=4 && flag_brake !=2)) //CCW
+                else if(((mydir == 0 || my_drv.drv_dir ==2)
+					      ||((mydir==1)&&(flag_brake == 5)))&&(my_drv.drv_enable!=2 && flag_brake !=4 && flag_brake !=2)) //CCW
 			    {
                     DRV_DIR =1;
                     /**/
@@ -514,9 +515,9 @@ void  main(void )
                   
                      flag_brake=5;
                   
-                    flag_power_on=0; //WT.EIDT 20190508
-                    my_drv.drv_dir=3;
-					my_drv.drv_brake =3; //WT.EDIT 20190508
+                     flag_power_on=0; //WT.EIDT 20190508
+                     my_drv.drv_dir=3;
+					 my_drv.drv_brake =3; //WT.EDIT 20190508
 				     Auto_OutPut_Brake=0;
                      Auto_Works_Signal = 0;
                 
