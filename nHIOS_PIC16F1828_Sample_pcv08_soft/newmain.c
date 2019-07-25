@@ -261,9 +261,9 @@ void  main(void )
                      
                 }
 				/***********************CW*****************************/
-                else if((((mydir == 1)||(my_drv.drv_dir==1)) 
-					     ||((mydir==0)&&(flag_brake == 4)))&&(my_drv.drv_enable!=1 && flag_brake !=5 && flag_brake !=2))
-                {
+				else if(((((mydir == 1)||(my_drv.drv_dir==1))&&flag_brake != 2) ||((mydir==0)&&(flag_brake == 4)))
+                               &&(my_drv.drv_enable!=1 && flag_brake !=5 && flag_brake !=2))
+               {
                    
                    
                     
@@ -312,7 +312,7 @@ void  main(void )
                         // my_drv.error_f = 1;
                     }
                     
-                     
+#if 0
                      /*judge overcurrent value*/
                     if(PIR1bits.TMR1IF == 1) 
                     {
@@ -364,6 +364,7 @@ void  main(void )
                        convertDecimalToHexa(adc_value);
                       
                     }
+#endif 
                     rem=5;
                     
                     
@@ -390,8 +391,9 @@ void  main(void )
                    
                 }
 				/**********************ccw*******************************************************/
-                else if(((mydir == 0 || my_drv.drv_dir ==2)
-					      ||((mydir==1)&&(flag_brake == 5)))&&(my_drv.drv_enable!=2 && flag_brake !=4 && flag_brake !=2)) //CCW
+                 else if(((mydir == 0 || my_drv.drv_dir ==2)
+                         ||((mydir==1)&&(flag_brake == 5)))&&(my_drv.drv_enable!=2 && flag_brake !=4 && flag_brake !=2))
+                       
 			    {
                     DRV_DIR =1;
                     /**/

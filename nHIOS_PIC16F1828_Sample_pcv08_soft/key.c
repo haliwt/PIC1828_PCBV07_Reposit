@@ -61,8 +61,6 @@ uchar GetKeyPad(void)
    }
   
  
- // else 
-      //return 1;
 }
  
 /************************************************************
@@ -79,17 +77,17 @@ uchar  Manual_Operation_Dir(void)
    if(Key_Dir ==1)// CW   motor run to works 2019-07-25
    {
 
-       if(my_drv.drv_dir ==3)
+       if(my_drv.drv_dir ==4)
        {
       
-            delay_1ms(5); //WT.EDIT 2019-06-10
-            if(my_drv.drv_dir ==3)
+            delay_10ms(1); //WT.EDIT 2019-06-10
+            if(my_drv.drv_dir ==4)
             {
-              //DRV_DIR =0;
-              Auto_Works_Signal = 0;
-            //  TXREG=0x12;
+              DRV_DIR =0;
+             
+              TXREG=0x12;
 
-              return 0; 
+              return 0;
             }
        }
        else
@@ -110,13 +108,14 @@ uchar  Manual_Operation_Dir(void)
        
        if(my_drv.drv_dir ==4)
         {
-           delay_1ms(5);//WT.EDIT 2019-06-10
-          if(my_drv.drv_dir ==4) 
+          delay_10ms(1);//WT.EDIT 2019-06-10
+          if(my_drv.drv_dir ==3) 
           {
-            
-            Auto_Works_Signal = 1;
+            DRV_DIR =1;
+            //my_drv.drv_dir=1;
+            Auto_Works_Signal = 0;
            // TXREG=0x11;
-            return 1; //WT.EDIT 2019-07-25
+            return 1;
           }
         }
         else 
