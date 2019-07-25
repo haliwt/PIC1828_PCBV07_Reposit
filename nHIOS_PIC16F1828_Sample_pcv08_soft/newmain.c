@@ -347,7 +347,7 @@ void  main(void )
                                 DRV_BRAKE =0;
                                 DRV_ENABLE=0;
                                 convertDecimalToHexa(adc_value);
-                                my_drv.error_f ++;
+                                my_drv.error_f=0;
                                 delay_10ms(100);
                                 delay_10ms(100);
                                 delay_10ms(100);
@@ -388,6 +388,7 @@ void  main(void )
                       
                    
                 }
+				/**********************ccw*******************************************************/
                 else if(((mydir == 1 || my_drv.drv_dir ==1)
 					      ||((mydir==0)&&(flag_brake == 5)))&&(my_drv.drv_enable!=2 && flag_brake !=4 && flag_brake !=2)) //CCW
 			    {
@@ -399,6 +400,7 @@ void  main(void )
                     DRV_BRAKE = 1; //run
                     DRV_ENABLE=1;
                     TRISCbits.TRISC5 =0;
+					TMR1_Counter_Enable = 1;
                     rem++;
                     if(rem==2)
                     {
@@ -453,27 +455,72 @@ void  main(void )
                          
                     }
                     DRV_DIR =1;
-                   // TRISCbits.TRISC5 =0;
+                  
                     
                     GIE =0;
-                  
+				    
+                     if(PIR1bits.TMR1IF == 1) 
+                    {
+#if 1
+                       TXREG= 0xee ;
+                       //delay_1ms(5);
+                       TXREG= 0xbb ;
+                       //delay_1ms(5);
+                       TMR1_Counter_Enable = 0;
+                       PIR1bits.TMR1IF =0;
+                       TMR1L =0;
+                       TMR1H =0;
+#endif 
+                       adc_value = ADC_GetValue();
+#if 1
+                       if(adc_value > 32 || adc_value ==32)
+                       {
+                             my_drv.error_f ++;
+                             flag_run ++;
+                             TXREG = my_drv.error_f;
+                            if( my_drv.error_f ==2 || my_drv.error_f > 2||flag_run == 2||flag_run >2)
+                            {
+                                flag_brake=2;
+                                my_drv.default_f= 1;
+                                flag_run=0;
+                                TXREG = 0xba;
+                                CCPR1L = 0; //WT.EDIT 2019-06-10
+                                Auto_OutPut_Brake=0;
+                                Auto_Works_Signal = 0;
+                                DRV_BRAKE =0;
+                                TRISCbits.TRISC5 =1;
+                                delay_10ms(6);  //WT.EDIT 20190505
+                                DRV_BRAKE =0;
+                                DRV_ENABLE=0;
+                                convertDecimalToHexa(adc_value);
+                                my_drv.error_f=0;
+                                delay_10ms(100);
+                                delay_10ms(100);
+                                delay_10ms(100);
+                                delay_10ms(100);
+                                delay_10ms(100);
+                                while(1);
+                                
+                                
+                            }
+                       }
+                       else
+#endif              
+                       convertDecimalToHexa(adc_value);
+                      
+                    }
                     rem=5;
-                     TXREG=0x22;
-                    //delay_100us(10);
-                   
+                    // TXREG=0x22;
+                  
                      flag_brake=5;
-                    // DRV_BRAKE = 1;
-					 TMR1_Counter_Enable = 0;
-		             k=0;
-					 TMR1H =0;
-					 TMR1L = 0;
+                  
                     flag_power_on=0; //WT.EIDT 20190508
                     my_drv.drv_dir=3;
 					my_drv.drv_brake =3; //WT.EDIT 20190508
 				     Auto_OutPut_Brake=0;
                      Auto_Works_Signal = 0;
                 
-                    TXREG=0x33;
+                   // TXREG=0x33;
               
                     my_drv.drv_enable=1;
                   //   mydir = Manual_Operation_Dir();

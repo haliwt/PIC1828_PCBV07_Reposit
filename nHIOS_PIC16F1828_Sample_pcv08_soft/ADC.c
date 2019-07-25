@@ -4,7 +4,7 @@
  void  ADC_Init(void)
  {
         TRISCbits.TRISC6 = 1; //RC6
-        ANSC6 = 1;
+        ANSC6 = 1;            //Analog
          //ADCON0=0x41;
          ADCON0bits.CHS =0b01000; //AN8 channel 
          ADCON0bits.ADON = 0b1; //ADC enable
@@ -24,7 +24,7 @@
  ****************************************************************************/
  ulong  ADC_GetValue(void)
  {
-     uchar i;
+    
     ulong  adval[3]={0};
     float  adc_sum=0;
 	ulong  advalf[3]={0};

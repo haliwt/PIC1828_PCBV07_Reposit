@@ -38,9 +38,6 @@ void Key_Init(void)
  ************************************************************/
 uchar GetKeyPad(void)
 {
-   
- 
-    
   if(Key_Start == 1) //stop
   {
        CCPR1L =0x0;  
