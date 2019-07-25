@@ -461,7 +461,7 @@ void  main(void )
                   
                     
                     GIE =0;
-				    
+#if 0				    
                      if(PIR1bits.TMR1IF == 1) 
                     {
 #if 1
@@ -512,6 +512,7 @@ void  main(void )
                        convertDecimalToHexa(adc_value);
                       
                     }
+#endif 
                     rem=5;
                     // TXREG=0x22;
                   

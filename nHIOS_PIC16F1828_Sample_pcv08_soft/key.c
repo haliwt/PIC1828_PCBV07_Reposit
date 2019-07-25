@@ -85,7 +85,7 @@ uchar  Manual_Operation_Dir(void)
             {
               DRV_DIR =0;
              
-              TXREG=0x12;
+              //TXREG=0x12;
 
               return 0;
             }
