@@ -13,12 +13,12 @@ void Output_SIG_Init(void)
       
        Auto_OutPut_Brake = 0; //PORTBbits.RB6 =0;   //output error signal
       
-      TRISBbits.TRISB4 = 0;
+      TRISBbits.TRISB4 = 1; //Input GPIO 
 	  ANSB4 =0;
      
       
      
-      Auto_Works_Signal = 0;
+      //Auto_Works_Signal = 0;
 }
 
  

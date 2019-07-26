@@ -1,9 +1,11 @@
 #ifndef DELAY_H
 #define	DELAY_H
 #include <xc.h>
-#include <pic16f1828.h>
+//#include <pic16f1828.h>
 #include <stdio.h>
 #include <stdlib.h>
+
+#define _XTAL_FREQ     8000000
 #define uchar       unsigned char   /*8bit 0~ 255*/
 #define uint        unsigned int       /*16bit 0 ~ 65535*/
 #define ushort      unsigned short   /*16bit*/
