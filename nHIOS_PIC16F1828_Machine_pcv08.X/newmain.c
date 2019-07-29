@@ -127,11 +127,7 @@ void  main(void )
                     rem++;
                     if(rem==2)
                     {
-                     
-                        DRV_DIR =0; //WT.EDIT 2019-06-13
-                        rem++;
-                        
-                       
+                         rem++;
                          CCPR1L =0x0;    //MSB 8bit<>pulse duty of value
                          DRV_DIR =0;
                          CCPR1L =0x01;    //MSB 8bit<>pulse duty of value
@@ -364,7 +360,7 @@ void  main(void )
 					 IOCAN2 =1; 
 
                     // TXREG=0x22;
-                     __delay_ms(250);//__delay_ms(150);
+                     __delay_ms(50);//__delay_ms(100);//__delay_ms(250);//__delay_ms(150);
                     
                
                   } 
@@ -405,7 +401,7 @@ void  main(void )
                  flag_power_on=0;
                 Auto_OutPut_Brake=0;
 
-			    	}
+			    }
 				
 					break;
 			}
@@ -499,6 +495,7 @@ void  main(void )
                          CCPR1L = 0x0c;    //MSB 8bit<>pulse duty of value
                          DRV_DIR =0;
                          CCPR1L = 0x0d;    //MSB 8bit<>pulse duty of value
+                        
                          TXREG=0xa1;
                         // my_drv.error_f = 1;
                     }
@@ -644,8 +641,8 @@ void  main(void )
 		                           DRV_DIR =1;    
 		                          CCPR1L = 0x0d;    //MSB 8bit<>pulse duty of value
 		                       
-		                       
-		                         TXREG=0xb1;
+		                          
+		                          //TXREG=0xb1;
 		                         
 		                    }
 		                    DRV_DIR =1;

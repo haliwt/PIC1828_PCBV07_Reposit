@@ -37,9 +37,9 @@ void Drv8306_PWM(void)
     CCPR1L = 0x00;    //MSB 8bit<>pulse duty of value
     CCP1CON = 0x0d ;//LSB has 2 bits in <5:4>
     CCPTMRS0 = 0;//0xFC ;  //PWM timer selectiong control RE :Enable PWM
-   //T2CON  = 0X07;     //TIMER2 of TIMER2,prescaler is 64
-    T2CON = 0x04;    //TXCON <>TIMER2 enable ,prescaler is=1 .
-  
+   // T2CON = 0x04;    //TXCON <>TIMER2 enable ,prescaler is=1 .
+    T2CONbits.T2CKPS = 0b00 ;  //prescaler = 1 
+    T2CONbits.TMR2ON = 0b1;
     
 }
 

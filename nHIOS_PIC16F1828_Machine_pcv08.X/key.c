@@ -43,7 +43,7 @@ uchar GetKeyPad(void)
         CCPR1L =0x0;  
        //DRV_BRAKE =0 ;
        TRISCbits.TRISC5 =1;
-	   delay_1ms(10);
+	   delay_10us();//delay_1ms(10);
        DRV_BRAKE =0 ;
      
        return 1;
@@ -52,7 +52,7 @@ uchar GetKeyPad(void)
   
   else if (Key_Start == 0) //WT.EDIT 2019-07-22
   {
-	  delay_1ms(5); //WT.EID 2019-07-22
+	  delay_10us();//__delay_ms(2);//delay_1ms(5); //WT.EID 2019-07-22
      
       
       return 0;
@@ -80,8 +80,8 @@ uchar  Manual_Operation_Dir(void)
        if(my_drv.drv_dir ==4)
        {
       
-            delay_10ms(1); //WT.EDIT 2019-06-10
-            if(my_drv.drv_dir ==4)
+            __delay_ms(2);//delay_10ms(1); //WT.EDIT 2019-06-10
+            //if(my_drv.drv_dir ==4)
             {
               DRV_DIR =0;
              
@@ -93,7 +93,7 @@ uchar  Manual_Operation_Dir(void)
        else
 
        {
-        delay_1ms(5); //WT.EDIT 2019-06-10
+        __delay_ms(1);//delay_1ms(5); //WT.EDIT 2019-06-10
       
         my_drv.drv_dir=1;
         //Auto_Works_Signal = 1;
@@ -108,8 +108,8 @@ uchar  Manual_Operation_Dir(void)
        
        if(my_drv.drv_dir ==4)
         {
-          delay_10ms(1);//WT.EDIT 2019-06-10
-          if(my_drv.drv_dir ==3) 
+          __delay_ms(2);//delay_10ms(1);//WT.EDIT 2019-06-10
+          //if(my_drv.drv_dir ==3) 
           {
             DRV_DIR =1;
             //my_drv.drv_dir=1;
@@ -121,7 +121,7 @@ uchar  Manual_Operation_Dir(void)
         else 
 
         {
-           delay_1ms(5); //WT.EDIT 2019-06-10
+           __delay_ms(2);//delay_1ms(5); //WT.EDIT 2019-06-10
            //DRV_DIR =0;
             my_drv.drv_dir=2;
             //Auto_Works_Signal = 0;

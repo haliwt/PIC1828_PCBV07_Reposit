@@ -1,5 +1,23 @@
 #include "Delay.h"
 
+
+/**************************************
+  *
+  *Function Name:
+  *Function active : delay times 100us
+  *Input Reference: times
+  *
+ **************************************/
+void delay_10us(void)
+{
+     _nop();; _nop();; _nop();; _nop();; _nop();;
+	 _nop();; _nop();; _nop();; _nop();; _nop();;
+	 _nop();; _nop();; _nop();; _nop();; _nop();;
+	 _nop();; _nop();; _nop();; 
+	 
+
+}
+
 /**************************************
   *
   *Function Name:
@@ -9,29 +27,17 @@
  **************************************/
 void delay_100us(uchar t)
 {
-     uint i= 6*t ;
-      while(i --)
-        {
-          ;
-        }
+     uchar i,j;
+	 for(i=0;i<t;i++)
+	 {
+	    for(j=0;j<97;j++)
+		   delay_10us();	
+
+     }
+     
 
 }
-/**************************************
-  *
-  *Function Name:
-  *Function active : delay times 100us
-  *Input Reference: times
-  *
- **************************************/
-void delay_10us(uchar t)
-{
-     uint i= 3*t ;
-      while(i --)
-        {
-          ;
-        }
 
-}
 /***************************************************************************
  *
  * Function Name:delay_1ms()

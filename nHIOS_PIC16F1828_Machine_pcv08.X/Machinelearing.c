@@ -118,9 +118,9 @@ void Average_First(uchar size_m,uchar addr)
 			  
 				 convertDecimalToHexa(sum);
 				 aver = sum /80;
-				 delay_10us(5);
+				 delay_10us();
 				 TXREG = aver;
-				 delay_10us(5);
+				 delay_10us();
 				 
 			   EEPROM_Write_OneByte(addr, aver);
 			  

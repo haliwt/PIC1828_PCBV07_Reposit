@@ -36,7 +36,7 @@
          adval[0] = (adval[0] << 8) | ADRESL;//00000011 11111111
          delay_100us(1);
          advalf[0] = (adval[0] * 10000) >> 10 ; //  adval / 1024;
-         delay_10us(1); 
+         delay_10us(); 
     }
    // return (advalf[0]);
 
@@ -48,7 +48,7 @@
         adval[1] = (adval[1] << 8) | ADRESL;//00000011 11111111
         delay_100us(1);
         advalf[1] = (adval[1] * 10000) >> 10 ; //  adval / 1024;
-        delay_10us(1);
+        delay_10us();
     }
    
   // adc_sum = (advalf[0] + advalf[1]) / 2;
@@ -63,10 +63,10 @@
         adval[2] = (adval[2] << 8) | ADRESL;//00000011 11111111
         delay_100us(1);
         advalf[2] = (adval[2] * 10000) >> 10 ; //  adval / 1024;
-        delay_10us(1);
+        delay_10us();
     }
     adc_sum = (advalf[0] + advalf[1]+ advalf[2]) / 3;
-    delay_10us(1);
+    delay_10us();
     
     return (adc_sum);
     
