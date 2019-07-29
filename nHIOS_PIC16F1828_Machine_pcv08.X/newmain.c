@@ -74,7 +74,7 @@ void  main(void )
     
    
     mykey =GetKeyPad();
-	
+	mydir = Manual_Operation_Dir();
   
 	if(Key_MachineL == 1 )
 	{
@@ -415,7 +415,7 @@ void  main(void )
 	**************************************************************************************/
 	else
 	{
-      mydir = Manual_Operation_Dir();
+     
 	  if((flag_power_on==2)||(my_drv.drv_brake ==1))
       {
 
