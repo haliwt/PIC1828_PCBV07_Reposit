@@ -78,8 +78,8 @@ void  main(void )
   
 	if(Key_MachineL == 1 )
 	{
-       
-  
+       TXREG=0x0d; 
+      
       if((flag_power_on==2)||(my_drv.drv_brake ==1))
       {
 
@@ -500,7 +500,7 @@ void  main(void )
                         // my_drv.error_f = 1;
                     }
                     
-#if 0
+#if 1
                      /*judge overcurrent value*/
                     if(PIR1bits.TMR1IF == 1) 
                     {
@@ -521,7 +521,7 @@ void  main(void )
                              my_drv.error_f ++;
                              flag_run ++;
                              TXREG = my_drv.error_f;
-                            if( my_drv.error_f ==2 || my_drv.error_f > 2||flag_run == 2||flag_run >2)
+                            if( my_drv.error_f ==2 ||flag_run == 2)
                             {
                                 flag_brake=2;
                                 my_drv.default_f= 1;
@@ -529,7 +529,7 @@ void  main(void )
                                 TXREG = 0xab;
                                 CCPR1L = 0; //WT.EDIT 2019-06-10
                                 Auto_OutPut_Brake=0;
-                                Auto_Works_Signal = 0;
+                                //Auto_Works_Signal = 0;
                                 DRV_BRAKE =0;
                                 TRISCbits.TRISC5 =1;
                                 delay_10ms(6);  //WT.EDIT 20190505
@@ -537,11 +537,8 @@ void  main(void )
                                 DRV_ENABLE=0;
                                 convertDecimalToHexa(adc_value);
                                 my_drv.error_f=0;
-                                delay_10ms(100);
-                                delay_10ms(100);
-                                delay_10ms(100);
-                                delay_10ms(100);
-                                delay_10ms(100);
+                                __delay_ms(2);
+                               
                                 while(1);
                                 
                                 
@@ -587,7 +584,7 @@ void  main(void )
 		                    /**/
 		                    //Auto_Works_Signal = 0;
 		                    Auto_OutPut_Brake=0;
-		                    
+		                  
 		                    DRV_BRAKE = 1; //run
 		                    DRV_ENABLE=1;
 		                    TRISCbits.TRISC5 =0;
@@ -649,7 +646,8 @@ void  main(void )
 		                  
 		                    
 		                    GIE =0;
-#if 0				    
+                           
+#if 1				    
 		                     if(PIR1bits.TMR1IF == 1) 
 		                    {
 #if 1
@@ -669,11 +667,11 @@ void  main(void )
 		                             my_drv.error_f ++;
 		                             flag_run ++;
 		                             TXREG = my_drv.error_f;
-		                            if( my_drv.error_f ==2 || my_drv.error_f > 2||flag_run == 2||flag_run >2)
+		                            if( my_drv.error_f ==2 || flag_run == 2)
 		                            {
 		                                flag_brake=2;
 		                                my_drv.default_f= 1;
-		                                flag_run=0;
+		                               
 		                                TXREG = 0xba;
 		                                CCPR1L = 0; //WT.EDIT 2019-06-10
 		                                Auto_OutPut_Brake=0;
@@ -685,11 +683,9 @@ void  main(void )
 		                                DRV_ENABLE=0;
 		                                convertDecimalToHexa(adc_value);
 		                                my_drv.error_f=0;
-		                                delay_10ms(100);
-		                                delay_10ms(100);
-		                                delay_10ms(100);
-		                                delay_10ms(100);
-		                                delay_10ms(100);
+                                        flag_run=0;
+		                                __delay_ms(2);
+		                                
 		                                while(1);
 		                                
 		                                
