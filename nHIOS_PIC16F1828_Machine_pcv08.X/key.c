@@ -40,7 +40,8 @@ uchar GetKeyPad(void)
 {
   if(Key_Start == 1) //stop
   {
-        CCPR1L =0x0;  
+       Auto_OutPut_Brake=0;
+       CCPR1L =0x0;  
        //DRV_BRAKE =0 ;
        TRISCbits.TRISC5 =1;
 	   delay_10us();//delay_1ms(10);
@@ -85,19 +86,25 @@ uchar  Manual_Operation_Dir(void)
             {
               DRV_DIR =0;
              
-              //TXREG=0x12;
+            //  TXREG=0x12;
 
               return 0;
             }
        }
-       else
-
-       {
-        __delay_ms(1);//delay_1ms(5); //WT.EDIT 2019-06-10
+       
+      else
+      {
+        
+       
+        delay_10us();//delay_1ms(5); //WT.EDIT 2019-06-10
       
         my_drv.drv_dir=1;
         //Auto_Works_Signal = 1;
-    
+        TXREG=0x11;
+	    if(my_drv.brake_sf == 1)
+        {
+          Auto_OutPut_Brake=1;
+        }
       
         return 1;
        }
@@ -108,24 +115,24 @@ uchar  Manual_Operation_Dir(void)
        
        if(my_drv.drv_dir ==4)
         {
-          __delay_ms(2);//delay_10ms(1);//WT.EDIT 2019-06-10
+          __delay_ms(4);//delay_10ms(1);//WT.EDIT 2019-06-10
           //if(my_drv.drv_dir ==3) 
           {
             DRV_DIR =1;
             //my_drv.drv_dir=1;
            // Auto_Works_Signal = 0;
-           // TXREG=0x11;
+           // TXREG=0x20;
             return 1;
           }
         }
         else 
 
         {
-           __delay_ms(2);//delay_1ms(5); //WT.EDIT 2019-06-10
+           __delay_ms(4);//delay_1ms(5); //WT.EDIT 2019-06-10
            //DRV_DIR =0;
             my_drv.drv_dir=2;
             //Auto_Works_Signal = 0;
-           // TXREG=0x00;
+           // TXREG=0x10;
 
             return 0;
          }

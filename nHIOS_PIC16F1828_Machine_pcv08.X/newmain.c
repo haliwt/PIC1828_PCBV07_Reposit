@@ -96,7 +96,7 @@ void  main(void )
     	{
             case 0 : //run works
             {
-                if((mydir == 0)&&(flag_brake ==2)&&(flag_brake!=3)&&(flag_brake!=0))
+                if((mydir == 1)&&(flag_brake ==2)&&(flag_brake!=3)&&(flag_brake!=0))
                 {
                     
                    // Auto_Works_Signal = 1;
@@ -108,7 +108,7 @@ void  main(void )
                      delay_10ms(2); //WT.EDIT 20190505
                      
                     // Auto_Works_Signal = 1;
-                     TXREG=0x55;
+                     TXREG=0x56;
                    
                      //delay_1ms(10);
                      
@@ -194,8 +194,9 @@ void  main(void )
                   } 
 
 
-               break;
+               
              }
+            break;
 			 case 1: //STOP
 			    {
                   CCPR1L = 0; //WT.EDIT 2019-06-10
@@ -222,7 +223,7 @@ void  main(void )
 				
 			    flag_run=0;
 		        my_drv.error_f=0;
-			    my_drv.default_f =0;
+			  
                 my_drv.drv_enable = 0;
 			     my_drv.drv_brake=0;
                 my_drv.drv_dir=0;
@@ -245,33 +246,36 @@ void  main(void )
 	  if((flag_power_on==2)||(my_drv.drv_brake ==1))
       {
 
+        Auto_OutPut_Brake=1;
         TMR1_Counter_Enable = 0;
 		flag_brake=2;
 		CCPR1L =0;   //WT.EDIT 2019-06-10
         DRV_BRAKE =0 ;
         Auto_OutPut_Brake=1;
-        __delay_ms(1); //WT.EDIT 20190730
-       // Auto_Works_Signal = 1;
-       // TXREG=0x00;
+         TXREG=0x00;
        }//end if(flag_power_on))
      
 	   switch(mykey)
         {
             case 0 : //run works
             {
-                if((mydir == 0)&&(flag_brake ==2)&&(flag_brake!=3)&&(flag_brake!=0))
+                if((mydir == 1)&&(flag_brake ==2)&&(flag_brake!=3)&&(flag_brake!=0))
                 {
                     
-                   Auto_OutPut_Brake=1;// Auto_Works_Signal = 1;
+                    Auto_OutPut_Brake=1;// Auto_Works_Signal = 1;
                     CCPR1L =0;   //WT.EDIT 2019-06-10
                     TRISCbits.TRISC5 =1;
                      DRV_BRAKE = 0; //run
                      DRV_ENABLE=0;
 				     Auto_OutPut_Brake=1;
-                     __delay_ms(2); //WT.EDIT 20190505
+                    
                      
                     // Auto_Works_Signal = 1;
                      TXREG=0x55;
+					 Auto_OutPut_Brake=1;
+					 my_drv.brake_sf = 1;
+					 mykey = 0;
+					 mydir =1;
                    
                 }
 				/***********************WORKS_CW*****************************/
@@ -316,11 +320,11 @@ void  main(void )
                        {
                              my_drv.error_f ++;
                              flag_run ++;
-                             TXREG = my_drv.error_f;
+                            
                             if( my_drv.error_f ==2 ||flag_run == 2)
                             {
                                 flag_brake=2;
-                                my_drv.default_f= 1;
+                              
                                 flag_run=0;
                                 TXREG = 0xab;
                                 CCPR1L = 0; //WT.EDIT 2019-06-10
@@ -421,11 +425,11 @@ void  main(void )
 		                       {
 		                             my_drv.error_f ++;
 		                             flag_run ++;
-		                             TXREG = my_drv.error_f;
+		                            
 		                            if( my_drv.error_f ==2 || flag_run == 2)
 		                            {
 		                                flag_brake=2;
-		                                my_drv.default_f= 1;
+		                               
 		                               
 		                                TXREG = 0xba;
 		                                CCPR1L = 0; //WT.EDIT 2019-06-10
@@ -472,13 +476,15 @@ void  main(void )
 					
 		            }
 		         
-		            break;
+		           
             	}
+			 break;
 			case 1: //STOP_key
             {
 
-                  CCPR1L = 0; //WT.EDIT 2019-06-10
-                  Auto_OutPut_Brake=0;
+                 Auto_OutPut_Brake=0;
+                 CCPR1L = 0; //WT.EDIT 2019-06-10
+                  
                   //Auto_Works_Signal = 0;
                   DRV_BRAKE =0;
                   TRISCbits.TRISC5 =1;
@@ -492,16 +498,12 @@ void  main(void )
                    IOCAF2 = 0;
                    IOCAP2=0;
                    IOCIF =0;
-                  
+                  TXREG=0x57;
                   rem=1;
-				  
-                flag_brake=3;
-                
-		        
-				
-			    flag_run=0;
+				flag_brake=3;
+                flag_run=0;
 		        my_drv.error_f=0;
-			    my_drv.default_f =0;
+			    my_drv.brake_sf = 0;
                 my_drv.drv_enable = 0;
 			     my_drv.drv_brake=0;
                 my_drv.drv_dir=0;
