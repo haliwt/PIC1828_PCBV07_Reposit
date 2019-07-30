@@ -252,7 +252,7 @@ void  main(void )
 		CCPR1L =0;   //WT.EDIT 2019-06-10
         DRV_BRAKE =0 ;
         Auto_OutPut_Brake=1;
-         TXREG=0x00;
+        // TXREG=0x00;
        }//end if(flag_power_on))
      
 	   switch(mykey)
@@ -271,7 +271,7 @@ void  main(void )
                     
                      
                     // Auto_Works_Signal = 1;
-                     TXREG=0x55;
+                    // TXREG=0x55;
 					 Auto_OutPut_Brake=1;
 					 my_drv.brake_sf = 1;
 					 mykey = 0;

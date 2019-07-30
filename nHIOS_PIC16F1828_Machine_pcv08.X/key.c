@@ -100,7 +100,7 @@ uchar  Manual_Operation_Dir(void)
       
         my_drv.drv_dir=1;
         //Auto_Works_Signal = 1;
-        TXREG=0x11;
+       // TXREG=0x11;
 	    if(my_drv.brake_sf == 1)
         {
           Auto_OutPut_Brake=1;
