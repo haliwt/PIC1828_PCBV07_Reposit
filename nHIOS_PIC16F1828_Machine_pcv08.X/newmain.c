@@ -51,10 +51,8 @@ uchar flag_power_on=0;
  *************************************************************/
 void  main(void )
 {
-    uchar rem=1, machine_key=0,k=0,m=0,n=0,power_on=1,counter=0;
-    uint size_n,i;
-    uint adc_value;
-    uchar  mykey=1,times_m=0,times_n=0,mydir = 0;  //wt.edit 2019-02-21
+    uchar rem=1,i;
+    uchar  mykey=1,mydir = 0;  //wt.edit 2019-02-21
     uchar flag_brake,flag_run;   
  
     init_fosc();
@@ -108,7 +106,7 @@ void  main(void )
                      DRV_ENABLE=0;
 				     Auto_OutPut_Brake=1;
                      delay_10ms(2); //WT.EDIT 20190505
-                     k=0;
+                     
                     // Auto_Works_Signal = 1;
                      TXREG=0x55;
                    
@@ -127,35 +125,15 @@ void  main(void )
                     rem++;
                     if(rem==2)
                     {
-                         rem++;
-                         CCPR1L =0x0;    
-                         DRV_DIR =0;
-                         CCPR1L =0x01;    
-                         DRV_DIR =0;
-                         CCPR1L =0x02;    
-                         DRV_DIR =0;
-                         CCPR1L =0x03;    
-                         DRV_DIR =0;
-                         CCPR1L =0x04;    
-                         DRV_DIR =0;
-                         CCPR1L =0x05;    
-                         DRV_DIR =0;
-                         CCPR1L =0x06;    
-                         DRV_DIR =0;
-                         CCPR1L =0x07;    
-                         DRV_DIR =0;
-                         CCPR1L =0x08;    
-                         DRV_DIR =0;
-                         CCPR1L =0x09;   
-                         DRV_DIR =0;
-                         CCPR1L =0x0a;   
-                         DRV_DIR =0;
-                         CCPR1L =0x0b;   
-                         DRV_DIR =0;
-                         CCPR1L = 0x0c;    
-                         DRV_DIR =0;
-                         CCPR1L = 0x0d;    
-                         TXREG=0xa1;
+                         
+                       for(i=0;i<0x0d;i++)
+                       	{
+                       
+                       
+                          DRV_DIR =0; 
+                          CCPR1L++;    
+                         }
+                       
                         
                     }
                     rem=5;
@@ -187,52 +165,15 @@ void  main(void )
                     if(rem==2)
                     {
                         
-                       
-                       // Auto_OutPut_Brake=0;
-                       
-                       
-                        CCPR1L =0x0;    
-                       
-                         DRV_DIR =1; 
-                         CCPR1L =0x1;   
-                       
-                         DRV_DIR =1; 
-                         CCPR1L =0x2;    
-                     
-                         DRV_DIR =1; 
-                         CCPR1L =0x3;    
-                      
-                         DRV_DIR =1; 
-                         CCPR1L =0x4;    
-                      
-                         DRV_DIR =1; 
-                         CCPR1L =0x5;   
-                       
-                         DRV_DIR =1;    
-                        CCPR1L =0x06;    
-                        
-                         DRV_DIR =1;    
-                         CCPR1L =0x07;   
-                           
-                         DRV_DIR =1;   
-                         CCPR1L = 0x08;    
-                        
-                         DRV_DIR =1;    
-                         CCPR1L = 0x09;    
-                         
-                         DRV_DIR =1;    
-                         CCPR1L = 0x0a;   
-                          DRV_DIR =1;    
-                          CCPR1L = 0x0b;    
-                          
-                          DRV_DIR =1;    
-                          CCPR1L = 0x0c;    
-                          
-                           DRV_DIR =1;    
-                          CCPR1L = 0x0d;   
+                       for(i=0;i<0x0d;i++)
+                       	{
                        
                        
-                        // TXREG=0xb1;
+                          DRV_DIR =1; 
+                          CCPR1L ++;    
+                         }
+                       
+                       
                          
                     }
                    // DRV_DIR =1;
@@ -262,7 +203,7 @@ void  main(void )
                   //Auto_Works_Signal = 0;
                   DRV_BRAKE =0;
                   TRISCbits.TRISC5 =1;
-                  delay_10ms(6);  //WT.EDIT 20190505
+                  __delay_ms(10);  //WT.EDIT 20190505
                   DRV_BRAKE =0;
                   DRV_ENABLE=0;
                  
@@ -277,7 +218,7 @@ void  main(void )
 				  
                 flag_brake=3;
                 
-		        k=0;
+		        
 				
 			    flag_run=0;
 		        my_drv.error_f=0;
@@ -309,9 +250,9 @@ void  main(void )
 		CCPR1L =0;   //WT.EDIT 2019-06-10
         DRV_BRAKE =0 ;
         Auto_OutPut_Brake=1;
-        
+        __delay_ms(1); //WT.EDIT 20190730
        // Auto_Works_Signal = 1;
-        TXREG=0x00;
+       // TXREG=0x00;
        }//end if(flag_power_on))
      
 	   switch(mykey)
@@ -328,7 +269,7 @@ void  main(void )
                      DRV_ENABLE=0;
 				     Auto_OutPut_Brake=1;
                      __delay_ms(2); //WT.EDIT 20190505
-                     k=0;
+                     
                     // Auto_Works_Signal = 1;
                      TXREG=0x55;
                    
@@ -346,42 +287,14 @@ void  main(void )
                     rem++;
                     if(rem==2)
                     {
-                     
-                        DRV_DIR =0; //WT.EDIT 2019-06-13
-                        rem++;
-                        
-                       
-                         CCPR1L =0x0;    
-                         DRV_DIR =0;
-                         CCPR1L =0x01;   
-                         DRV_DIR =0;
-                         CCPR1L =0x02;    
-                         DRV_DIR =0;
-                         CCPR1L =0x03;    
-                         DRV_DIR =0;
-                         CCPR1L =0x04;    
-                         DRV_DIR =0;
-                         CCPR1L =0x05;    
-                         DRV_DIR =0;
-                         CCPR1L =0x06;    
-                         DRV_DIR =0;
-                         CCPR1L =0x07;    
-                         DRV_DIR =0;
-                         CCPR1L =0x08;    
-                         DRV_DIR =0;
-                         CCPR1L =0x09;    
-                         DRV_DIR =0;
-                         CCPR1L =0x0a;    
-                         DRV_DIR =0;
-                         CCPR1L =0x0b;    
-                         DRV_DIR =0;
-                         CCPR1L = 0x0c;    
-                         DRV_DIR =0;
-                         CCPR1L = 0x0d;    
-                        
-                         TXREG=0xa1;
-                        
-                    }
+                        for(i =0;i< 0x0d;i++)
+                        {
+                            DRV_DIR =0; //WT.EDIT 2019-06-13
+                            CCPR1L ++ ;
+                        }
+                             TXREG=0xa1;
+                     }
+                    
                     
 #ifdef FAULT_F 
                      /*judge overcurrent value*/
@@ -476,57 +389,16 @@ void  main(void )
 		                    rem++;
 		                    if(rem==2)
 		                    {
-		                        DRV_DIR =1; 
-		                       
-		                       // Auto_OutPut_Brake=0;
-		                       rem++;
-		                        
-		                        CCPR1L =0x0;    
-		                       
-		                         DRV_DIR =1; 
-		                         CCPR1L =0x1;    
-		                       
-		                         DRV_DIR =1; 
-		                         CCPR1L =0x2;    
-		                     
-		                         DRV_DIR =1; 
-		                         CCPR1L =0x3;    
-		                      
-		                         DRV_DIR =1; 
-		                         CCPR1L =0x4;    
-		                      
-		                         DRV_DIR =1; 
-		                         CCPR1L =0x5;    
-		                         DRV_DIR =1;    
-		                        CCPR1L =0x06;    
-		                        
-		                         DRV_DIR =1;    
-		                         CCPR1L =0x07;   
-		                           
-		                         DRV_DIR =1;   
-		                         CCPR1L = 0x08;    
-		                        
-		                         DRV_DIR =1;    
-		                         CCPR1L = 0x09;    
-		                         
-		                         DRV_DIR =1;    
-		                         CCPR1L = 0x0a;    
-		                       
-		                          DRV_DIR =1;    
-		                          CCPR1L = 0x0b;   
-		                          
-		                          DRV_DIR =1;    
-		                          CCPR1L = 0x0c;    
-		                          
-		                           DRV_DIR =1;    
-		                           CCPR1L = 0x0d;   
-		                       
-		                          
+                               for(i=0;i<0x0d;i++)
+                               	{
+								  DRV_DIR =1; 
+								  CCPR1L++;
+		                         }
 		                          //TXREG=0xb1;
 		                         
 		                    }
-		                    DRV_DIR =1;
-		                  
+		                    
+		                 
 		                    
 		                    GIE =0;
                            
@@ -625,7 +497,7 @@ void  main(void )
 				  
                 flag_brake=3;
                 
-		        k=0;
+		        
 				
 			    flag_run=0;
 		        my_drv.error_f=0;
@@ -650,7 +522,7 @@ void  main(void )
 			  Auto_OutPut_Brake=0;
 			 
 			 // Auto_Works_Signal = 0;
-			  k=0;
+			  
 			
       
 			 
