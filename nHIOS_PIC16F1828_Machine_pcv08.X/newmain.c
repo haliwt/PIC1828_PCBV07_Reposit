@@ -441,13 +441,13 @@ void  main(void )
                   
                       
                       IOCIE =1;
-                      IOCIF=0;
+                      IOCIF=1;
                       PEIE =1;   
                       GIE = 1; 
                       IOCAP2 = 1;  //Flag IOCAF0  //WT.EDIT 2019-02-20
                       IOCAN2 =1; 
                      
-                 
+             
                      
                      
                      flag_brake =4;
