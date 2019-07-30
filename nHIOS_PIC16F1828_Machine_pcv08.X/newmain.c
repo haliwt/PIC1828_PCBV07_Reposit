@@ -36,7 +36,7 @@
 
 
 
-#define DELAY_STOP   
+//#define FAULT_F 
 
 //#define LENGTH(a) ((sizeof(a))/(sizeof(a[0])))
 uchar flag_power_on=0;
@@ -115,7 +115,7 @@ void  main(void )
                      //delay_1ms(10);
                      
                 }
-				/********************CW******************************/
+				/*******************AUTO _ CW******************************/
 			    if((AUTO_OUTPUT_DIR == 1)&&(flag_brake !=2))
 				{
                     DRV_DIR =0;//WT.EDIT 2019-06-13
@@ -128,93 +128,37 @@ void  main(void )
                     if(rem==2)
                     {
                          rem++;
-                         CCPR1L =0x0;    //MSB 8bit<>pulse duty of value
+                         CCPR1L =0x0;    
                          DRV_DIR =0;
-                         CCPR1L =0x01;    //MSB 8bit<>pulse duty of value
+                         CCPR1L =0x01;    
                          DRV_DIR =0;
-                         CCPR1L =0x02;    //MSB 8bit<>pulse duty of value
+                         CCPR1L =0x02;    
                          DRV_DIR =0;
-                         CCPR1L =0x03;    //MSB 8bit<>pulse duty of value
+                         CCPR1L =0x03;    
                          DRV_DIR =0;
-                         CCPR1L =0x04;    //MSB 8bit<>pulse duty of value
+                         CCPR1L =0x04;    
                          DRV_DIR =0;
-                         CCPR1L =0x05;    //MSB 8bit<>pulse duty of value
+                         CCPR1L =0x05;    
                          DRV_DIR =0;
-                         CCPR1L =0x06;    //MSB 8bit<>pulse duty of value
+                         CCPR1L =0x06;    
                          DRV_DIR =0;
-                         CCPR1L =0x07;    //MSB 8bit<>pulse duty of value
+                         CCPR1L =0x07;    
                          DRV_DIR =0;
-                         CCPR1L =0x08;    //MSB 8bit<>pulse duty of value
+                         CCPR1L =0x08;    
                          DRV_DIR =0;
-                         CCPR1L =0x09;    //MSB 8bit<>pulse duty of value
+                         CCPR1L =0x09;   
                          DRV_DIR =0;
-                         CCPR1L =0x0a;    //MSB 8bit<>pulse duty of value
+                         CCPR1L =0x0a;   
                          DRV_DIR =0;
-                         CCPR1L =0x0b;    //MSB 8bit<>pulse duty of value
+                         CCPR1L =0x0b;   
                          DRV_DIR =0;
-                         CCPR1L = 0x0c;    //MSB 8bit<>pulse duty of value
+                         CCPR1L = 0x0c;    
                          DRV_DIR =0;
-                         CCPR1L = 0x0d;    //MSB 8bit<>pulse duty of value
+                         CCPR1L = 0x0d;    
                          TXREG=0xa1;
-                        // my_drv.error_f = 1;
+                        
                     }
-                    
-#if 0
-                     /*judge overcurrent value*/
-                    if(PIR1bits.TMR1IF == 1) 
-                    {
-#if 1
-                       TXREG= 0xff ;
-                       //delay_1ms(5);
-                       TXREG= 0xaa ;
-                       //delay_1ms(5);
-                       TMR1_Counter_Enable = 0;
-                       PIR1bits.TMR1IF =0;
-                       TMR1L =0;
-                       TMR1H =0;
-#endif 
-                       adc_value = ADC_GetValue();
-#if 1
-                       if(adc_value > 32 || adc_value ==32)
-                       {
-                             my_drv.error_f ++;
-                             flag_run ++;
-                             TXREG = my_drv.error_f;
-                            if( my_drv.error_f ==2 || my_drv.error_f > 2||flag_run == 2||flag_run >2)
-                            {
-                                flag_brake=2;
-                                my_drv.default_f= 1;
-                                flag_run=0;
-                                TXREG = 0xab;
-                                CCPR1L = 0; //WT.EDIT 2019-06-10
-                                Auto_OutPut_Brake=0;
-                                Auto_Works_Signal = 0;
-                                DRV_BRAKE =0;
-                                TRISCbits.TRISC5 =1;
-                                delay_10ms(6);  //WT.EDIT 20190505
-                                DRV_BRAKE =0;
-                                DRV_ENABLE=0;
-                                convertDecimalToHexa(adc_value);
-                                my_drv.error_f=0;
-                                delay_10ms(100);
-                                delay_10ms(100);
-                                delay_10ms(100);
-                                delay_10ms(100);
-                                delay_10ms(100);
-                                while(1);
-                                
-                                
-                            }
-                       }
-                       else
-#endif              
-                       convertDecimalToHexa(adc_value);
-                      
-                    }
-#endif 
                     rem=5;
-                    
-                    
                     //Auto_Works_Signal = 1;
                     Auto_OutPut_Brake=0;
                   
@@ -227,9 +171,6 @@ void  main(void )
                    
 
 				}
-
-
-		    
 			/***************************AUTO_CCW**********************************/
 		    if(AUTO_OUTPUT_DIR == 0)
 			{
@@ -250,46 +191,45 @@ void  main(void )
                        // Auto_OutPut_Brake=0;
                        
                        
-                        CCPR1L =0x0;    //MSB 8bit<>pulse duty of value
+                        CCPR1L =0x0;    
                        
                          DRV_DIR =1; 
-                         CCPR1L =0x1;    //MSB 8bit<>pulse duty of value
+                         CCPR1L =0x1;   
                        
                          DRV_DIR =1; 
-                         CCPR1L =0x2;    //MSB 8bit<>pulse duty of value
+                         CCPR1L =0x2;    
                      
                          DRV_DIR =1; 
-                         CCPR1L =0x3;    //MSB 8bit<>pulse duty of value
+                         CCPR1L =0x3;    
                       
                          DRV_DIR =1; 
-                         CCPR1L =0x4;    //MSB 8bit<>pulse duty of value
+                         CCPR1L =0x4;    
                       
                          DRV_DIR =1; 
-                         CCPR1L =0x5;    //MSB 8bit<>pulse duty of value
+                         CCPR1L =0x5;   
                        
                          DRV_DIR =1;    
-                        CCPR1L =0x06;    //MSB 8bit<>pulse duty of value
+                        CCPR1L =0x06;    
                         
                          DRV_DIR =1;    
-                         CCPR1L =0x07;    //MSB 8bit<>pulse duty of value
+                         CCPR1L =0x07;   
                            
                          DRV_DIR =1;   
-                         CCPR1L = 0x08;    //MSB 8bit<>pulse duty of value
+                         CCPR1L = 0x08;    
                         
                          DRV_DIR =1;    
-                         CCPR1L = 0x09;    //MSB 8bit<>pulse duty of value
+                         CCPR1L = 0x09;    
                          
                          DRV_DIR =1;    
-                         CCPR1L = 0x0a;    //MSB 8bit<>pulse duty of value
-                       
+                         CCPR1L = 0x0a;   
                           DRV_DIR =1;    
-                          CCPR1L = 0x0b;    //MSB 8bit<>pulse duty of value
+                          CCPR1L = 0x0b;    
                           
                           DRV_DIR =1;    
-                          CCPR1L = 0x0c;    //MSB 8bit<>pulse duty of value
+                          CCPR1L = 0x0c;    
                           
                            DRV_DIR =1;    
-                          CCPR1L = 0x0d;    //MSB 8bit<>pulse duty of value
+                          CCPR1L = 0x0d;   
                        
                        
                         // TXREG=0xb1;
@@ -298,59 +238,6 @@ void  main(void )
                    // DRV_DIR =1;
                   
                     flag_brake=3;
-                    GIE =0;
-#if 0				    
-                     if(PIR1bits.TMR1IF == 1) 
-                    {
-#if 1
-                       TXREG= 0xee ;
-                       //delay_1ms(5);
-                       TXREG= 0xbb ;
-                       //delay_1ms(5);
-                       TMR1_Counter_Enable = 0;
-                       PIR1bits.TMR1IF =0;
-                       TMR1L =0;
-                       TMR1H =0;
-#endif 
-                       adc_value = ADC_GetValue();
-#if 1
-                       if(adc_value > 32 || adc_value ==32)
-                       {
-                             my_drv.error_f ++;
-                             flag_run ++;
-                             TXREG = my_drv.error_f;
-                            if( my_drv.error_f ==2 || my_drv.error_f > 2||flag_run == 2||flag_run >2)
-                            {
-                                flag_brake=2;
-                                my_drv.default_f= 1;
-                                flag_run=0;
-                                TXREG = 0xba;
-                                CCPR1L = 0; //WT.EDIT 2019-06-10
-                                Auto_OutPut_Brake=0;
-                                Auto_Works_Signal = 0;
-                                DRV_BRAKE =0;
-                                TRISCbits.TRISC5 =1;
-                                delay_10ms(6);  //WT.EDIT 20190505
-                                DRV_BRAKE =0;
-                                DRV_ENABLE=0;
-                                convertDecimalToHexa(adc_value);
-                                my_drv.error_f=0;
-                                delay_10ms(100);
-                                delay_10ms(100);
-                                delay_10ms(100);
-                                delay_10ms(100);
-                                delay_10ms(100);
-                                while(1);
-                                
-                                
-                            }
-                       }
-                       else
-#endif              
-                       convertDecimalToHexa(adc_value);
-                      
-                    }
-#endif 
                      rem=5;
 					 IOCIE =1;
 					 IOCIF=0;
@@ -359,7 +246,7 @@ void  main(void )
 					 IOCAP2 = 1;  //Flag IOCAF0  //WT.EDIT 2019-02-20
 					 IOCAN2 =1; 
 
-                    // TXREG=0x22;
+                   
                      __delay_ms(50);//__delay_ms(100);//__delay_ms(250);//__delay_ms(150);
                     
                
@@ -367,10 +254,10 @@ void  main(void )
 
 
                break;
-
-			    case 1: //STOP
-			    	{
-                      CCPR1L = 0; //WT.EDIT 2019-06-10
+             }
+			 case 1: //STOP
+			    {
+                  CCPR1L = 0; //WT.EDIT 2019-06-10
                   Auto_OutPut_Brake=0;
                   //Auto_Works_Signal = 0;
                   DRV_BRAKE =0;
@@ -403,15 +290,13 @@ void  main(void )
 
 			    }
 				
-					break;
-			}
+				break;
+	       } //end mykey
 			
-		  
-            
-	      }
-	}
+       }	  
+          
 	/*************************************************************************************
-	**************************************************************************************
+	******************************WORKS_CW********************************************************
 	**************************************************************************************/
 	else
 	{
@@ -429,28 +314,26 @@ void  main(void )
         TXREG=0x00;
        }//end if(flag_power_on))
      
-	  switch(mykey)
+	   switch(mykey)
         {
             case 0 : //run works
             {
                 if((mydir == 0)&&(flag_brake ==2)&&(flag_brake!=3)&&(flag_brake!=0))
                 {
                     
-                   // Auto_Works_Signal = 1;
+                   Auto_OutPut_Brake=1;// Auto_Works_Signal = 1;
                     CCPR1L =0;   //WT.EDIT 2019-06-10
                     TRISCbits.TRISC5 =1;
                      DRV_BRAKE = 0; //run
                      DRV_ENABLE=0;
 				     Auto_OutPut_Brake=1;
-                     delay_10ms(2); //WT.EDIT 20190505
+                     __delay_ms(2); //WT.EDIT 20190505
                      k=0;
                     // Auto_Works_Signal = 1;
                      TXREG=0x55;
                    
-                     //delay_1ms(10);
-                     
                 }
-				/***********************CW*****************************/
+				/***********************WORKS_CW*****************************/
 				else if(((((mydir == 1)||(my_drv.drv_dir==1))&&flag_brake != 2) ||((mydir==0)&&(flag_brake == 4)))
                                &&(my_drv.drv_enable!=1 && flag_brake !=5 && flag_brake !=2))
                {
@@ -468,39 +351,39 @@ void  main(void )
                         rem++;
                         
                        
-                         CCPR1L =0x0;    //MSB 8bit<>pulse duty of value
+                         CCPR1L =0x0;    
                          DRV_DIR =0;
-                         CCPR1L =0x01;    //MSB 8bit<>pulse duty of value
+                         CCPR1L =0x01;   
                          DRV_DIR =0;
-                         CCPR1L =0x02;    //MSB 8bit<>pulse duty of value
+                         CCPR1L =0x02;    
                          DRV_DIR =0;
-                         CCPR1L =0x03;    //MSB 8bit<>pulse duty of value
+                         CCPR1L =0x03;    
                          DRV_DIR =0;
-                         CCPR1L =0x04;    //MSB 8bit<>pulse duty of value
+                         CCPR1L =0x04;    
                          DRV_DIR =0;
-                         CCPR1L =0x05;    //MSB 8bit<>pulse duty of value
+                         CCPR1L =0x05;    
                          DRV_DIR =0;
-                         CCPR1L =0x06;    //MSB 8bit<>pulse duty of value
+                         CCPR1L =0x06;    
                          DRV_DIR =0;
-                         CCPR1L =0x07;    //MSB 8bit<>pulse duty of value
+                         CCPR1L =0x07;    
                          DRV_DIR =0;
-                         CCPR1L =0x08;    //MSB 8bit<>pulse duty of value
+                         CCPR1L =0x08;    
                          DRV_DIR =0;
-                         CCPR1L =0x09;    //MSB 8bit<>pulse duty of value
+                         CCPR1L =0x09;    
                          DRV_DIR =0;
-                         CCPR1L =0x0a;    //MSB 8bit<>pulse duty of value
+                         CCPR1L =0x0a;    
                          DRV_DIR =0;
-                         CCPR1L =0x0b;    //MSB 8bit<>pulse duty of value
+                         CCPR1L =0x0b;    
                          DRV_DIR =0;
-                         CCPR1L = 0x0c;    //MSB 8bit<>pulse duty of value
+                         CCPR1L = 0x0c;    
                          DRV_DIR =0;
-                         CCPR1L = 0x0d;    //MSB 8bit<>pulse duty of value
+                         CCPR1L = 0x0d;    
                         
                          TXREG=0xa1;
-                        // my_drv.error_f = 1;
+                        
                     }
                     
-#if 1
+#ifdef FAULT_F 
                      /*judge overcurrent value*/
                     if(PIR1bits.TMR1IF == 1) 
                     {
@@ -556,13 +439,14 @@ void  main(void )
                    // Auto_Works_Signal = 1;
                     Auto_OutPut_Brake=0;
                   
+                      
                       IOCIE =1;
                       IOCIF=0;
                       PEIE =1;   
                       GIE = 1; 
                       IOCAP2 = 1;  //Flag IOCAF0  //WT.EDIT 2019-02-20
                       IOCAN2 =1; 
-                   
+                     
                  
                      
                      
@@ -575,7 +459,7 @@ void  main(void )
                       
                 }  
 				
-				/**********************ccw*******************************************************/
+				/**********************WORKS_ccw*******************************************************/
 				  else if(((mydir == 0 || my_drv.drv_dir ==2)
                          ||((mydir==1)&&(flag_brake == 5)))&&(my_drv.drv_enable!=2 && flag_brake !=4 && flag_brake !=2))
 					{
@@ -597,46 +481,45 @@ void  main(void )
 		                       // Auto_OutPut_Brake=0;
 		                       rem++;
 		                        
-		                        CCPR1L =0x0;    //MSB 8bit<>pulse duty of value
+		                        CCPR1L =0x0;    
 		                       
 		                         DRV_DIR =1; 
-		                         CCPR1L =0x1;    //MSB 8bit<>pulse duty of value
+		                         CCPR1L =0x1;    
 		                       
 		                         DRV_DIR =1; 
-		                         CCPR1L =0x2;    //MSB 8bit<>pulse duty of value
+		                         CCPR1L =0x2;    
 		                     
 		                         DRV_DIR =1; 
-		                         CCPR1L =0x3;    //MSB 8bit<>pulse duty of value
+		                         CCPR1L =0x3;    
 		                      
 		                         DRV_DIR =1; 
-		                         CCPR1L =0x4;    //MSB 8bit<>pulse duty of value
+		                         CCPR1L =0x4;    
 		                      
 		                         DRV_DIR =1; 
-		                         CCPR1L =0x5;    //MSB 8bit<>pulse duty of value
-		                       
+		                         CCPR1L =0x5;    
 		                         DRV_DIR =1;    
-		                        CCPR1L =0x06;    //MSB 8bit<>pulse duty of value
+		                        CCPR1L =0x06;    
 		                        
 		                         DRV_DIR =1;    
-		                         CCPR1L =0x07;    //MSB 8bit<>pulse duty of value
+		                         CCPR1L =0x07;   
 		                           
 		                         DRV_DIR =1;   
-		                         CCPR1L = 0x08;    //MSB 8bit<>pulse duty of value
+		                         CCPR1L = 0x08;    
 		                        
 		                         DRV_DIR =1;    
-		                         CCPR1L = 0x09;    //MSB 8bit<>pulse duty of value
+		                         CCPR1L = 0x09;    
 		                         
 		                         DRV_DIR =1;    
-		                         CCPR1L = 0x0a;    //MSB 8bit<>pulse duty of value
+		                         CCPR1L = 0x0a;    
 		                       
 		                          DRV_DIR =1;    
-		                          CCPR1L = 0x0b;    //MSB 8bit<>pulse duty of value
+		                          CCPR1L = 0x0b;   
 		                          
 		                          DRV_DIR =1;    
-		                          CCPR1L = 0x0c;    //MSB 8bit<>pulse duty of value
+		                          CCPR1L = 0x0c;    
 		                          
 		                           DRV_DIR =1;    
-		                          CCPR1L = 0x0d;    //MSB 8bit<>pulse duty of value
+		                           CCPR1L = 0x0d;   
 		                       
 		                          
 		                          //TXREG=0xb1;
@@ -647,7 +530,7 @@ void  main(void )
 		                    
 		                    GIE =0;
                            
-#if 1				    
+#ifdef FAULT_F				    
 		                     if(PIR1bits.TMR1IF == 1) 
 		                    {
 #if 1
@@ -711,8 +594,7 @@ void  main(void )
 		                   // TXREG=0x33;
 		              
 		                    my_drv.drv_enable=1;
-		                  //   mydir = Manual_Operation_Dir();
-		                  //  mykey =GetKeyPad();
+		                 
 		                  
 		                 
 					
@@ -728,17 +610,17 @@ void  main(void )
                   //Auto_Works_Signal = 0;
                   DRV_BRAKE =0;
                   TRISCbits.TRISC5 =1;
-                  delay_10ms(6);  //WT.EDIT 20190505
+                  __delay_ms(3);  //WT.EDIT 20190505
                   DRV_BRAKE =0;
                   DRV_ENABLE=0;
                  
-                  IOCIE =0;
-                  IOCIF=1;
-                  PEIE =0;   
-                  GIE = 0;
-                  IOCAP2 = 0;  //Flag IOCAF0  //WT.EDIT 2019-02-20
-                  IOCAN2 =0; 
-                
+                 
+                   GIE = 0;
+				   INTF =0;
+                   IOCAF2 = 0;
+                   IOCAP2=0;
+                   IOCIF =0;
+                  
                   rem=1;
 				  
                 flag_brake=3;
@@ -753,11 +635,7 @@ void  main(void )
                 my_drv.drv_dir=0;
                  flag_power_on=0;
                 Auto_OutPut_Brake=0;
-             
-			
-			   
-                 
-		    }
+            }
             break;
        
             
@@ -776,16 +654,17 @@ void  main(void )
 			
       
 			 
-			}
+			  }
             break;
-         }//end switch(mykey)
+       } //end switch(mykey)
     
      
 
-     }//end while(1)
+     }//end else {}
 	 
-     }
-   }
+    } //end while(1)
+   } //end main()
+  
 
 /**************************************************************
  *
@@ -799,27 +678,26 @@ void  main(void )
 void __interrupt() Hallsensor(void)
 {
    
-if((INTF == 1) ||(IOCAF2 == 1) || (IOCAP2 ==1)||(PORTAbits.RA2 == 0)||(IOCIF ==1))
-{
-     
-      INTF =0;
+  if((INTF == 1) ||(IOCAF2 == 1) || (IOCAP2 ==1)||(PORTAbits.RA2 == 0)||(IOCIF ==1))
+	{
+	  INTF =0;
 	  IOCIF =0;
       IOCAF2=0;
       IOCAP2=0;
       flag_power_on=flag_power_on+ 1;
       my_drv.drv_brake =1;
-      TXREG=0x66;
-      delay_100us(5);
+      
+      delay_100us(1);
      
       CCPR1L =0;   //WT.EDIT 2019-06-10
       TRISCbits.TRISC5 =1;
       DRV_BRAKE =0 ;
       Auto_OutPut_Brake=1;
-      delay_10ms(5);
+      __delay_ms(2);
       TXREG=0x66;
-      //delay_1ms(2);
- 
- }
+          
+	 
+	 }
 
   
 }  

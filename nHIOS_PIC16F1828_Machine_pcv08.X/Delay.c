@@ -30,7 +30,7 @@ void delay_100us(uchar t)
      uchar i,j;
 	 for(i=0;i<t;i++)
 	 {
-	    for(j=0;j<97;j++)
+	    for(j=0;j<95;j++)
 		   delay_10us();	
 
      }
