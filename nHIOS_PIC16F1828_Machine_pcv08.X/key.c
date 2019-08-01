@@ -41,10 +41,10 @@ uchar GetKeyPad(void)
   if(Key_Start == 1) //stop
   {
        Auto_OutPut_Brake=0;
-       CCPR1L =0x0;  
-       //DRV_BRAKE =0 ;
        TRISCbits.TRISC5 =1;
-	   delay_10us();//delay_1ms(10);
+       CCPR1L =0x0;  
+    
+        __delay_ms(15);//delay_1ms(10);
        DRV_BRAKE =0 ;
      
        return 1;
