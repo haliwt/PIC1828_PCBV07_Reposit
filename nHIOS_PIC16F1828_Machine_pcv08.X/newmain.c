@@ -275,8 +275,7 @@ void  main(void )
                     // TXREG=0x55;
 					 Auto_OutPut_Brake=1;
 					 my_drv.brake_sf = 1;
-					 mykey = 0;
-					 mydir =1;
+					 
                    
                 }
 				/***********************WORKS_CW*****************************/
