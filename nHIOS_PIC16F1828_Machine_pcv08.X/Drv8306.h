@@ -27,7 +27,7 @@ typedef struct DRV8306
     uchar drv_enable  ;
     uchar drv_brake ;
     uchar drv_dir ;
-    uchar error_f;      //judge output overcurrent flag bit
+    volatile uchar error_f;      //judge output overcurrent flag bit
     uchar brake_sf;
    
 }my_drv8306;

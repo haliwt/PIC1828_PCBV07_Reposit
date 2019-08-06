@@ -142,7 +142,7 @@ void Average_First(uchar size_m,uchar addr)
   {
 	 uchar i,index =0 ;
 	 ulong x = number;
-	 uchar data[4]={0,0,0,0};
+	// uchar data[4]={0,0,0,0};
 	 while(x>0)
 	 {
 		 data[index] = x%16; // get hexadecimal is remainder
@@ -154,7 +154,7 @@ void Average_First(uchar size_m,uchar addr)
 	 
 	 //queue hexadecimal output sequence
 	   
-		 delay_100us(5);
+		//delay_100us(5);
 		TXREG = data[3];
 		 delay_100us(5);
 		TXREG = data[2];

@@ -9,6 +9,7 @@
 #define	MACHINELEARING_H
 #include "Delay.h"
 
+extern uchar data[4]={0,0,0,0};
 typedef struct machine 
 {
    uchar machine_swtich : 1 ;

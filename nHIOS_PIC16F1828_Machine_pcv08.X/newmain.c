@@ -40,7 +40,7 @@
 
 //#define LENGTH(a) ((sizeof(a))/(sizeof(a[0])))
 uchar flag_power_on=0;
-
+uchar data[4];
 
  
 /**************************************************************
@@ -53,9 +53,10 @@ void  main(void )
 {
     uchar rem=1,i;
     uchar  mykey=1,mydir = 0;  //wt.edit 2019-02-21
-    uchar flag_brake,flag_run;
-    uint adc_value =0 ;
- 
+    uchar flag_brake;
+    volatile uchar  flag_run;
+    uint adc_value =0 ,read_adc = 0;
+    
     init_fosc();
     USART_Init();
    // Led_Init();
@@ -289,7 +290,19 @@ void  main(void )
                     TRISCbits.TRISC5 =0;
                     TMR1_Counter_Enable = 1;
                     rem++;
-                    if(rem==2)
+                    if(flag_run == 0x0a)
+                    {
+                     Auto_OutPut_Brake=1;// Auto_Works_Signal = 1;
+                     CCPR1L =0;   //WT.EDIT 2019-06-10
+                     TRISCbits.TRISC5 =1;
+                     DRV_BRAKE = 0; //run
+                     DRV_ENABLE=0;
+				     flag_brake =2;
+                     TXREG = 0xa5;
+                     while(1);
+                
+                    }
+                    else if(rem==2)
                     {
                         for(i =0;i< 0x0d;i++)
                         {
@@ -304,51 +317,48 @@ void  main(void )
                      /*judge overcurrent value*/
                     if(PIR1bits.TMR1IF == 1) 
                     {
-#if 1
-                       TXREG= 0xff ;
-                       //delay_1ms(5);
-                       TXREG= 0xaa ;
+
+                        TXREG= 0xa2 ;
                        //delay_1ms(5);
                        TMR1_Counter_Enable = 0;
                        PIR1bits.TMR1IF =0;
                        TMR1L =0;
                        TMR1H =0;
-#endif 
-                       adc_value = ADC_GetValue();
-#if 1
-                       if(adc_value > 32 || adc_value ==32)
+
+                      adc_value = ADC_GetValue();
+                      convertDecimalToHexa(adc_value);
+                      TXREG = 0xff;
+                    
+                      read_adc = data[2]<<8 | data[1]<<4 | data[0];
+                      TXREG = read_adc;
+                      
+                      __delay_ms(1);
+                    
+                       if(read_adc > 0x100 || read_adc ==0x100)
                        {
-                             my_drv.error_f ++;
-                             flag_run ++;
-                            
+                           TXREG = 0xee;
+                            my_drv.error_f = my_drv.error_f + 1;
+                             TXREG = my_drv.error_f ;
+                             __delay_ms(1);
+                             flag_run = flag_run + 1;
+                             TXREG = flag_run;
+                             __delay_ms(1);
+                             TXREG = 0xa3;
                             if( my_drv.error_f ==2 ||flag_run == 2)
                             {
                                 flag_brake=2;
                               
-                                flag_run=0;
-                                TXREG = 0xab;
-                                CCPR1L = 0; //WT.EDIT 2019-06-10
-                                Auto_OutPut_Brake=0;
-                                //Auto_Works_Signal = 0;
-                                DRV_BRAKE =0;
-                                TRISCbits.TRISC5 =1;
-                                delay_10ms(6);  //WT.EDIT 20190505
-                                DRV_BRAKE =0;
-                                DRV_ENABLE=0;
-                                convertDecimalToHexa(adc_value);
-                                my_drv.error_f=0;
-                                __delay_ms(2);
+                                flag_run=0x0a;
+                                TXREG = 0xa4;
                                
                                 while(1);
                                 
                                 
                             }
                        }
-                       else
-#endif              
-                       convertDecimalToHexa(adc_value);
                       
-                    }
+                    }  
+                    
 #endif 
                     rem=5;
                     
@@ -391,7 +401,18 @@ void  main(void )
 		                    TRISCbits.TRISC5 =0;
 							TMR1_Counter_Enable = 1;
 		                    rem++;
-		                    if(rem==2)
+                            if(flag_run ==0x0b)
+                            {
+                                Auto_OutPut_Brake=1;// Auto_Works_Signal = 1;
+                                CCPR1L =0;   //WT.EDIT 2019-06-10
+                                TRISCbits.TRISC5 =1;
+                                DRV_BRAKE = 0; //run
+                                DRV_ENABLE=0;
+                                flag_brake =2;
+                                TXREG = 0xb5;
+                                while(1);
+                            }
+		                    else if(rem==2)
 		                    {
                                for(i=0;i<0x0d;i++)
                                	{
@@ -408,52 +429,37 @@ void  main(void )
                            
 #ifdef FAULT_F				    
 		                     if(PIR1bits.TMR1IF == 1) 
-		                    {
-#if 1
-		                       TXREG= 0xee ;
-		                       //delay_1ms(5);
-		                       TXREG= 0xbb ;
+                             {
+		                      
+		                       TXREG= 0xb2 ;
 		                       //delay_1ms(5);
 		                       TMR1_Counter_Enable = 0;
 		                       PIR1bits.TMR1IF =0;
 		                       TMR1L =0;
 		                       TMR1H =0;
-#endif 
+
 		                       adc_value = ADC_GetValue();
-#if 1
-		                       if(adc_value > 32 || adc_value ==32)
+			                   convertDecimalToHexa(adc_value);
+			                        
+			                   read_adc = data[2]<<8 | data[1]<<4 | data[0];
+			                   
+			                    if(read_adc > 0x100 || read_adc ==0x100)
 		                       {
-		                             my_drv.error_f ++;
-		                             flag_run ++;
+		                             TXREG = 0xdd;
+		                             my_drv.error_f = my_drv.error_f + 1;
+		                             TXREG = my_drv.error_f ;
+		                             __delay_ms(1);
+		                             flag_run = flag_run + 1;
+		                             TXREG = flag_run;
+		                             __delay_ms(1);
+		                             TXREG = 0xb3;
 		                            
 		                            if( my_drv.error_f ==2 || flag_run == 2)
 		                            {
 		                                flag_brake=2;
-		                               
-		                               
-		                                TXREG = 0xba;
-		                                CCPR1L = 0; //WT.EDIT 2019-06-10
-		                                Auto_OutPut_Brake=0;
-		                               // Auto_Works_Signal = 0;
-		                                DRV_BRAKE =0;
-		                                TRISCbits.TRISC5 =1;
-		                                delay_10ms(6);  //WT.EDIT 20190505
-		                                DRV_BRAKE =0;
-		                                DRV_ENABLE=0;
-		                                convertDecimalToHexa(adc_value);
-		                                my_drv.error_f=0;
-                                        flag_run=0;
-		                                __delay_ms(2);
-		                                
-		                                while(1);
-		                                
-		                                
+		                                flag_run = 0x0b;
 		                            }
 		                       }
-		                       else
-#endif              
-		                       convertDecimalToHexa(adc_value);
-		                      
 		                    }
 #endif 
 		                    rem=5;
@@ -490,7 +496,7 @@ void  main(void )
                    IOCAF2 = 0;
                    IOCAP2=0;
                    IOCIF =0;
-                  TXREG=0x57;
+                  //TXREG=0x57;
                   rem=1;
 				flag_brake=3;
                 flag_run=0;
