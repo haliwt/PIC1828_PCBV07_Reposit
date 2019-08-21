@@ -144,8 +144,9 @@ void  main(void )
                     else if(rem==2)
                     {
                      
-                        DRV_DIR =0; //WT.EDIT 2019-06-13
-                        rem++;
+                         rem++;
+					    DRV_DIR =0; //WT.EDIT 2019-06-13
+                      
                         
                        
                          CCPR1L =0x0;    //MSB 8bit<>pulse duty of value
@@ -394,18 +395,16 @@ void  main(void )
             	}
 			case 1: //STOP_key
             {
-
-                 DRV_BRAKE =0;
-                 CCPR1L = 0; //WT.EDIT 2019-06-10
-                  Auto_OutPut_Brake=0;
-                  //Auto_Works_Signal = 0;
-                  DRV_BRAKE =0;
-                  TRISCbits.TRISC5 =1;
-                  __delay_ms(20);  //WT.EDIT 20190505
-                  DRV_BRAKE =0;
-                  DRV_ENABLE=0;
-                 CCPR1L = 0; //WT.EDIT 2019-06-10
+                 Auto_OutPut_Brake=0;
+               
                  TRISCbits.TRISC5 =1;
+                 __delay_ms(5);
+                 DRV_BRAKE =0 ;
+               
+                 DRV_ENABLE=0;
+               
+                Auto_OutPut_Brake=0;
+             
                   IOCIE =0;
                   IOCIF=1;
                   PEIE =0;   

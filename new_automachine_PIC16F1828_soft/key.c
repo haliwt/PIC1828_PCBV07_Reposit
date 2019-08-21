@@ -40,19 +40,18 @@ uchar GetKeyPad(void)
 {
   if(Key_Start == 1) //stop
   {
+  
+      TRISCbits.TRISC5 =1;
+	   __delay_ms(2);
        DRV_BRAKE =0 ;
-      CCPR1L =0x0;  
-       TRISCbits.TRISC5 =1;
-	   __delay_ms(10);
-       DRV_BRAKE =0 ;
-     
+       Auto_OutPut_Brake=0;
        return 1;
       
   }
   
-  else if (Key_Start == 0) //WT.EDIT 2019-07-22
+  if (Key_Start == 0) //WT.EDIT 2019-07-22
   {
-	  delay_10us();//__delay_ms(2);//delay_1ms(5); //WT.EID 2019-07-22
+	  __delay_ms(2);//__delay_ms(2);//delay_1ms(5); //WT.EID 2019-07-22
      
       
       return 0;
