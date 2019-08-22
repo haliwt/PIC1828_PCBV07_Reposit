@@ -53,7 +53,7 @@ void  main(void )
 {
     uchar rem=1, flag_auto_test=0;
     uchar  mykey=1,mydir = 0;  //wt.edit 2019-02-21
-    uchar flag_brake; 
+    uchar flag_brake,b_s; 
     volatile uchar  flag_run;
     uint adc_value =0 ,read_adc = 0;
  
@@ -73,18 +73,19 @@ void  main(void )
   {
     
    
-    mykey =GetKeyPad();
-	mydir = Manual_Operation_Dir();
-    if(Key_MachineL == 1 )
+    mykey =GetKeyPad(); //jude the key if key down scan 
+	mydir = Manual_Operation_Dir();  //direction key scan
+    
+    if(Key_MachineL == 1 ) //jude automation of machine by test be used to .
     {
-       flag_auto_test=1; 
+       flag_auto_test=1;  //by test automation for factory ,don't used to customer
       
     }
-    else  flag_auto_test=0; 
+    else  flag_auto_test=0;  // by customer of model.
         
 	
      
-	  if((flag_power_on==2)||(my_drv.drv_brake ==1))
+	  if((flag_power_on==2)||(my_drv.drv_brake ==1)) //the motor be brake statement
       {
 
          Auto_OutPut_Brake=1;
@@ -101,7 +102,7 @@ void  main(void )
         {
             case 0 : //run works
             {
-                if((mydir == 1)&&(flag_brake ==2)&&(flag_brake!=3)&&(flag_brake!=0))
+BRAKE_S:      if((mydir == 1)&&(flag_brake ==2)&&(flag_brake!=3)&&(flag_brake!=0))
                 {
                     
                    // Auto_Works_Signal = 1;
@@ -109,6 +110,11 @@ void  main(void )
                     TRISCbits.TRISC5 =1;
                      DRV_BRAKE = 0; //run
                      DRV_ENABLE=0;
+                     if(b_s ==1)
+                     {
+                         Auto_OutPut_Brake=0;
+                     }
+                     else 
 				     Auto_OutPut_Brake=1;
                      delay_10ms(2); //WT.EDIT 20190505
                   
@@ -129,6 +135,16 @@ void  main(void )
                     TRISCbits.TRISC5 =0;
                     TMR1_Counter_Enable = 1;
                     rem++;
+                    if(Key_Start == 1)
+                    {
+                            TRISCbits.TRISC5 =1;
+                            __delay_ms(5);
+                            DRV_BRAKE =0 ;   
+                            b_s = 1;
+                            flag_brake =2;
+                            mydir = 1;
+                            goto BRAKE_S;
+                    }
                     if(flag_run == 0x0a)
                     {
                      Auto_OutPut_Brake=1;// Auto_Works_Signal = 1;
@@ -146,40 +162,190 @@ void  main(void )
                      
                          rem++;
 					    DRV_DIR =0; //WT.EDIT 2019-06-13
-                      
+                        CCPR1L =0x0;    //MSB 8bit<>pulse duty of value
                         
-                       
-                         CCPR1L =0x0;    //MSB 8bit<>pulse duty of value
+                        if(Key_Start == 1)
+                        {
+                            TRISCbits.TRISC5 =1;
+                            __delay_ms(5);
+                            DRV_BRAKE =0 ;   
+                            b_s = 1;
+                            flag_brake =2;
+                            mydir = 1;
+                            goto BRAKE_S;
+                        }
                          DRV_DIR =0;
                          CCPR1L =0x01;    //MSB 8bit<>pulse duty of value
+                        if(Key_Start == 1)
+                        {
+                            TRISCbits.TRISC5 =1;
+                            __delay_ms(5);
+                            DRV_BRAKE =0 ;   
+                            b_s = 1;
+                            flag_brake =2;
+                            mydir = 1;
+                            goto BRAKE_S;
+                        }
                          DRV_DIR =0;
                          CCPR1L =0x02;    //MSB 8bit<>pulse duty of value
+                          if(Key_Start == 1)
+                        {
+                            TRISCbits.TRISC5 =1;
+                            __delay_ms(5);
+                            DRV_BRAKE =0 ;   
+                            b_s = 1;
+                            flag_brake =2;
+                            mydir = 1;
+                            goto BRAKE_S;
+                        }
                          DRV_DIR =0;
                          CCPR1L =0x03;    //MSB 8bit<>pulse duty of value
+                          if(Key_Start == 1)
+                        {
+                            TRISCbits.TRISC5 =1;
+                            __delay_ms(5);
+                            DRV_BRAKE =0 ;   
+                            b_s = 1;
+                            flag_brake =2;
+                            mydir = 1;
+                            goto BRAKE_S;
+                        }
                          DRV_DIR =0;
                          CCPR1L =0x04;    //MSB 8bit<>pulse duty of value
+                          if(Key_Start == 1)
+                        {
+                            TRISCbits.TRISC5 =1;
+                            __delay_ms(5);
+                            DRV_BRAKE =0 ;   
+                            b_s = 1;
+                            flag_brake =2;
+                            mydir = 1;
+                            goto BRAKE_S;
+                        }
                          DRV_DIR =0;
-                         CCPR1L =0x05;    //MSB 8bit<>pulse duty of value
+                         CCPR1L =0x05; 
+                          if(Key_Start == 1)
+                        {
+                            TRISCbits.TRISC5 =1;
+                            __delay_ms(5);
+                            DRV_BRAKE =0 ;   
+                            b_s = 1;
+                            flag_brake =2;
+                            mydir = 1;
+                            goto BRAKE_S;
+                        }
                          DRV_DIR =0;
-                         CCPR1L =0x06;    //MSB 8bit<>pulse duty of value
+                         CCPR1L =0x06;   
+                          if(Key_Start == 1)
+                        {
+                            TRISCbits.TRISC5 =1;
+                            __delay_ms(5);
+                            DRV_BRAKE =0 ;   
+                            b_s = 1;
+                            flag_brake =2;
+                            mydir = 1;
+                            goto BRAKE_S;
+                        }
                          DRV_DIR =0;
-                         CCPR1L =0x07;    //MSB 8bit<>pulse duty of value
+                         CCPR1L =0x07;    
+                          if(Key_Start == 1)
+                        {
+                            TRISCbits.TRISC5 =1;
+                            __delay_ms(5);
+                            DRV_BRAKE =0 ;   
+                            b_s = 1;
+                            flag_brake =2;
+                            mydir = 1;
+                            goto BRAKE_S;
+                        }
                          DRV_DIR =0;
-                         CCPR1L =0x08;    //MSB 8bit<>pulse duty of value
+                         CCPR1L =0x08;   
+                          if(Key_Start == 1)
+                        {
+                            TRISCbits.TRISC5 =1;
+                            __delay_ms(5);
+                            DRV_BRAKE =0 ;   
+                            b_s = 1;
+                            flag_brake =2;
+                            mydir = 1;
+                            goto BRAKE_S;
+                        }
                          DRV_DIR =0;
-                         CCPR1L =0x09;    //MSB 8bit<>pulse duty of value
+                         CCPR1L =0x09;    
+                          if(Key_Start == 1)
+                        {
+                            TRISCbits.TRISC5 =1;
+                            __delay_ms(5);
+                            DRV_BRAKE =0 ;   
+                            b_s = 1;
+                            flag_brake =2;
+                            mydir = 1;
+                            goto BRAKE_S;
+                        }
                          DRV_DIR =0;
-                         CCPR1L =0x0a;    //MSB 8bit<>pulse duty of value
+                         CCPR1L =0x0a;    
+                          if(Key_Start == 1)
+                        {
+                            TRISCbits.TRISC5 =1;
+                            __delay_ms(5);
+                            DRV_BRAKE =0 ;   
+                            b_s = 1;
+                            flag_brake =2;
+                            mydir = 1;
+                            goto BRAKE_S;
+                        }
                          DRV_DIR =0;
-                         CCPR1L =0x0b;    //MSB 8bit<>pulse duty of value
+                         CCPR1L =0x0b;    
+                          if(Key_Start == 1)
+                        {
+                            TRISCbits.TRISC5 =1;
+                            __delay_ms(5);
+                            DRV_BRAKE =0 ;   
+                            b_s = 1;
+                            flag_brake =2;
+                            mydir = 1;
+                            goto BRAKE_S;
+                        }
                          DRV_DIR =0;
-                         CCPR1L = 0x0c;    //MSB 8bit<>pulse duty of value
+                         CCPR1L = 0x0c;   
+                          if(Key_Start == 1)
+                        {
+                            TRISCbits.TRISC5 =1;
+                            __delay_ms(5);
+                            DRV_BRAKE =0 ;   
+                            b_s = 1;
+                            flag_brake =2;
+                            mydir = 1;
+                            goto BRAKE_S;
+                        }
                          DRV_DIR =0;
-                         CCPR1L = 0x0d;    //MSB 8bit<>pulse duty of value
+                         CCPR1L = 0x0d;    
+                          if(Key_Start == 1)
+                        {
+                            TRISCbits.TRISC5 =1;
+                            __delay_ms(5);
+                            DRV_BRAKE =0 ;   
+                            b_s = 1;
+                            flag_brake =2;
+                            mydir = 1;
+                            goto BRAKE_S;
+                        }
                         
                          TXREG=0xa1;
                         // my_drv.error_f = 1;
                     }
+                    
+                     if(Key_Start == 1)
+                        {
+                            TRISCbits.TRISC5 =1;
+                            __delay_ms(5);
+                            DRV_BRAKE =0 ;   
+                            b_s = 1;
+                            flag_brake =2;
+                            mydir = 1;
+                            goto BRAKE_S;
+                    }
+                    
                     
                     if(flag_auto_test==0)
                     {
@@ -195,14 +361,20 @@ void  main(void )
                        TMR1H =0;
 
                       adc_value = ADC_GetValue();
-                      convertDecimalToHexa(adc_value);
+                     // convertDecimalToHexa(adc_value);
                       TXREG = 0xff;
+                       if(Key_Start == 1)
+                        {
+                            TRISCbits.TRISC5 =1;
+                            __delay_ms(5);
+                            DRV_BRAKE =0 ;   
+                            b_s = 1;
+                            flag_brake =2;
+                            mydir = 1;
+                            goto BRAKE_S;
+                        }
                     
-                    
-                      
-                      __delay_ms(1);
-                    
-                       if(adc_value > 0x100 || adc_value ==0x100)
+                       if(adc_value > 0x100 || adc_value ==0x100)//judge overcurrent protect
                        {
                            TXREG = 0xee;
                             my_drv.error_f = my_drv.error_f + 1;
@@ -212,6 +384,16 @@ void  main(void )
                              TXREG = flag_run;
                              __delay_ms(1);
                              TXREG = 0xa3;
+                              if(Key_Start == 1)
+                                {
+                                    TRISCbits.TRISC5 =1;
+                                    __delay_ms(5);
+                                    DRV_BRAKE =0 ;   
+                                    b_s = 1;
+                                    flag_brake =2;
+                                    mydir = 1;
+                                    goto BRAKE_S;
+                                }
                             if( my_drv.error_f ==2 ||flag_run == 2)
                             {
                                 flag_brake=2;
@@ -240,7 +422,16 @@ void  main(void )
                       IOCAP2 = 1;  //Flag IOCAF0  //WT.EDIT 2019-02-20
                       IOCAN2 =1; 
                    
-                 
+                       if(Key_Start == 1)
+                        {
+                            TRISCbits.TRISC5 =1;
+                            __delay_ms(5);
+                            DRV_BRAKE =0 ;   
+                            b_s = 1;
+                            flag_brake =2;
+                            mydir = 1;
+                            goto BRAKE_S;
+                        }
                      
                      
                      flag_brake =4;
@@ -280,49 +471,164 @@ void  main(void )
                             }
 		                    else if(rem==2)
 		                    {
+		                        rem++;
 		                        DRV_DIR =1; 
-		                       
-		                       // Auto_OutPut_Brake=0;
-		                       rem++;
-		                        
-		                        CCPR1L =0x0;    //MSB 8bit<>pulse duty of value
+		                        CCPR1L =0x0;    
+                                if(Key_Start == 1)
+                                {
+                                    TRISCbits.TRISC5 =1;
+                                    __delay_ms(5);
+                                    DRV_BRAKE =0 ;   
+                                    b_s = 1;
+                                    flag_brake =2;
+                                    mydir = 1;
+                                    goto BRAKE_S;
+                                }
 		                       
 		                         DRV_DIR =1; 
 		                         CCPR1L =0x1;    //MSB 8bit<>pulse duty of value
-		                       
+		                          if(Key_Start == 1)
+                                {
+                                    TRISCbits.TRISC5 =1;
+                                    __delay_ms(5);
+                                    DRV_BRAKE =0 ;   
+                                    b_s = 1;
+                                    flag_brake =2;
+                                    mydir = 1;
+                                    goto BRAKE_S;
+                                }
 		                         DRV_DIR =1; 
 		                         CCPR1L =0x2;    //MSB 8bit<>pulse duty of value
-		                     
+		                         if(Key_Start == 1)
+                                {
+                                    TRISCbits.TRISC5 =1;
+                                    __delay_ms(5);
+                                    DRV_BRAKE =0 ;   
+                                    b_s = 1;
+                                    flag_brake =2;
+                                    mydir = 1;
+                                    goto BRAKE_S;
+                                }
 		                         DRV_DIR =1; 
 		                         CCPR1L =0x3;    //MSB 8bit<>pulse duty of value
-		                      
+		                           if(Key_Start == 1)
+                                {
+                                    TRISCbits.TRISC5 =1;
+                                    __delay_ms(5);
+                                    DRV_BRAKE =0 ;   
+                                    b_s = 1;
+                                    flag_brake =2;
+                                    mydir = 1;
+                                    goto BRAKE_S;
+                                }
 		                         DRV_DIR =1; 
 		                         CCPR1L =0x4;    //MSB 8bit<>pulse duty of value
-		                      
+		                          if(Key_Start == 1)
+                                {
+                                    TRISCbits.TRISC5 =1;
+                                    __delay_ms(5);
+                                    DRV_BRAKE =0 ;   
+                                    b_s = 1;
+                                    flag_brake =2;
+                                    mydir = 1;
+                                    goto BRAKE_S;
+                                }
 		                         DRV_DIR =1; 
 		                         CCPR1L =0x5;    //MSB 8bit<>pulse duty of value
-		                       
+		                          if(Key_Start == 1)
+                                {
+                                    TRISCbits.TRISC5 =1;
+                                    __delay_ms(5);
+                                    DRV_BRAKE =0 ;   
+                                    b_s = 1;
+                                    flag_brake =2;
+                                    mydir = 1;
+                                    goto BRAKE_S;
+                                }
 		                         DRV_DIR =1;    
 		                        CCPR1L =0x06;    //MSB 8bit<>pulse duty of value
-		                        
+		                         if(Key_Start == 1)
+                                {
+                                    TRISCbits.TRISC5 =1;
+                                    __delay_ms(5);
+                                    DRV_BRAKE =0 ;   
+                                    b_s = 1;
+                                    flag_brake =2;
+                                    mydir = 1;
+                                    goto BRAKE_S;
+                                }
 		                         DRV_DIR =1;    
 		                         CCPR1L =0x07;    //MSB 8bit<>pulse duty of value
-		                           
+		                           if(Key_Start == 1)
+                                {
+                                    TRISCbits.TRISC5 =1;
+                                    __delay_ms(5);
+                                    DRV_BRAKE =0 ;   
+                                    b_s = 1;
+                                    flag_brake =2;
+                                    mydir = 1;
+                                    goto BRAKE_S;
+                                } 
 		                         DRV_DIR =1;   
 		                         CCPR1L = 0x08;    //MSB 8bit<>pulse duty of value
-		                        
+		                         if(Key_Start == 1)
+                                {
+                                    TRISCbits.TRISC5 =1;
+                                    __delay_ms(5);
+                                    DRV_BRAKE =0 ;   
+                                    b_s = 1;
+                                    flag_brake =2;
+                                    mydir = 1;
+                                    goto BRAKE_S;
+                                }
 		                         DRV_DIR =1;    
 		                         CCPR1L = 0x09;    //MSB 8bit<>pulse duty of value
-		                         
+		                          if(Key_Start == 1)
+                                {
+                                    TRISCbits.TRISC5 =1;
+                                    __delay_ms(5);
+                                    DRV_BRAKE =0 ;   
+                                    b_s = 1;
+                                    flag_brake =2;
+                                    mydir = 1;
+                                    goto BRAKE_S;
+                                }
 		                         DRV_DIR =1;    
 		                         CCPR1L = 0x0a;    //MSB 8bit<>pulse duty of value
-		                       
+		                        if(Key_Start == 1)
+                                {
+                                    TRISCbits.TRISC5 =1;
+                                    __delay_ms(5);
+                                    DRV_BRAKE =0 ;   
+                                    b_s = 1;
+                                    flag_brake =2;
+                                    mydir = 1;
+                                    goto BRAKE_S;
+                                }
 		                          DRV_DIR =1;    
 		                          CCPR1L = 0x0b;    //MSB 8bit<>pulse duty of value
-		                          
+		                           if(Key_Start == 1)
+                                {
+                                    TRISCbits.TRISC5 =1;
+                                    __delay_ms(5);
+                                    DRV_BRAKE =0 ;   
+                                    b_s = 1;
+                                    flag_brake =2;
+                                    mydir = 1;
+                                    goto BRAKE_S;
+                                }
 		                          DRV_DIR =1;    
 		                          CCPR1L = 0x0c;    //MSB 8bit<>pulse duty of value
-		                          
+		                           if(Key_Start == 1)
+                                {
+                                    TRISCbits.TRISC5 =1;
+                                    __delay_ms(5);
+                                    DRV_BRAKE =0 ;   
+                                    b_s = 1;
+                                    flag_brake =2;
+                                    mydir = 1;
+                                    goto BRAKE_S;
+                                }
 		                           DRV_DIR =1;    
 		                          CCPR1L = 0x0d;    //MSB 8bit<>pulse duty of value
 		                       
@@ -331,7 +637,16 @@ void  main(void )
 		                         
 		                    }
 		                    DRV_DIR =1;
-		                  
+		                   if(Key_Start == 1)
+                                {
+                                    TRISCbits.TRISC5 =1;
+                                    __delay_ms(5);
+                                    DRV_BRAKE =0 ;   
+                                    b_s = 1;
+                                    flag_brake =2;
+                                    mydir = 1;
+                                    goto BRAKE_S;
+                                }
 		                    
 		                    GIE =0;
                           if(flag_auto_test==0)	
@@ -347,8 +662,17 @@ void  main(void )
 		                       TMR1H =0;
 
 		                       adc_value = ADC_GetValue();
-			                   convertDecimalToHexa(adc_value);
-			                        
+			                   //convertDecimalToHexa(adc_value);
+			                    if(Key_Start == 1)
+                                {
+                                    TRISCbits.TRISC5 =1;
+                                    __delay_ms(5);
+                                    DRV_BRAKE =0 ;   
+                                    b_s = 1;
+                                    flag_brake =2;
+                                    mydir = 1;
+                                    goto BRAKE_S;
+                                }    
 			                  
 			                   
 			                    if(adc_value > 0x100 || adc_value ==0x100)
@@ -361,6 +685,16 @@ void  main(void )
 		                             TXREG = flag_run;
 		                             __delay_ms(1);
 		                             TXREG = 0xb3;
+                                      if(Key_Start == 1)
+                                {
+                                    TRISCbits.TRISC5 =1;
+                                    __delay_ms(5);
+                                    DRV_BRAKE =0 ;   
+                                    b_s = 1;
+                                    flag_brake =2;
+                                    mydir = 1;
+                                    goto BRAKE_S;
+                                }
 		                            
 		                            if( my_drv.error_f ==2 || flag_run == 2)
 		                            {
@@ -371,7 +705,16 @@ void  main(void )
 		                    }
                           }
 		                    rem=5;
-		                    // TXREG=0x22;
+		                     if(Key_Start == 1)
+                                {
+                                    TRISCbits.TRISC5 =1;
+                                    __delay_ms(5);
+                                    DRV_BRAKE =0 ;   
+                                    b_s = 1;
+                                    flag_brake =2;
+                                    mydir = 1;
+                                    goto BRAKE_S;
+                                }
 		                  
 		                     flag_brake=5;
 		                  
@@ -444,7 +787,7 @@ void  main(void )
 			  flag_power_on=0;
 			  Auto_OutPut_Brake=0;
 			 
-			 // Auto_Works_Signal = 0;
+			
 			 
 			
       
