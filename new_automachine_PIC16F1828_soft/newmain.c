@@ -124,7 +124,8 @@ BRAKE_S:      if((mydir == 1)&&(flag_brake ==2)&&(flag_brake!=3)&&(flag_brake!=0
                      //delay_1ms(10);
                      
                 }
-				/***********************CW*****************************/
+				/***********************CW Rotate*********************************************************/
+                /**********************************************************************************/
 				else if(((((mydir == 1)||(my_drv.drv_dir==1))&&flag_brake != 2) ||((mydir==0)&&(flag_brake == 4)))
                                &&(my_drv.drv_enable!=1 && flag_brake !=5 && flag_brake !=2))
                {
@@ -332,7 +333,7 @@ BRAKE_S:      if((mydir == 1)&&(flag_brake ==2)&&(flag_brake!=3)&&(flag_brake!=0
                         }
                         
                          TXREG=0xa1;
-                        // my_drv.error_f = 1;
+                       
                     }
                     
                      if(Key_Start == 1)
@@ -376,14 +377,14 @@ BRAKE_S:      if((mydir == 1)&&(flag_brake ==2)&&(flag_brake!=3)&&(flag_brake!=0
                     
                        if(adc_value > 0x100 || adc_value ==0x100)//judge overcurrent protect
                        {
-                           TXREG = 0xee;
+                          // TXREG = 0xee;
                             my_drv.error_f = my_drv.error_f + 1;
-                             TXREG = my_drv.error_f ;
-                             __delay_ms(1);
+                           //  TXREG = my_drv.error_f ;
+                          
                              flag_run = flag_run + 1;
-                             TXREG = flag_run;
-                             __delay_ms(1);
-                             TXREG = 0xa3;
+                            // TXREG = flag_run;
+                          
+                            // TXREG = 0xa3;
                               if(Key_Start == 1)
                                 {
                                     TRISCbits.TRISC5 =1;
@@ -399,7 +400,7 @@ BRAKE_S:      if((mydir == 1)&&(flag_brake ==2)&&(flag_brake!=3)&&(flag_brake!=0
                                 flag_brake=2;
                               
                                 flag_run=0x0a;
-                                TXREG = 0xa4;
+                              //  TXREG = 0xa4;
                                
                                 while(1);
                                 
@@ -677,14 +678,14 @@ BRAKE_S:      if((mydir == 1)&&(flag_brake ==2)&&(flag_brake!=3)&&(flag_brake!=0
 			                   
 			                    if(adc_value > 0x100 || adc_value ==0x100)
 		                       {
-		                             TXREG = 0xdd;
+		                          //   TXREG = 0xdd;
 		                             my_drv.error_f = my_drv.error_f + 1;
-		                             TXREG = my_drv.error_f ;
-		                             __delay_ms(1);
+		                           //  TXREG = my_drv.error_f ;
+		                            // __delay_ms(1);
 		                             flag_run = flag_run + 1;
-		                             TXREG = flag_run;
-		                             __delay_ms(1);
-		                             TXREG = 0xb3;
+		                           //  TXREG = flag_run;
+		                           //  __delay_ms(1);
+		                           //  TXREG = 0xb3;
                                       if(Key_Start == 1)
                                 {
                                     TRISCbits.TRISC5 =1;
@@ -704,7 +705,7 @@ BRAKE_S:      if((mydir == 1)&&(flag_brake ==2)&&(flag_brake!=3)&&(flag_brake!=0
 		                       }
 		                    }
                           }
-		                    rem=5;
+		                     rem=5;
 		                     if(Key_Start == 1)
                                 {
                                     TRISCbits.TRISC5 =1;
@@ -716,23 +717,12 @@ BRAKE_S:      if((mydir == 1)&&(flag_brake ==2)&&(flag_brake!=3)&&(flag_brake!=0
                                     goto BRAKE_S;
                                 }
 		                  
-		                     flag_brake=5;
-		                  
-		                     flag_power_on=0; //WT.EIDT 20190508
-		                     my_drv.drv_dir=3;
-							 my_drv.drv_brake =3; //WT.EDIT 20190508
-						     Auto_OutPut_Brake=0;
-		                    // Auto_Works_Signal = 0;
-		                
-		                   // TXREG=0x33;
-		              
-		                    my_drv.drv_enable=1;
-		                  //   mydir = Manual_Operation_Dir();
-		                  //  mykey =GetKeyPad();
-		                  
-		                 
-					
-		            }
+                                flag_brake=5;
+                                flag_power_on=0; //WT.EIDT 20190508
+                                my_drv.drv_dir=3;
+                                my_drv.drv_brake =3; //WT.EDIT 20190508
+                                my_drv.drv_enable=1;
+		                  }
 		         
 		            break;
             	}
@@ -769,29 +759,14 @@ BRAKE_S:      if((mydir == 1)&&(flag_brake ==2)&&(flag_brake!=3)&&(flag_brake!=0
                 my_drv.drv_dir=0;
                  flag_power_on=0;
                 Auto_OutPut_Brake=0;
-             
-			
-			   
-                 
-		    }
+              }
             break;
-       
-            
-           
-           
-
-	     default :
+         default :
 	     	{
 			  TRISCbits.TRISC5 =1;
 			  DRV_ENABLE=0;
 			  flag_power_on=0;
 			  Auto_OutPut_Brake=0;
-			 
-			
-			 
-			
-      
-			 
 			}
             break;
          }//end switch(mykey)

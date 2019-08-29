@@ -76,7 +76,7 @@ uchar  Manual_Operation_Dir(void)
   {
       if( AUTO_OUTPUT_DIR==1)
       {
-        __delay_ms(2);//delay_1ms(5); //WT.EDIT 2019-06-10
+        __delay_ms(1);//delay_1ms(5); //WT.EDIT 2019-06-10
       
         my_drv.drv_dir=1;
         //Auto_Works_Signal = 1;
@@ -88,7 +88,7 @@ uchar  Manual_Operation_Dir(void)
      if( AUTO_OUTPUT_DIR==0)
      {
      
-          __delay_ms(2);//delay_1ms(5); //WT.EDIT 2019-06-10
+          __delay_ms(1);//delay_1ms(5); //WT.EDIT 2019-06-10
            
             my_drv.drv_dir=2;
           
@@ -104,7 +104,7 @@ uchar  Manual_Operation_Dir(void)
        if(my_drv.drv_dir ==4)
        {
       
-            __delay_ms(2);//delay_10ms(1); //WT.EDIT 2019-06-10
+            __delay_ms(1);//delay_10ms(1); //WT.EDIT 2019-06-10
             //if(my_drv.drv_dir ==4)
             {
               DRV_DIR =0;
@@ -120,7 +120,7 @@ uchar  Manual_Operation_Dir(void)
         __delay_ms(1);//delay_1ms(5); //WT.EDIT 2019-06-10
       
         my_drv.drv_dir=1;
-        //Auto_Works_Signal = 1;
+      
     
       
         return 1;
@@ -132,24 +132,18 @@ uchar  Manual_Operation_Dir(void)
        
        if(my_drv.drv_dir ==4)
         {
-          __delay_ms(2);//delay_10ms(1);//WT.EDIT 2019-06-10
-          //if(my_drv.drv_dir ==3) 
-          {
-            DRV_DIR =1;
-            //my_drv.drv_dir=1;
-           // Auto_Works_Signal = 0;
-           // TXREG=0x11;
-            return 1;
-          }
+          __delay_ms(1);//delay_10ms(1);//WT.EDIT 2019-06-10
+         
+           return 1;
+          
         }
         else 
 
         {
-           __delay_ms(2);//delay_1ms(5); //WT.EDIT 2019-06-10
-           //DRV_DIR =0;
+           __delay_ms(1);//delay_1ms(5); //WT.EDIT 2019-06-10
+          
             my_drv.drv_dir=2;
-            //Auto_Works_Signal = 0;
-           // TXREG=0x00;
+           
 
             return 0;
          }
